@@ -2,7 +2,7 @@
 
 ## Scope, authority, and provenance
 
-This document describes the existing harness only, not the complete product architecture. [spec.md](../../spec.md) remains the product authority; the current [Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) and [Allocation](2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md) retain their derived roles. These realization choices support A-build and A-acceptance without adding product requirements, allocation units, or an implementation plan.
+This document describes the existing harness only, not the complete product architecture. [SPEC.md](../../SPEC.md) remains the product authority; the current [Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) and [Allocation](2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md) retain their derived roles. These realization choices support A-build and A-acceptance without adding product requirements, allocation units, or an implementation plan.
 
 The retained choices were already recorded in the [technical canon before this extraction](https://github.com/at-rama/sqlite-vec-wasm/blob/d6b911f01c00995939e8ee0ff8ad5504dc8d1d03/.42p/standards/software.md#qualified-technical-harness). The [qualification](2026-10-04_sqlite-vec-wasm_qualification_edit-0.1.md) supplies historical experimental justification and limits, not another contract. A successful tooling probe is not product acceptance, release readiness, or evidence that all allocated responsibilities are implemented.
 

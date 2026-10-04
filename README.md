@@ -45,7 +45,7 @@ These commands set up development tools and test a small browser fixture. They d
 
 ## Project documentation
 
-- [spec.md](spec.md) defines the product requirements.
+- [SPEC.md](SPEC.md) defines the product requirements.
 - [Engineering notes](.42p/engineering/) record the technical analysis and build investigation.
 - [Development rules](.42p/standards/) describe how to work in this repository.
 

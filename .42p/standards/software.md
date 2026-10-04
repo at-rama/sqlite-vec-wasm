@@ -1,6 +1,6 @@
 # Technical repository canon
 
-This is the repository-wide engineering authority, subordinate to [spec.md](../../spec.md). It translates repository concerns from the current [Capture and Allocation](../engineering/) without changing their product obligations. Executable configuration defines the current checks; this document explains their scope and prerequisites.
+This is the repository-wide engineering authority, subordinate to [SPEC.md](../../SPEC.md). It translates repository concerns from the current [Capture and Allocation](../engineering/) without changing their product obligations. Executable configuration defines the current checks; this document explains their scope and prerequisites.
 
 ## Lightweight repository gateway
 
@@ -10,7 +10,7 @@ A Git checkout, Git 2.18 or newer, and a POSIX shell with standard utilities are
 sh tools/check-repository.sh
 ```
 
-Stage new files before checking so Git includes them in the candidate snapshot. The command checks the complete tracked working snapshot for Git whitespace errors, requires the unique root `spec.md` and the agent/canon entry points, and rejects tracked files matching repository `.gitignore` rules, even if force-added. Local/global ignore configuration does not affect that rejection. It returns nonzero on any failure. It does not check arbitrary untracked files or prove absence of renamed/copied upstream sources; review still enforces those source boundaries.
+Stage new files before checking so Git includes them in the candidate snapshot. The command checks the complete tracked working snapshot for Git whitespace errors, requires the unique root `SPEC.md` and the agent/canon entry points, and rejects tracked files matching repository `.gitignore` rules, even if force-added. Local/global ignore configuration does not affect that rejection. It returns nonzero on any failure. It does not check arbitrary untracked files or prove absence of renamed/copied upstream sources; review still enforces those source boundaries.
 
 The same command is mandatory for every proposed change and runs as `Repository / check` in pull-request and `main` CI. A successful repository check is not product acceptance or permission to publish. Changes to this gateway or its configuration must retain meaningful failure behavior; new checks enter this command when their implementation subjects exist. Do not bypass failures or substitute always-successful commands.
 
@@ -37,4 +37,4 @@ sh tools/check-repository.sh
 
 Use `bash tools/harness.sh check` for an independent identity check and `bash tools/harness.sh exec COMMAND [ARG ...]` to run a command in the verified tooling environment.
 
-These tooling checks do not replace product acceptance or human merge authority defined in spec.md. Missing prerequisites or failed checks must fail rather than silently skip required verification. Do not infer broader qualification or release readiness from a passing tooling check.
+These tooling checks do not replace product acceptance or human merge authority defined in SPEC.md. Missing prerequisites or failed checks must fail rather than silently skip required verification. Do not infer broader qualification or release readiness from a passing tooling check.

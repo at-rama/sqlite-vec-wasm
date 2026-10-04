@@ -3,11 +3,11 @@ set -eu
 
 cd "$(git rev-parse --show-toplevel)"
 
-if [ "$(git ls-files -- ':(icase)spec.md')" != spec.md ]; then
-    echo 'Expected exactly one tracked root specification: spec.md' >&2
+if [ "$(git ls-files -- ':(icase)SPEC.md')" != SPEC.md ]; then
+    echo 'Expected exactly one tracked root specification: SPEC.md' >&2
     exit 1
 fi
-for path in spec.md AGENTS.md .42p/standards/software.md .gitignore; do
+for path in SPEC.md AGENTS.md .42p/standards/software.md .gitignore; do
     if [ ! -f "$path" ]; then
         echo "Missing repository authority or integrity configuration: $path" >&2
         exit 1

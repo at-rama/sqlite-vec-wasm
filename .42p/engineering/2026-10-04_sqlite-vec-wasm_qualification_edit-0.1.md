@@ -2,7 +2,7 @@
 
 ## Scope and evidence boundary
 
-Examined on 2026-10-04 from repository revision `11c315cfe22f1eaf5fe1432a3f44bb38a96a3e89`. [spec.md](../../spec.md) remains authoritative; the unchanged [Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) and [Allocation](2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md) supplied the questions. This record is empirical evidence and a qualified tooling path, not another contract, implementation, or completed acceptance model.
+Examined on 2026-10-04 from repository revision `11c315cfe22f1eaf5fe1432a3f44bb38a96a3e89`. [SPEC.md](../../SPEC.md) remains authoritative; the unchanged [Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) and [Allocation](2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md) supplied the questions. This record is empirical evidence and a qualified tooling path, not another contract, implementation, or completed acceptance model.
 
 All experiments were disposable under ignored `.work/qualification/`. Environment: Ubuntu 24.04.3, Linux x86-64, preinstalled native development and browser libraries. No sqlite-vec integration, product package, publication, or OpenSpec change was made. The source versions below are qualification fixtures, not a release selection or compatibility certification.
 

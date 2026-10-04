@@ -2,7 +2,7 @@
 
 ## Purpose, scope, and authority
 
-Purpose: structure the current `sqlite-vec-wasm` project contract for later reasoning. Scope: the root specification and the user's validated update-model rationale in S-release-model. This Capture is a derived, non-authoritative working set; [S-spec](../../spec.md) governs every difference in reading. It introduces no decision, allocation, implementation choice, or implementation plan.
+Purpose: structure the current `sqlite-vec-wasm` project contract for later reasoning. Scope: the root specification and the user's validated rationale in S-release-model and S-doc-model. This Capture is a derived, non-authoritative working set; [S-spec](../../spec.md) governs every difference in reading. It introduces no decision, allocation, implementation choice, or implementation plan.
 
 All normative modalities below report S-spec's requirements, permissions, preferences, and exceptions; they confer no independent authority. MUST denotes a requirement; SHOULD denotes a preference whose departure needs a concrete justification. S-spec establishes the contract, not evidence that bootstrap, compatibility, verification, or publication has already succeeded. Source-stated technical context remains attributed to S-spec and is not independently validated here. R-updates records the user's adopted rationale from S-release-model, not a new product requirement.
 
@@ -106,12 +106,6 @@ Source: [S-spec, updates publication and documentation](../../spec.md#updates-pu
 
 Initial repository/registry bootstrap MAY include the minimum unavoidable manual registry configuration and first npm publication needed to establish trusted publishing. This exception concerns publication setup, not the recurring human trigger and merge authority, and does not waive verification or the synchronized release contract. Steady-state publication MUST use npm trusted publishing and verifiable build provenance/asset attestations where supported by the chosen publishing environment; any unsupported mechanism and fallback MUST be explicit. Persistent npm publishing credentials MUST NOT be the normal mechanism where trusted publishing provides secretless publication.
 
-### C-docs — Minimal documentation obligations
-
-Source: [S-spec, updates publication and documentation](../../spec.md#updates-publication-and-documentation).
-
-One concise `README.md` MUST explain the package's responsibility and exclusions, concrete consumption and asset-hosting examples, included upstream versions, reproduction prerequisites and commands, the one-time bootstrap boundary for maintainers, and the manually triggered candidate PR, human merge, and automatic post-merge publication lifecycle, including publication being blocked by failed verification. Additional documentation or governance files SHOULD exist only for a concrete need; separate license notices may be necessary.
-
 ### C-obsolescence — End of project responsibility
 
 Source: [S-spec, updates publication and documentation](../../spec.md#updates-publication-and-documentation).
@@ -126,8 +120,10 @@ C-autonomy separates external awareness and human initiation, automated qualific
 
 ## Material sources
 
-**S-spec** — [root spec.md](../../spec.md), the user-designated authoritative project specification. Its current requirements govern this projection; prior assistant receipts and this Capture are not corroboration. Snapshot SHA-256: `d486fafa92286a59b0b26f195ec10609bca798efd2763d3975b566a4d4b0708a`.
+**S-spec** — [root spec.md](../../spec.md), the user-designated authoritative project specification. Its current requirements govern this projection; prior assistant receipts and this Capture are not corroboration. Snapshot SHA-256: `8e63960c6f6c363ddca026b946f85252ad6dccdf2b6a75e17ed749a9183f3a90`.
 
 **S-release-model** — User mission for `at-rama/sqlite-vec-wasm`, submitted 2026-10-04 in the sqlite-vec-wasm project conversation, beginning “Correct the repository design to replace the previously specified autonomous upstream detection and release model”. The explicit validated decision and execution requirement 4 supply the adopted mechanical-automation/human-authority boundary and insufficient-marginal-value rationale in R-updates. Product obligations are now expressed in S-spec; this primary user instruction and the updated specification are related sources, not independent corroboration.
+
+**S-doc-model** — User mission for PR #8 in `at-rama/sqlite-vec-wasm`, submitted 2026-10-04 in the same project conversation, beginning “Amend the existing PR to complete the strict inter-document coherence correction discovered during review”. The validated decision removes a premature standalone README checklist without replacing it with a generic documentation obligation. Documentation remains attached to substantive product concerns and emerges with their concrete surfaces; C-storage, C-inputs, C-release, and C-verification retain their existing prerequisites and record requirements. The existing editorial standard governs README presentation. S-spec expresses the resulting product requirements; this primary user instruction and S-spec are related sources, not independent corroboration.
 
 The specification's [upstream references](../../spec.md#upstream-references) remain retrievable through S-spec; their contents are not additional acquired evidence for this Capture. S-spec states: references explain upstream mechanisms; moving documentation does not change its requirements, and version-specific behavior is evaluated against pinned releases.

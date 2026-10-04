@@ -2,7 +2,7 @@
 
 ## Identity, source, and authority
 
-Direct input: [the current Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `8e23b84b8f9b3b99083516983ea3cb502aedcab2777af75ae9bccf62d2f83067`. Capture handles below retain their existing identity. [spec.md](../../spec.md) remains the ultimate authority through S-spec; this Allocation is a derived responsibility model, not a new contract or evidence of implementation progress.
+Direct input: [the current Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `e7541374981bfc5c5c1d2dec1d9e38e9b35301aae20cc93e081f16633ea7759f`. Capture handles below retain their existing identity. [spec.md](../../spec.md) remains the ultimate authority through S-spec; this Allocation is a derived responsibility model, not a new contract or evidence of implementation progress.
 
 An allocation surface denotes a responsibility boundary, not a prescribed file, workflow, library, API, or architectural component. The modalities, exclusions, conditions, and exceptions attributed to the Capture retain their force. Evidence described below identifies what later Verification must connect to that responsibility; it is not a separate Verification model.
 
@@ -26,11 +26,11 @@ R-inputs supplies acquisition context: the canonical build currently needs the f
 
 Own the canonical browser/WASM build with stable sqlite-vec statically compiled and automatically registered through SQLite's supported mechanism on every new connection. Consumers neither dynamically load nor register the extension. SQLite core, WASM support, and JavaScript bindings MUST come from the same SQLite release, preserving the normative content in R-inputs.
 
-Preserve the pinned canonical default browser baseline: conventional JavaScript and ESM initialization, documented C-style and OO1 APIs, BigInt, Worker1 and its promise interface, FTS5, and default persistence VFSes including OPFS. Preserve upstream SQL and extension semantics and upstream browser/storage prerequisites and limitations. Browser execution alone is supported; Node.js runtime, native binaries, and WASI distributions are excluded, while Node.js tooling remains permitted. Server use of node:sqlite with native sqlite-vec is outside this project's runtime responsibility.
+Preserve the pinned canonical default browser baseline: conventional JavaScript and ESM initialization, documented C-style and OO1 APIs, BigInt, Worker1 and its promise interface, FTS5, and default persistence VFSes including OPFS. Preserve upstream SQL and extension semantics and upstream browser/storage prerequisites and limitations. Document required Worker contexts, secure hosting, and VFS-specific isolation/header requirements without promising main-thread OPFS. Browser execution alone is supported; Node.js runtime, native binaries, and WASI distributions are excluded, while Node.js tooling remains permitted. Server use of node:sqlite with native sqlite-vec is outside this project's runtime responsibility.
 
-Build-defining toolchain/dependency versions and options are pinned and recorded. No functional upstream modification, SQL abstraction, ORM, application API, FluidJ behavior, or custom vector semantics is added. Glue is limited to building, initializing, locating, and exposing upstream functionality. Source patches remain excluded; any unavoidable patch requires an explicit contract revision identifying necessity and isolation.
+Build-defining toolchain/dependency versions and options are pinned and recorded. Document the prerequisites for reproducing this build from a clean checkout. No functional upstream modification, SQL abstraction, ORM, application API, FluidJ behavior, or custom vector semantics is added. Glue is limited to building, initializing, locating, and exposing upstream functionality. Source patches remain excluded; any unavoidable patch requires an explicit contract revision identifying necessity and isolation.
 
-**Composition:** consumes A-inputs and supplies A-package; A-acceptance checks the retained behavior. **Evidence target:** build environment/options, common SQLite release identity, integration/configuration boundaries, and resulting baseline capabilities and extension registration.
+**Composition:** consumes A-inputs and supplies A-package; A-acceptance checks the retained behavior. **Evidence target:** build environment/options, documented reproduction and browser/storage prerequisites, common SQLite release identity, integration/configuration boundaries, and resulting baseline capabilities and extension registration.
 
 ### A-package — Consumer-ready verified payload
 
@@ -91,14 +91,6 @@ Own the permitted one-time publication-setup exception: minimum unavoidable manu
 
 **Composition:** the first publication remains constrained by A-acceptance and A-release; established configuration supports A-release's subsequent automatic post-merge publications. **Evidence target:** initial-versus-steady-state publishing configuration and the bounded publication-setup exception, if exercised.
 
-### A-docs — Minimal consumer and maintainer documentation
-
-**Capture:** C-docs, C-storage, C-inputs. **Surface:** the required concise README and only concretely necessary additional documentation/governance.
-
-Own explicit README coverage of responsibility/exclusions, concrete consumption and asset-hosting examples, included upstream versions, reproduction prerequisites/commands, the maintainer bootstrap boundary, manually triggered candidate PR/human merge/automatic post-merge publication lifecycle, and failed-verification publication blocking. Document required Worker contexts, secure hosting, and VFS-specific isolation/header requirements without promising main-thread OPFS. Additional documentation/governance SHOULD exist only for a concrete need; separate license notices may be necessary, with distributed notices owned by A-package.
-
-**Composition:** describes the consumption/reproduction surfaces of A-inputs/A-build/A-package and the lifecycle of A-updates/A-release/A-bootstrap. **Evidence target:** documentation coverage and consistency with those surfaces, without a required maintenance manual or new implementation feature.
-
 ### A-lifecycle — Obsolescence boundary
 
 **Capture:** C-obsolescence. **Surface:** project lifecycle/maintenance state.
@@ -115,22 +107,22 @@ Each material handle has one classification. Multiple units in a covered row joi
 | --- | --- | --- |
 | C-purpose | Covered | A-inputs, A-build, A-package, A-release: official integrated browser distribution and publication boundary. |
 | C-nonmodification | Covered | A-build, A-package, A-updates: allowed glue, exclusions, unchanged semantics, patch/revision and intervention boundary. |
-| C-inputs | Covered | A-inputs, A-build, A-package, A-acceptance, A-updates, A-docs: origins/pins/digests, acquisition exclusions, toolchain pins, artifact exclusions, reproduction, proposed updates and prerequisites. |
+| C-inputs | Covered | A-inputs, A-build, A-package, A-acceptance, A-updates: origins/pins/digests, acquisition exclusions, toolchain pins, artifact exclusions, reproduction, proposed updates and documented prerequisites. |
 | R-inputs | Covered | A-inputs retains source-stated acquisition context; A-build owns the embedded same-SQLite-release MUST. Context does not create separate work. |
 | C-browser | Covered | A-build, A-package, A-acceptance: full retained baseline, assets/variants, exclusions and omission checks. |
 | C-static | Covered | A-build, A-acceptance: supported static registration, every connection, unchanged extension semantics and availability evidence. |
-| C-storage | Covered | A-build, A-package, A-acceptance, A-docs: upstream conditions, persistence preservation/no fallback, mandatory evidence and documented prerequisites. |
+| C-storage | Covered | A-build, A-package, A-acceptance: upstream conditions, persistence preservation/no fallback, mandatory evidence and documented prerequisites owned by A-build. |
 | C-release | Covered | A-package, A-release: consumer-ready payload/notices, identity across revision/tag/channels, versions, digests and environment/options. |
 | C-verification | Covered | A-acceptance: all captured production/browser obligations, evidence conditions and omitted-capability detection. |
 | C-autonomy | Covered | A-updates, A-release, A-bootstrap: external awareness/human initiation, manual candidate selection independent of polling history, qualified PR stop, human merge, automatic post-merge publication, excluded autonomy machinery and publication-setup exception. |
 | R-updates | Non-allocatable | Adopted complexity/value and human-authority rationale informs A-updates; no additional implementation obligation or technically refuted alternative. |
 | C-failure | Covered | A-updates, A-release: no qualification for merge/integration/tag/channel publication on any mandatory failure; human approval waives no gate; no required automatic repair. |
 | C-bootstrap | Covered | A-bootstrap, A-release: initial-only publication-setup exception, separate recurring human trigger/merge authority, no waived gates, trusted publishing/provenance and explicit unsupported fallbacks. |
-| C-docs | Covered | A-docs: all README subjects and conditional additional-documentation preference. |
 | C-obsolescence | Covered | A-lifecycle: exact equivalent-maintained-upstream condition and demo insufficiency. |
 | S-spec | Non-allocatable | Provenance and ultimate-authority identity, retained through the current Capture and source links; not implementation work or independent corroboration. |
 | S-release-model | Non-allocatable | Primary user provenance for R-updates and the adopted correction now expressed in S-spec; not separate implementation work or independent corroboration. |
+| S-doc-model | Non-allocatable | Primary user provenance for removing the standalone README checklist while preserving substantive product obligations in S-spec; not separate implementation work or independent corroboration. |
 
-**Capture coverage: 100% — 17/17 material handles examined; 14 covered, three non-allocatable, none unresolved or omitted.** All nine A- units cite explicit Capture handles. **Allocation grounding: 100% — 9/9 units grounded; no orphan units.**
+**Capture coverage: 100% — 17/17 material handles examined; 13 covered, four non-allocatable, none unresolved or omitted.** All eight A- units cite explicit Capture handles. **Allocation grounding: 100% — 8/8 units grounded; no orphan units.**
 
 Authority and epistemic distinctions outside the Capture handles are retained in this document's source boundary, and its material relationships are represented in unit composition. Lifecycle invariants are not reclassified as current readiness conditions. No explicit unresolved Capture issue prevents allocation; unspecified lower-level mechanisms remain open. Coverage certifies responsibility/grounding accounting, not successful implementation, technical compatibility, completed bootstrap, or passed production gates.

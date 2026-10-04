@@ -56,8 +56,6 @@ Automation MUST fail closed: failure of any mandatory build, compatibility, pack
 
 Initial repository/registry bootstrap MAY include the minimum unavoidable manual registry configuration and first npm publication needed to establish trusted publishing. This exception concerns publication setup, not the recurring human trigger and merge authority, and does not waive verification or the synchronized release contract. Steady-state publication MUST use npm trusted publishing and verifiable build provenance/asset attestations where supported by the chosen publishing environment; any unsupported mechanism and fallback MUST be explicit. Persistent npm publishing credentials MUST NOT be the normal mechanism where trusted publishing provides secretless publication.
 
-One concise `README.md` MUST explain the package's responsibility and exclusions, concrete consumption and asset-hosting examples, included upstream versions, reproduction prerequisites and commands, the one-time bootstrap boundary for maintainers, and the manually triggered candidate PR, human merge, and automatic post-merge publication lifecycle, including publication being blocked by failed verification. Additional documentation or governance files SHOULD exist only for a concrete need; separate license notices may be necessary.
-
 The project is obsolete when SQLite or `sqlite-vec` upstream publishes and maintains an equivalent distribution satisfying this browser, API, vector, and persistence contract. A demonstration package alone does not meet that condition.
 
 ## Upstream references

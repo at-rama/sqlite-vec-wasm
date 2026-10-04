@@ -18,9 +18,11 @@ Releases provide the same version and browser files through npm and [GitHub Rele
 
 Builds use official upstream sources with fixed versions and verified checksums. They can be reproduced from a clean checkout; downloaded sources and generated browser files stay outside source control.
 
-Compatible stable upstream updates are built and tested before automatic publication. A failed check stops the update. Initial repository and npm setup may need manual configuration; subsequent compatible updates and releases run automatically.
+Compatible stable SQLite and "sqlite-vec" releases are automatically rebuilt, verified and published. Only verified builds are released.
 
 ## Development
+
+This repository is developed agentically. Changes are driven by versioned engineering artifacts and repository rules, executed against automated checks, and reviewed through pull requests.
 
 Read [AGENTS.md](AGENTS.md) and the [development rules](.42p/standards/software.md) for system prerequisites and setup instructions. Work on a branch and open a pull request targeting `main`.
 

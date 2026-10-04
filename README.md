@@ -18,7 +18,7 @@ Releases provide the same version and browser files through npm and [GitHub Rele
 
 Builds use official upstream sources with fixed versions and verified checksums. They can be reproduced from a clean checkout; downloaded sources and generated browser files stay outside source control.
 
-Maintainers follow upstream releases externally and manually trigger a workflow that builds and verifies a candidate update and opens or updates a pull request. The workflow stops there; a human merges the approved candidate, and that merge triggers publication. Only verified builds are released.
+Stable upstream releases are evaluated by maintainers. Updates are published only after verification and maintainer approval.
 
 ## Development
 

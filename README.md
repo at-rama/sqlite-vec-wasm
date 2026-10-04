@@ -1,24 +1,24 @@
 # sqlite-vec-wasm
 
-`sqlite-vec-wasm` exists to build and publish the canonical SQLite browser/WASM distribution with an official stable `sqlite-vec` release statically integrated, reproducibly and automatically, without functionally modifying either upstream.
+sqlite-vec-wasm exists to build and publish the canonical SQLite browser/WASM distribution with an official stable sqlite-vec release statically integrated, reproducibly and automatically, without functionally modifying either upstream.
 
 The goal is a ready-to-use browser distribution that saves you from building WASM and integrating the extension yourself, while preserving SQLite's browser APIs and upstream vector-search behavior.
 
 ## Browser support
 
-The distribution targets browsers, with JavaScript and ES module loading, FTS5, Worker1 and its promise interface, and OPFS where supported by the browser and hosting environment. Static integration makes `sqlite-vec` available without loading an extension or compiling anything yourself.
+The distribution targets browsers, with JavaScript and ES module loading, FTS5, Worker1 and its promise interface, and OPFS where supported by the browser and hosting environment. Static integration makes sqlite-vec available without loading an extension or compiling anything yourself.
 
-Node.js runtime support, native binaries and WASI are outside the project's scope. For server use, use `node:sqlite` with native `sqlite-vec`. The project adds no SQL abstractions, ORM, application APIs or custom vector-search behavior.
+Node.js runtime support, native binaries and WASI are outside the project's scope. For server use, use `node:sqlite` with native sqlite-vec. The project adds no SQL abstractions, ORM, application APIs or custom vector-search behavior.
 
 ## Releases
 
-Releases provide the same version and browser files through npm and [GitHub Releases](https://github.com/at-rama/sqlite-vec-wasm/releases). Each release identifies the included SQLite and `sqlite-vec` versions and file checksums. Check GitHub Releases for available versions, downloads and release details.
+Releases provide the same version and browser files through npm and [GitHub Releases](https://github.com/at-rama/sqlite-vec-wasm/releases). Each release identifies the included SQLite and sqlite-vec versions and file checksums. Check GitHub Releases for available versions, downloads and release details.
 
 ## Builds and updates
 
 Builds use official upstream sources with fixed versions and verified checksums. They can be reproduced from a clean checkout; downloaded sources and generated browser files stay outside source control.
 
-Compatible stable SQLite and `sqlite-vec` releases are automatically rebuilt, verified and published. Only verified builds are released.
+Compatible stable SQLite and sqlite-vec releases are automatically rebuilt, verified and published. Only verified builds are released.
 
 ## Development
 

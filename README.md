@@ -1,6 +1,6 @@
 # sqlite-vec-wasm
 
-sqlite-vec-wasm exists to build and publish the canonical SQLite browser/WASM distribution with an official stable sqlite-vec release statically integrated, reproducibly and automatically, without functionally modifying either upstream.
+sqlite-vec-wasm exists to build and publish the canonical SQLite browser/WASM distribution with an official stable sqlite-vec release statically integrated, reproducibly, without functionally modifying either upstream.
 
 The goal is a ready-to-use browser distribution that saves you from building WASM and integrating the extension yourself, while preserving SQLite's browser APIs and upstream vector-search behavior.
 
@@ -18,13 +18,13 @@ Releases provide the same version and browser files through npm and [GitHub Rele
 
 Builds use official upstream sources with fixed versions and verified checksums. They can be reproduced from a clean checkout; downloaded sources and generated browser files stay outside source control.
 
-Compatible stable SQLite and sqlite-vec releases are automatically rebuilt, verified and published. Only verified builds are released.
+Stable upstream releases are evaluated by maintainers. Updates are published only after verification and maintainer approval.
 
 ## Development
 
 This repository is developed agentically. Changes are driven by versioned engineering artifacts and repository rules, executed against automated checks, and reviewed through pull requests.
 
-Read [AGENTS.md](AGENTS.md) and the [development rules](.42p/standards/software.md) for system prerequisites and setup instructions. Work on a branch and open a pull request targeting `main`.
+Read [AGENTS.md](AGENTS.md) and the [development rules](.42p/standards/software.md) for repository requirements. Work on a branch and open a pull request targeting `main`.
 
 For the lightweight repository check, Git and a POSIX shell are sufficient. Stage new files before running:
 
@@ -32,7 +32,7 @@ For the lightweight repository check, Git and a POSIX shell are sufficient. Stag
 sh tools/check-repository.sh
 ```
 
-To set up and check the Linux browser/build tools, follow the development rules' prerequisites and temporary-directory guidance, then run from the repository root:
+To set up and check the Linux browser/build tools, follow the [harness architecture](.42p/engineering/2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md) for prerequisites and temporary-directory guidance, then run from the repository root:
 
 ```sh
 bash tools/harness.sh install
@@ -45,7 +45,7 @@ These commands set up development tools and test a small browser fixture. They d
 
 ## Project documentation
 
-- [spec.md](spec.md) defines the product requirements.
+- [SPEC.md](SPEC.md) defines the product requirements.
 - [Engineering notes](.42p/engineering/) record the technical analysis and build investigation.
 - [Development rules](.42p/standards/) describe how to work in this repository.
 

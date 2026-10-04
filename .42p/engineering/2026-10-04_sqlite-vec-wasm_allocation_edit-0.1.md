@@ -2,7 +2,7 @@
 
 ## Identity, source, and authority
 
-Case: `specification`. Direct input: [the current Capture](2026-10-04_sqlite-vec-wasm_specification_capture_edit-0.1.md), as present in repository revision `1fe626e98e9a5f85d9d360e2968f0f6dc622dee1`. Capture handles below retain their existing identity. [spec.md](../../../spec.md) remains the ultimate authority through S-spec; this Allocation is a derived responsibility model, not a new contract or evidence of implementation progress.
+Direct input: [the current Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), as present in repository revision `1fe626e98e9a5f85d9d360e2968f0f6dc622dee1`. Capture handles below retain their existing identity. [spec.md](../../spec.md) remains the ultimate authority through S-spec; this Allocation is a derived responsibility model, not a new contract or evidence of implementation progress.
 
 An allocation surface denotes a responsibility boundary, not a prescribed file, workflow, library, API, or architectural component. The modalities, exclusions, conditions, and exceptions attributed to the Capture retain their force. Evidence described below identifies what later Verification must connect to that responsibility; it is not a separate Verification model.
 

@@ -1,6 +1,6 @@
 # Technical repository canon
 
-This is the repository-wide engineering authority, subordinate to [spec.md](../../spec.md). It translates repository concerns from the current [Capture and Allocation](../cases/specification/) without changing their product obligations. Executable configuration defines the current checks; this document explains their scope and prerequisites.
+This is the repository-wide engineering authority, subordinate to [spec.md](../../spec.md). It translates repository concerns from the current [Capture and Allocation](../engineering/) without changing their product obligations. Executable configuration defines the current checks; this document explains their scope and prerequisites.
 
 ## Lightweight repository gateway
 
@@ -30,7 +30,7 @@ A-updates/A-release/A-bootstrap retain the specified autonomous, gated lifecycle
 
 ## Qualified technical harness
 
-The [merged qualification](../cases/specification/2026-10-04_sqlite-vec-wasm_specification_qualification_edit-0.1.md) is the evidence for this tooling path, not a second product contract. The instituted harness is Linux x86-64: upstream emsdk installer commit `96c657fc60920d2a6a82318aa50e0abf82749604`, prebuilt Emscripten 4.0.23, WABT 1.0.42, SDK Node 24.19.0/npm 11.17.0, official Chrome headless shell 153.0.8010.12, and locked `playwright-core` 1.63.0 with native `node:test`. Recorded archive digests in `tools/harness.sh` and the npm lock authorize acquisition; ordinary installs must not refresh that trust. No LLVM compilation, Playwright browser installer, bundler, TypeScript, additional test framework or server dependency is involved.
+The [merged qualification](../engineering/2026-10-04_sqlite-vec-wasm_qualification_edit-0.1.md) is the evidence for this tooling path, not a second product contract. The instituted harness is Linux x86-64: upstream emsdk installer commit `96c657fc60920d2a6a82318aa50e0abf82749604`, prebuilt Emscripten 4.0.23, WABT 1.0.42, SDK Node 24.19.0/npm 11.17.0, official Chrome headless shell 153.0.8010.12, and locked `playwright-core` 1.63.0 with native `node:test`. Recorded archive digests in `tools/harness.sh` and the npm lock authorize acquisition; ordinary installs must not refresh that trust. No LLVM compilation, Playwright browser installer, bundler, TypeScript, additional test framework or server dependency is involved.
 
 Prerequisites are Bash, Git, Python 3, GNU Make, native `cc` plus its linker/headers/runtime development environment, HTTPS/CA access with curl, sha256sum, unzip and tar/xz, and Chrome's system runtime libraries. The qualification observed Ubuntu 24.04.3 with GCC 13.3.0/binutils 2.42/libc development 2.39; it did not establish a bare-OS package-install recipe or pin those system packages as product build inputs. Browser libraries (glib/gobject, NSS/NSPR, ATK, DBus, X11, GBM/DRM, ALSA and dependencies) must already be available. Missing libraries fail rather than skip smoke verification. No separate native C++ or system Tcl prerequisite is established.
 

@@ -2,9 +2,11 @@
 
 ## Identity, source, and authority
 
-Direct input: [the current Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `e7541374981bfc5c5c1d2dec1d9e38e9b35301aae20cc93e081f16633ea7759f`. Capture handles below retain their existing identity. [spec.md](../../spec.md) remains the ultimate authority through S-spec; this Allocation is a derived responsibility model, not a new contract or evidence of implementation progress.
+Direct input: [the current Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `8d23acc601a56b264318d1d98322736bdd7519303bcb6733814aa289048598a4`. Capture handles below retain their existing identity. [spec.md](../../spec.md) remains the ultimate authority through S-spec; this Allocation is a derived responsibility model, not a new contract or evidence of implementation progress.
 
 An allocation surface denotes a responsibility boundary, not a prescribed file, workflow, library, API, or architectural component. The modalities, exclusions, conditions, and exceptions attributed to the Capture retain their force. Evidence described below identifies what later Verification must connect to that responsibility; it is not a separate Verification model.
+
+The [technical architecture](2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md) records current harness choices supporting these responsibilities. It adds no allocation unit or product obligation; the tooling described there does not establish completion of the production, acceptance, or publication responsibilities below.
 
 S-spec's upstream references explain mechanisms rather than adding acquired evidence. Moving documentation does not change the contract; version-specific behavior is evaluated against pinned releases.
 

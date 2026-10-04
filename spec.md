@@ -2,6 +2,8 @@
 
 This is the authoritative project contract. **MUST** denotes a requirement; **SHOULD** denotes a preference whose departure needs a concrete justification.
 
+The [technical architecture](.42p/engineering/2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md) records realization choices derived from the engineering allocation; it is subordinate to this product contract and adds no product requirements.
+
 ## Responsibility and boundaries
 
 The project MUST build and publish the canonical SQLite browser/WASM distribution with an official stable `sqlite-vec` release statically integrated, without functionally modifying either upstream.

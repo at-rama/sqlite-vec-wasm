@@ -6,6 +6,8 @@ Purpose: structure the current `sqlite-vec-wasm` project contract for later reas
 
 All normative modalities below report S-spec's requirements, permissions, preferences, and exceptions; they confer no independent authority. MUST denotes a requirement; SHOULD denotes a preference whose departure needs a concrete justification. S-spec establishes the contract, not evidence that bootstrap, compatibility, verification, or publication has already succeeded. Source-stated technical context remains attributed to S-spec and is not independently validated here. R-updates records the user's adopted rationale from S-release-model, not a new product requirement.
 
+The [technical architecture](2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md) describes current harness realization choices under the existing Allocation. It is a derived projection, not a substantive source for this product Capture or evidence that product acceptance and publication have succeeded.
+
 ## Material constraints and lifecycle boundaries
 
 ### C-purpose — Responsibility and runtime boundary
@@ -120,7 +122,7 @@ C-autonomy separates external awareness and human initiation, automated qualific
 
 ## Material sources
 
-**S-spec** — [root spec.md](../../spec.md), the user-designated authoritative project specification. Its current requirements govern this projection; prior assistant receipts and this Capture are not corroboration. Snapshot SHA-256: `8e63960c6f6c363ddca026b946f85252ad6dccdf2b6a75e17ed749a9183f3a90`.
+**S-spec** — [root spec.md](../../spec.md), the user-designated authoritative project specification. Its current requirements govern this projection; prior assistant receipts and this Capture are not corroboration. Snapshot SHA-256: `d50dfc901df825b331d7f97bdd7af8531309f336af1dfbfe076c5c6cfeaa583a`.
 
 **S-release-model** — User mission for `at-rama/sqlite-vec-wasm`, submitted 2026-10-04 in the sqlite-vec-wasm project conversation, beginning “Correct the repository design to replace the previously specified autonomous upstream detection and release model”. The explicit validated decision and execution requirement 4 supply the adopted mechanical-automation/human-authority boundary and insufficient-marginal-value rationale in R-updates. Product obligations are now expressed in S-spec; this primary user instruction and the updated specification are related sources, not independent corroboration.
 

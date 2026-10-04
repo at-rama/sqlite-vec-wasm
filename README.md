@@ -1,34 +1,36 @@
 # sqlite-vec-wasm
 
-`sqlite-vec-wasm` exists to build and publish the canonical SQLite browser/WASM distribution with an official stable upstream `sqlite-vec` release statically integrated, reproducibly and automatically, without functionally modifying either upstream.
+`sqlite-vec-wasm` exists to build and publish the canonical SQLite browser/WASM distribution with an official stable `sqlite-vec` release statically integrated, reproducibly and automatically, without functionally modifying either upstream.
 
-Its intended product is a ready-to-use browser distribution that spares consumers from assembling the WASM build and extension integration themselves. The responsibility is to preserve SQLite's familiar browser surface and upstream vector semantics while supplying the complete runtime assets.
+The goal is a ready-to-use browser distribution that saves you from building WASM and integrating the extension yourself, while preserving SQLite's browser APIs and upstream vector-search behavior.
 
-## Scope and distribution
+## Browser support
 
-The target is browser/WASM, retaining SQLite's canonical APIs, JavaScript and ES module loading, FTS5, Worker1 and its promise interface, and OPFS under upstream browser and hosting prerequisites. The extension is statically integrated and available without consumer-side extension loading or compilation.
+The distribution targets browsers, with JavaScript and ES module loading, FTS5, Worker1 and its promise interface, and OPFS where supported by the browser and hosting environment. Static integration makes `sqlite-vec` available without loading an extension or compiling anything yourself.
 
-Node.js runtime support, native binaries and WASI are outside this repository's responsibility. Server consumers use `node:sqlite` with native `sqlite-vec`. The project adds no SQL abstractions, ORM, application APIs or custom vector-search semantics. Node.js is used only for repository tooling.
+Node.js runtime support, native binaries and WASI are outside the project's scope. For server use, use `node:sqlite` with native `sqlite-vec`. The project adds no SQL abstractions, ORM, application APIs or custom vector-search behavior.
 
-The distribution contract calls for npm publication and downloadable [GitHub Release assets](https://github.com/at-rama/sqlite-vec-wasm/releases). Both channels must represent the same verified payload and project version; release records identify the included upstream versions and their integrity information. Use those publication records for available versions and release-specific consumption details.
+## Releases
 
-## Reproduction and maintenance
+Releases provide the same version and browser files through npm and [GitHub Releases](https://github.com/at-rama/sqlite-vec-wasm/releases). Each release identifies the included SQLite and `sqlite-vec` versions and file checksums. Check GitHub Releases for available versions, downloads and release details.
 
-The contract requires official, version-pinned, integrity-verified upstream inputs and a reproducible clean-checkout build, verification and packaging path. Upstream source trees and generated SQLite/WASM assets stay outside source control.
+## Builds and updates
 
-After the one-time repository/registry bootstrap, compatible stable upstream releases must pass the full gates and proceed automatically through repository integration, tagging, GitHub Release and npm publication. Failed verification blocks integration and publication. The [product contract](spec.md) defines the lifecycle and its bootstrap exception.
+Builds use official upstream sources with fixed versions and verified checksums. They can be reproduced from a clean checkout; downloaded sources and generated browser files stay outside source control.
+
+Compatible stable upstream updates are built and tested before automatic publication. A failed check stops the update. Initial repository and npm setup may need manual configuration; subsequent compatible updates and releases run automatically.
 
 ## Development
 
-Read [AGENTS.md](AGENTS.md) and the [technical canon](.42p/standards/software.md) for prerequisites, temporary-state rules and the engineering command interface. Work through a branch and pull request targeting `main`.
+Read [AGENTS.md](AGENTS.md) and the [development rules](.42p/standards/software.md) for system prerequisites and setup instructions. Work on a branch and open a pull request targeting `main`.
 
-The lightweight repository gateway needs Git and a POSIX shell. Stage new files before running:
+For the lightweight repository check, Git and a POSIX shell are sufficient. Stage new files before running:
 
 ```sh
 sh tools/check-repository.sh
 ```
 
-For the qualified Linux browser/toolchain harness, follow the canon's system prerequisites and temporary-location guidance, then run from the repository root:
+To set up and check the Linux browser/build tools, follow the development rules' prerequisites and temporary-directory guidance, then run from the repository root:
 
 ```sh
 bash tools/harness.sh install
@@ -37,13 +39,13 @@ bash tools/harness.sh deps
 bash tools/harness.sh smoke
 ```
 
-These commands install and verify development tooling and exercise a neutral browser fixture. They are not product installation or acceptance gates. `bash tools/harness.sh exec COMMAND [ARG ...]` runs repository tooling in the verified SDK environment.
+These commands set up development tools and test a small browser fixture. They do not install the product or test its SQLite/vector features. Use `bash tools/harness.sh exec COMMAND [ARG ...]` to run tools in the verified SDK environment.
 
-## Engineering sources
+## Project documentation
 
-- [spec.md](spec.md) is the authoritative product contract.
-- [.42p/engineering/](.42p/engineering/) contains the derived Capture, Allocation and technical qualification. The contract governs any difference in reading.
-- [.42p/standards/](.42p/standards/) contains repository-wide engineering rules.
+- [spec.md](spec.md) defines the product requirements.
+- [Engineering notes](.42p/engineering/) contain the Capture, Allocation and build investigation.
+- [Development rules](.42p/standards/) describe how to work in this repository.
 
 ## License and upstream
 

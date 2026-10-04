@@ -2,7 +2,7 @@
 
 ## Identity, source, and authority
 
-Direct input: [the current Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), as present in repository revision `1fe626e98e9a5f85d9d360e2968f0f6dc622dee1`. Capture handles below retain their existing identity. [spec.md](../../spec.md) remains the ultimate authority through S-spec; this Allocation is a derived responsibility model, not a new contract or evidence of implementation progress.
+Direct input: [the current Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `8e23b84b8f9b3b99083516983ea3cb502aedcab2777af75ae9bccf62d2f83067`. Capture handles below retain their existing identity. [spec.md](../../spec.md) remains the ultimate authority through S-spec; this Allocation is a derived responsibility model, not a new contract or evidence of implementation progress.
 
 An allocation surface denotes a responsibility boundary, not a prescribed file, workflow, library, API, or architectural component. The modalities, exclusions, conditions, and exceptions attributed to the Capture retain their force. Evidence described below identifies what later Verification must connect to that responsibility; it is not a separate Verification model.
 
@@ -61,39 +61,41 @@ Tests consume final packaged assets, not a separate development build. Every man
 
 **Composition:** gathers the complete production outcomes from A-inputs, A-build, and A-package; gate results constrain A-updates and A-release. **Evidence target:** the recorded clean-checkout and packaged-browser results required above, tied to their evaluated repository state/payload. No additional test obligation is introduced here.
 
-### A-updates — Autonomous proposed update and integration
+### A-updates — Manually triggered candidate preparation and human integration
 
-**Capture:** C-inputs, C-autonomy, C-failure, C-nonmodification. **Surface:** stable upstream detection, candidate repository changes, and authoritative integration control.
+**Capture:** C-inputs, C-autonomy, C-failure, C-nonmodification, R-updates. **Surface:** manual candidate workflow, candidate repository changes/PR, and human authoritative integration boundary.
 
-Own scheduled detection of both upstreams' compatible stable releases and proposed updates containing pins/integrity data. After bootstrap, these updates proceed through full build/verification and authoritative branch integration with zero human intervention. Reviewability/auditability is permitted, not mandatory human review or approval. All mandatory gates pass before integration.
+Own a human-triggered `workflow_dispatch` accepting explicit upstream versions or resolving stable versions at invocation. For the selected candidate, automate source retrieval/integrity verification through A-inputs, repository changes containing pins/integrity data, A-build/A-package production, all A-acceptance tests and qualification, and creation or update of a candidate PR targeting the authoritative branch, normally `main`. Selection does not depend on polling history or processing every intervening release, so missed external notifications do not prevent a later candidate.
 
-A failed mandatory build, compatibility, packaging, integrity, or acceptance requirement stops the candidate before successful integration. Automatic upstream incompatibility repair is not required. Intervention after bootstrap is reserved for project evolution when the existing contract cannot be satisfied automatically; it does not relax the patch prohibition or authorize a new design decision here.
+The workflow stops at the qualified candidate PR. It must not merge, enable automatic merge, tag a release, or publish. All mandatory gates pass before integration; the merge decision remains human. Upstream awareness and the decision to evaluate are external human responsibilities, not repository release detection. R-updates supplies the rationale for excluding scheduled polling, autonomous adoption, heartbeat activity, and notification/bookkeeping machinery used solely to sustain zero-human-touch adoption; it introduces no monitoring implementation obligation.
 
-**Composition:** supplies candidates to A-inputs and requires complete A-acceptance outcomes before integration. The resulting authoritative revision feeds A-release and must satisfy the complete verification contract. **Evidence target:** detection/candidate/integration records showing successful autonomous progression or the captured failure stop.
+A failed mandatory build, compatibility, packaging, integrity, or acceptance requirement stops the candidate before qualification for merge or successful integration. Human approval does not waive mandatory gates. Automatic upstream incompatibility repair is not required; human initiation and adoption do not relax the patch prohibition or authorize a new design decision here.
+
+**Composition:** supplies candidates to A-inputs and requires complete A-acceptance outcomes before the candidate PR is qualified for human merge. The human-approved merged authoritative revision feeds A-release and must satisfy the complete verification contract. **Evidence target:** manual invocation and selected-version records, candidate changes and qualification outcomes, PR creation/update and stop before merge/publication, human-approved merge, and captured failure stops; no polling history is required.
 
 ### A-release — Synchronized tagging and publication
 
 **Capture:** C-purpose, C-release, C-autonomy, C-failure, C-bootstrap. **Surface:** Git tag, GitHub Release assets/record, npm publication, and publication provenance.
 
-Own the post-integration sequence of tagging, GitHub Release, and npm publication without human intervention in steady state, making the distribution consumable through npm and downloadable GitHub Release assets. Every published version corresponds to one authoritative source revision, one tag, one GitHub Release, and one npm publication. Both channels use the same project version, derive from the same verified revision, represent the exact same verified runtime payload, and identify SQLite WASM/sqlite-vec versions. Release records identify upstream/output digests and build environment/options; automatically derived concise version information suffices without mandatory narrative release notes.
+Own the automatic post-merge sequence of tagging, GitHub Release, and npm publication, triggered by the human-approved candidate merged into the authoritative branch, normally `main`, making the distribution consumable through npm and downloadable GitHub Release assets. Candidate preparation cannot trigger publication before that merge. Every published version corresponds to one authoritative source revision, one tag, one GitHub Release, and one npm publication. Both channels use the same project version, derive from the same verified revision, represent the exact same verified runtime payload, and identify SQLite WASM/sqlite-vec versions. Release records identify upstream/output digests and build environment/options; automatically derived concise version information suffices without mandatory narrative release notes.
 
 Any mandatory gate failure prevents the corresponding release tag, GitHub Release, and npm version. Steady-state publication uses npm trusted publishing and verifiable build provenance/asset attestations where supported by the chosen environment; unsupported mechanisms/fallbacks are explicit. Persistent npm credentials cannot be the normal mechanism where trusted publishing provides secretless publication.
 
-**Composition:** consumes A-package's exact verified payload, A-acceptance results, A-updates' authoritative revision, and the publishing relationship established under A-bootstrap. Bootstrap does not waive this unit's verification or synchronized release obligations. **Evidence target:** tag/revision/version identity, both channel payloads and metadata, publication gate outcomes, authentication mechanism, and supported provenance/attestations.
+**Composition:** consumes A-package's exact verified payload, A-acceptance results, A-updates' human-approved merged authoritative revision, and the publishing relationship established under A-bootstrap. Bootstrap does not waive this unit's verification or synchronized release obligations. **Evidence target:** approved candidate merge as publication trigger, tag/revision/version identity, both channel payloads and metadata, publication gate outcomes, authentication mechanism, and supported provenance/attestations.
 
 ### A-bootstrap — Initial publishing relationship
 
 **Capture:** C-bootstrap, C-autonomy. **Surface:** initial repository/registry bootstrap and establishment of npm trusted publishing.
 
-Own the permitted one-time exception: minimum unavoidable manual registry configuration and first npm publication needed to establish trusted publishing MAY occur during initial bootstrap. This is the only manual exception in the normal release lifecycle, with no waiver of verification or synchronized publication. It supplies the relationship A-release uses for steady-state autonomy; it does not authorize recurring manual release steps or specify a bootstrap procedure.
+Own the permitted one-time publication-setup exception: minimum unavoidable manual registry configuration and first npm publication needed to establish trusted publishing MAY occur during initial bootstrap. This does not waive verification or synchronized publication and is distinct from recurring human candidate initiation and merge authority. It supplies the relationship A-release uses for automatic post-merge publication; it does not authorize recurring manual publication steps or specify a bootstrap procedure.
 
-**Composition:** the first publication remains constrained by A-acceptance and A-release; established configuration supports A-release's subsequent autonomous publications. **Evidence target:** initial-versus-steady-state publishing configuration and the bounded exception, if exercised.
+**Composition:** the first publication remains constrained by A-acceptance and A-release; established configuration supports A-release's subsequent automatic post-merge publications. **Evidence target:** initial-versus-steady-state publishing configuration and the bounded publication-setup exception, if exercised.
 
 ### A-docs — Minimal consumer and maintainer documentation
 
 **Capture:** C-docs, C-storage, C-inputs. **Surface:** the required concise README and only concretely necessary additional documentation/governance.
 
-Own explicit README coverage of responsibility/exclusions, concrete consumption and asset-hosting examples, included upstream versions, reproduction prerequisites/commands, the maintainer bootstrap boundary, autonomous steady-state lifecycle, and failed-verification publication blocking. Document required Worker contexts, secure hosting, and VFS-specific isolation/header requirements without promising main-thread OPFS. Additional documentation/governance SHOULD exist only for a concrete need; separate license notices may be necessary, with distributed notices owned by A-package.
+Own explicit README coverage of responsibility/exclusions, concrete consumption and asset-hosting examples, included upstream versions, reproduction prerequisites/commands, the maintainer bootstrap boundary, manually triggered candidate PR/human merge/automatic post-merge publication lifecycle, and failed-verification publication blocking. Document required Worker contexts, secure hosting, and VFS-specific isolation/header requirements without promising main-thread OPFS. Additional documentation/governance SHOULD exist only for a concrete need; separate license notices may be necessary, with distributed notices owned by A-package.
 
 **Composition:** describes the consumption/reproduction surfaces of A-inputs/A-build/A-package and the lifecycle of A-updates/A-release/A-bootstrap. **Evidence target:** documentation coverage and consistency with those surfaces, without a required maintenance manual or new implementation feature.
 
@@ -120,13 +122,15 @@ Each material handle has one classification. Multiple units in a covered row joi
 | C-storage | Covered | A-build, A-package, A-acceptance, A-docs: upstream conditions, persistence preservation/no fallback, mandatory evidence and documented prerequisites. |
 | C-release | Covered | A-package, A-release: consumer-ready payload/notices, identity across revision/tag/channels, versions, digests and environment/options. |
 | C-verification | Covered | A-acceptance: all captured production/browser obligations, evidence conditions and omitted-capability detection. |
-| C-autonomy | Covered | A-updates, A-release, A-bootstrap: candidate-to-integration-to-publication sequence, mandatory gates, no human approval and initial exception. |
-| C-failure | Covered | A-updates, A-release: no successful integration/tag/channel publication on any mandatory failure; no required automatic repair; bounded intervention. |
-| C-bootstrap | Covered | A-bootstrap, A-release: initial-only manual exception, no waived gates, trusted publishing/provenance and explicit unsupported fallbacks. |
+| C-autonomy | Covered | A-updates, A-release, A-bootstrap: external awareness/human initiation, manual candidate selection independent of polling history, qualified PR stop, human merge, automatic post-merge publication, excluded autonomy machinery and publication-setup exception. |
+| R-updates | Non-allocatable | Adopted complexity/value and human-authority rationale informs A-updates; no additional implementation obligation or technically refuted alternative. |
+| C-failure | Covered | A-updates, A-release: no qualification for merge/integration/tag/channel publication on any mandatory failure; human approval waives no gate; no required automatic repair. |
+| C-bootstrap | Covered | A-bootstrap, A-release: initial-only publication-setup exception, separate recurring human trigger/merge authority, no waived gates, trusted publishing/provenance and explicit unsupported fallbacks. |
 | C-docs | Covered | A-docs: all README subjects and conditional additional-documentation preference. |
 | C-obsolescence | Covered | A-lifecycle: exact equivalent-maintained-upstream condition and demo insufficiency. |
-| S-spec | Non-allocatable | Provenance and ultimate-authority identity, retained through the unchanged Capture and source links; not implementation work or independent corroboration. |
+| S-spec | Non-allocatable | Provenance and ultimate-authority identity, retained through the current Capture and source links; not implementation work or independent corroboration. |
+| S-release-model | Non-allocatable | Primary user provenance for R-updates and the adopted correction now expressed in S-spec; not separate implementation work or independent corroboration. |
 
-**Capture coverage: 100% — 15/15 material handles examined; 14 covered, one non-allocatable, none unresolved or omitted.** All nine A- units cite explicit Capture handles. **Allocation grounding: 100% — 9/9 units grounded; no orphan units.**
+**Capture coverage: 100% — 17/17 material handles examined; 14 covered, three non-allocatable, none unresolved or omitted.** All nine A- units cite explicit Capture handles. **Allocation grounding: 100% — 9/9 units grounded; no orphan units.**
 
 Authority and epistemic distinctions outside the Capture handles are retained in this document's source boundary, and its material relationships are represented in unit composition. Lifecycle invariants are not reclassified as current readiness conditions. No explicit unresolved Capture issue prevents allocation; unspecified lower-level mechanisms remain open. Coverage certifies responsibility/grounding accounting, not successful implementation, technical compatibility, completed bootstrap, or passed production gates.

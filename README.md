@@ -1,6 +1,6 @@
 # sqlite-vec-wasm
 
-sqlite-vec-wasm exists to build and publish the canonical SQLite browser/WASM distribution with an official stable sqlite-vec release statically integrated, reproducibly and automatically, without functionally modifying either upstream.
+sqlite-vec-wasm exists to build and publish the canonical SQLite browser/WASM distribution with an official stable sqlite-vec release statically integrated, reproducibly, without functionally modifying either upstream.
 
 The goal is a ready-to-use browser distribution that saves you from building WASM and integrating the extension yourself, while preserving SQLite's browser APIs and upstream vector-search behavior.
 
@@ -18,7 +18,7 @@ Releases provide the same version and browser files through npm and [GitHub Rele
 
 Builds use official upstream sources with fixed versions and verified checksums. They can be reproduced from a clean checkout; downloaded sources and generated browser files stay outside source control.
 
-Compatible stable SQLite and sqlite-vec releases are automatically rebuilt, verified and published. Only verified builds are released.
+Maintainers follow upstream releases externally and manually trigger a workflow that builds and verifies a candidate update and opens or updates a pull request. The workflow stops there; a human approves the merge, which triggers publication. Only verified builds are released.
 
 ## Development
 

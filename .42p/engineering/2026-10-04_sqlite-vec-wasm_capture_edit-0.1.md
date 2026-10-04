@@ -2,9 +2,9 @@
 
 ## Purpose, scope, and authority
 
-Purpose: structure the current `sqlite-vec-wasm` project contract for later reasoning. Scope: the supplied root specification only. This Capture is a derived, non-authoritative working set; [S-spec](../../spec.md) governs every difference in reading. It introduces no decision, allocation, implementation choice, or implementation plan.
+Purpose: structure the current `sqlite-vec-wasm` project contract for later reasoning. Scope: the root specification and the user's validated update-model rationale in S-release-model. This Capture is a derived, non-authoritative working set; [S-spec](../../spec.md) governs every difference in reading. It introduces no decision, allocation, implementation choice, or implementation plan.
 
-All modalities below report S-spec's requirements, permissions, preferences, and exceptions; they confer no independent authority. MUST denotes a requirement; SHOULD denotes a preference whose departure needs a concrete justification. S-spec establishes the contract, not evidence that bootstrap, compatibility, verification, or publication has already succeeded. Source-stated technical context remains attributed to S-spec and is not independently validated here.
+All normative modalities below report S-spec's requirements, permissions, preferences, and exceptions; they confer no independent authority. MUST denotes a requirement; SHOULD denotes a preference whose departure needs a concrete justification. S-spec establishes the contract, not evidence that bootstrap, compatibility, verification, or publication has already succeeded. Source-stated technical context remains attributed to S-spec and is not independently validated here. R-updates records the user's adopted rationale from S-release-model, not a new product requirement.
 
 ## Material constraints and lifecycle boundaries
 
@@ -78,29 +78,39 @@ CI MUST demonstrate the complete clean-checkout production path. Browser accepta
 
 At least one real browser satisfying the relevant upstream prerequisites MUST execute every mandatory gate; unavailable OPFS MUST NOT count as a pass or silently skip the persistence gate. Verification results MUST record browser versions and hosting conditions. Public API/loading-surface and default-capability checks against the pinned baseline MUST detect accidental omissions.
 
-### C-autonomy — Successful steady-state lifecycle
+### C-autonomy — Manually initiated candidate and human adoption lifecycle
 
 Source: [S-spec, updates publication and documentation](../../spec.md#updates-publication-and-documentation).
 
-After initial bootstrap, compatible stable releases of both upstreams MUST proceed without human intervention through scheduled detection, a proposed repository update containing pins and integrity data, full build and verification, integration into the authoritative branch, Git tagging, GitHub Release publication, and npm publication. All mandatory gates MUST pass before integration; tagging and publication MUST derive from the resulting authoritative source revision verified against the complete contract, using the exact verified payload. Updates MAY remain reviewable and auditable, but MUST NOT require human review or approval on this successful path.
+Upstream release awareness is external to the repository, for example through GitHub release notifications watched by a human. The repository MUST NOT monitor upstream releases or contain scheduled polling, autonomous adoption, automatic merge, heartbeat activity, or notification/bookkeeping machinery used solely to sustain zero-human-touch upstream adoption.
+
+A human decides when to evaluate an upstream release and manually triggers candidate preparation through `workflow_dispatch`. That workflow MUST accept explicit upstream versions or resolve stable versions at invocation, retrieve and verify the corresponding official sources, prepare repository changes containing pins and integrity data, build and package the distribution, run all mandatory tests and qualification, and create or update a candidate PR targeting the authoritative branch, normally `main`. Candidate selection MUST NOT depend on continuous polling history or processing every intervening upstream release. The workflow MUST stop at the qualified candidate PR; it MUST NOT merge, enable automatic merge, tag a release, or publish. All mandatory gates MUST pass before integration, and the merge decision MUST remain human.
+
+Merging the approved candidate into the authoritative branch MUST automatically trigger Git tagging, GitHub Release publication, and npm publication. Tagging and publication MUST derive from the resulting authoritative source revision verified against the complete contract, using the exact verified payload. Candidate preparation and post-merge publication are separate workflow responsibilities; successful qualification does not authorize adoption or publication before the human-approved merge.
+
+### R-updates — Mechanical automation and authority boundary
+
+Source: S-release-model, the user's validated upstream-release-model correction.
+
+Periodic repository polling and zero-human-touch adoption offer insufficient marginal value for their complexity and are excluded from the adopted design. External notifications support human awareness; the human initiates evaluation and retains merge authority. Automation performs candidate preparation/qualification and post-merge publication. Fully autonomous adoption is not selected, rather than technically refuted. Reconsidering it would require an explicit product decision demonstrating sufficient value to change this complexity and authority trade-off; missed notifications alone do not require it because candidate selection is independent of sequential release processing.
 
 ### C-failure — Failed update and intervention boundary
 
 Source: [S-spec, updates publication and documentation](../../spec.md#updates-publication-and-documentation).
 
-Automation MUST fail closed: failure of any mandatory build, compatibility, packaging, integrity, or acceptance requirement MUST stop the update before successful integration, release tagging, GitHub Release publication, or npm publication. Automatic repair of upstream incompatibilities is not required. Human intervention after bootstrap is reserved for evolving the project when its existing contract can no longer be satisfied automatically; the upstream non-modification boundary continues to apply.
+Automation MUST fail closed: failure of any mandatory build, compatibility, packaging, integrity, or acceptance requirement MUST stop the candidate before qualification for merge or successful integration, release tagging, GitHub Release publication, or npm publication. Human approval does not waive mandatory gates. Automatic repair of upstream incompatibilities is not required; the upstream non-modification boundary continues to apply.
 
-### C-bootstrap — Manual exception and publication mechanisms
+### C-bootstrap — Publication setup exception and publication mechanisms
 
 Source: [S-spec, updates publication and documentation](../../spec.md#updates-publication-and-documentation).
 
-Initial repository/registry bootstrap MAY include the minimum unavoidable manual registry configuration and first npm publication needed to establish trusted publishing. This is the only manual exception in the normal release lifecycle and does not waive verification or the synchronized release contract. Steady-state publication MUST use npm trusted publishing and verifiable build provenance/asset attestations where supported by the chosen publishing environment; any unsupported mechanism and fallback MUST be explicit. Persistent npm publishing credentials MUST NOT be the normal mechanism where trusted publishing provides secretless publication.
+Initial repository/registry bootstrap MAY include the minimum unavoidable manual registry configuration and first npm publication needed to establish trusted publishing. This exception concerns publication setup, not the recurring human trigger and merge authority, and does not waive verification or the synchronized release contract. Steady-state publication MUST use npm trusted publishing and verifiable build provenance/asset attestations where supported by the chosen publishing environment; any unsupported mechanism and fallback MUST be explicit. Persistent npm publishing credentials MUST NOT be the normal mechanism where trusted publishing provides secretless publication.
 
 ### C-docs — Minimal documentation obligations
 
 Source: [S-spec, updates publication and documentation](../../spec.md#updates-publication-and-documentation).
 
-One concise `README.md` MUST explain the package's responsibility and exclusions, concrete consumption and asset-hosting examples, included upstream versions, reproduction prerequisites and commands, the one-time bootstrap boundary for maintainers, and the autonomous update/release lifecycle, including publication being blocked by failed verification. Additional documentation or governance files SHOULD exist only for a concrete need; separate license notices may be necessary.
+One concise `README.md` MUST explain the package's responsibility and exclusions, concrete consumption and asset-hosting examples, included upstream versions, reproduction prerequisites and commands, the one-time bootstrap boundary for maintainers, and the manually triggered candidate PR, human merge, and automatic post-merge publication lifecycle, including publication being blocked by failed verification. Additional documentation or governance files SHOULD exist only for a concrete need; separate license notices may be necessary.
 
 ### C-obsolescence — End of project responsibility
 
@@ -112,10 +122,12 @@ The project is obsolete when SQLite or `sqlite-vec` upstream publishes and maint
 
 C-inputs governs the inputs and reproduction whose complete production path C-verification requires CI to demonstrate. C-browser, C-static, and C-storage define the retained behavior exercised by C-verification; storage availability remains conditional on the upstream prerequisites, but unavailable OPFS cannot satisfy its mandatory acceptance gate.
 
-C-autonomy places successful mandatory gates before authoritative integration, then tagging and publication. C-release binds the resulting source revision, project version, and verified payload across both channels. C-failure prevents a failed update from crossing those boundaries. C-bootstrap permits the initial manual exception without waiving verification or synchronized releases; C-nonmodification continues to constrain intervention. These are lifecycle invariants, not claims of current readiness for a forthcoming commitment.
+C-autonomy separates external awareness and human initiation, automated qualification ending at a candidate PR, human merge authority, and automatic post-merge tagging/publication. R-updates explains this boundary without treating technical qualification as adoption authority. C-release binds the resulting source revision, project version, and verified payload across both channels. C-failure blocks candidate qualification and publication on failed mandatory gates; human approval cannot waive them. C-bootstrap permits the initial publication-setup exception without waiving verification or synchronized releases or displacing recurring human initiation/merge; C-nonmodification continues to constrain intervention. These are lifecycle invariants, not claims of current readiness for a forthcoming commitment.
 
-## Material source
+## Material sources
 
-**S-spec** — [root spec.md](../../spec.md), the supplied authoritative project specification. This user-designated contract is the sole substantive source of this projection; prior assistant receipts and this Capture are not corroboration. Snapshot SHA-256: `0b99fe946a28aaca6462f12a590297d47e0bb5e214d5dc61e8d1bf3382b3f893`.
+**S-spec** — [root spec.md](../../spec.md), the user-designated authoritative project specification. Its current requirements govern this projection; prior assistant receipts and this Capture are not corroboration. Snapshot SHA-256: `d486fafa92286a59b0b26f195ec10609bca798efd2763d3975b566a4d4b0708a`.
+
+**S-release-model** — User mission for `at-rama/sqlite-vec-wasm`, submitted 2026-10-04 in the sqlite-vec-wasm project conversation, beginning “Correct the repository design to replace the previously specified autonomous upstream detection and release model”. The explicit validated decision and execution requirement 4 supply the adopted mechanical-automation/human-authority boundary and insufficient-marginal-value rationale in R-updates. Product obligations are now expressed in S-spec; this primary user instruction and the updated specification are related sources, not independent corroboration.
 
 The specification's [upstream references](../../spec.md#upstream-references) remain retrievable through S-spec; their contents are not additional acquired evidence for this Capture. S-spec states: references explain upstream mechanisms; moving documentation does not change its requirements, and version-specific behavior is evaluated against pinned releases.

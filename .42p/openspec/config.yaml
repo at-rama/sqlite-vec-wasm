@@ -9,11 +9,11 @@ context: |
   Every Change MUST realize exactly one allocation unit and MUST NOT add unallocated product
   requirements. Insufficiency, contradiction or required upstream semantic change
   MUST cause escalation; never reinterpret upstream authority locally.
-  Before sync, allocation unit -> Change and Change -> allocation unit coverage MUST
+  Before Apply, allocation unit -> Change and Change -> allocation unit coverage MUST
   both be 100% for that unit, not the complete Allocation.
   openspec/specs/ is the cumulative synchronized realization canon derived
   from Allocation, not a second product specification or implementation evidence.
-  Apply MUST respect the Change, synchronized canon and repository standards.
+  Apply MUST respect the Change and repository standards.
   42P Verification MUST precede archive; archive cannot replace Verification.
   Read ../AGENTS.md and standards/openspec.md. Normal CLI commands MUST run from
   this .42p project root. Use local OpenSpec only; no Store or --store.

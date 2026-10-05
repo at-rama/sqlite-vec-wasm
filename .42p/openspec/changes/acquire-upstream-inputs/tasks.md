@@ -1,6 +1,6 @@
 # Tasks
 
-These tasks remain unstarted. The complete bidirectional `A-inputs`/Change mapping and passed unit-scoped coverage gate are recorded in [coverage](coverage.md). Synchronization and its strict validation must precede separately authorized Apply; other allocation units are not prerequisites. This planning update performs neither sync nor implementation.
+These tasks remain unstarted. The complete bidirectional `A-inputs`/Change mapping and passed unit-scoped coverage gate are recorded in [coverage](coverage.md). The mandatory 100% bidirectional coverage gate must precede separately authorized Apply; other allocation units are not prerequisites. Distinct 42P Verification follows implementation, then archive follows normal OpenSpec behavior. This planning update performs neither sync nor implementation.
 
 ## 1. Official resolution and source lock
 
@@ -21,4 +21,4 @@ These tasks remain unstarted. The complete bidirectional `A-inputs`/Change mappi
 
 - [ ] 3.1 Integrate inexpensive offline source-tooling validation into `tools/check-repository.sh` when its implementation exists; verify the gateway stays network-free, passes valid fixtures and meaningfully fails an isolated invalid-lock probe without adding runtime/dependency installation.
 - [ ] 3.2 Reconstruct acquisition in an isolated clean checkout with empty source state and no installed SDK/tool/npm state, using the documented existing system prerequisites; record official origins, release classifications, expected/observed digests, resulting paths and command outcomes, then verify acquired archives/trees remain untracked and ignored.
-- [ ] 3.3 Review the final implementation diff against `A-inputs`, update its requirement/scenario/task evidence mapping and run the canonical repository check; deliver evidence for distinct 42P Verification, with no harness refactor, compilation, browser-acceptance claim, dispatch/PR automation, release deduplication, synchronization bypass or publication.
+- [ ] 3.3 Review the final implementation diff against `A-inputs`, update its requirement/scenario/task evidence mapping and run the canonical repository check; deliver evidence for distinct 42P Verification, with no harness refactor, compilation, browser-acceptance claim, dispatch/PR automation, release deduplication or publication.

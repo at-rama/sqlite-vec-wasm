@@ -4,13 +4,13 @@ This is the repository-wide engineering authority, subordinate to [SPEC.md](../.
 
 ## Lightweight repository gateway
 
-A Git checkout, Git 2.18 or newer, and a POSIX shell with standard utilities are sufficient. No dependency installation, network access, cache, or unpublished local file is needed for this lightweight check. From the repository root:
+The lightweight check uses a Git checkout, Git 2.18 or newer, a POSIX shell with standard utilities, and the existing system Bash, Python 3, tar and unzip for offline source-tooling checks. No dependency installation, network access, cache, or unpublished local file is needed. From the repository root:
 
 ```sh
 sh tools/check-repository.sh
 ```
 
-Stage new files before checking so Git includes them in the candidate snapshot. The command checks the complete tracked working snapshot for Git whitespace errors, requires the unique root `SPEC.md` and the agent/canon entry points, and rejects tracked files matching repository `.gitignore` rules, even if force-added. Local/global ignore configuration does not affect that rejection. It returns nonzero on any failure. It does not check arbitrary untracked files or prove absence of renamed/copied upstream sources; review still enforces those source boundaries.
+Stage new files before checking so Git includes them in the candidate snapshot. The command checks the complete tracked working snapshot for Git whitespace errors, requires the unique root `SPEC.md` and the agent/canon entry points, and rejects tracked files matching repository `.gitignore` rules, even if force-added. Local/global ignore configuration does not affect that rejection. It returns nonzero on any failure. It also validates the source lock and runs the inexpensive offline source-tooling tests. It does not check arbitrary untracked files or prove absence of renamed/copied upstream sources; review still enforces those source boundaries.
 
 The same command is mandatory for every proposed change and runs as `Repository / check` in pull-request and `main` CI. A successful repository check is not product acceptance or permission to publish. Changes to this gateway or its configuration must retain meaningful failure behavior; new checks enter this command when their implementation subjects exist. Do not bypass failures or substitute always-successful commands.
 

@@ -8,7 +8,7 @@ This Change realizes only `A-inputs`, through `C-inputs`, `R-inputs` and the off
 
 ## Bidirectional mapping within A-inputs
 
-Requirement names identify the blocks in [the delta spec](specs/upstream-inputs/spec.md). Tasks identify [the implementation checklist](tasks.md); they remain unchecked. Each requirement's scenarios provide expected behavior, not acquired implementation evidence.
+Requirement names identify the blocks in [the delta spec](specs/upstream-inputs/spec.md). Tasks identify [the implementation checklist](tasks.md); their checkboxes record Apply completion, not distinct 42P Verification. Each requirement's scenarios provide expected behavior, not acquired implementation evidence.
 
 | Allocated content | OpenSpec requirement | Scenario coverage | Tasks |
 | --- | --- | --- | --- |
@@ -35,6 +35,8 @@ The governing [OpenSpec usage canon](../../../standards/openspec.md#authority-an
 
 The same-SQLite-release integration responsibility and the caller's candidate/publication responsibilities remain explicit composition boundaries, not missing `A-inputs` obligations. Other units have not been formalized by this Change; their absence is not a coverage failure or a prerequisite for its Apply. The unit-scoped verdict claims neither complete product coverage nor implementation acceptance.
 
-## Next stage
+## Apply evidence and next stage
 
-The next stage is Apply under separate implementation authorization, with the mandatory 100% bidirectional coverage gate satisfied for this allocation unit. Distinct 42P Verification follows implementation, then archive follows normal OpenSpec behavior, including native delta-spec synchronization. This planning update performs no sync, Apply or archive, leaves all 12 tasks unchecked and changes no product requirements or implementation files.
+The [Apply evidence](apply-evidence.md#requirement-scenario-and-task-evidence) connects all seven requirements, their 20 scenarios and the 12 completed tasks to implementation and applicable checks. The mandatory bidirectional coverage gate above preceded separately authorized Apply. Its completion does not establish implementation acceptance.
+
+The next stage is distinct 42P Verification against `A-inputs` and this Change. After a satisfactory verdict, archive follows normal OpenSpec behavior, including native delta-spec synchronization. No sync, archive, merge or publication has been performed.

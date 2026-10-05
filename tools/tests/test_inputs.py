@@ -1,0 +1,320 @@
+"""Small authored fixtures; no upstream sources or network access."""
+import copy
+import argparse
+import importlib.util
+import hashlib
+import io
+import json
+import subprocess
+import tarfile
+import zipfile
+from unittest.mock import patch
+from pathlib import Path
+import tempfile
+import unittest
+
+spec = importlib.util.spec_from_file_location('inputs', Path(__file__).resolve().parents[1] / 'inputs.py')
+inputs = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(inputs)
+
+
+def lock():
+    return {'schemaVersion': 1, 'sqlite': {
+        'version': '3.53.4', 'archiveUrl': 'https://sqlite.org/2026/sqlite-src-3530400.zip',
+        'digest': {'algorithm': 'sha3-256', 'value': 'a' * 64},
+        'releaseUrl': inputs.release_url('3.53.4'), 'digestUrl': inputs.SQLITE_DOWNLOAD},
+        'sqliteVec': {'version': '0.1.9',
+        'archiveUrl': 'https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.tar.gz',
+        'digest': {'algorithm': 'sha256', 'value': 'b' * 64},
+        'releaseUrl': 'https://github.com/asg017/sqlite-vec/releases/tag/v0.1.9',
+        'digestUrl': inputs.VEC_API + '/123'}}
+
+
+class LockTests(unittest.TestCase):
+    def test_complete_lock(self):
+        self.assertEqual(inputs.validate_lock(lock()), lock())
+
+    def test_invalid_locks(self):
+        mutations = [lambda x: x.pop('sqlite'), lambda x: x.update(schemaVersion=True),
+            lambda x: x['sqlite'].pop('digest'),
+            lambda x: x['sqlite']['digest'].update(algorithm='sha256'),
+            lambda x: x['sqliteVec']['digest'].update(value='invalid'),
+            lambda x: x['sqlite'].update(version='3.53.3'),
+            lambda x: x['sqlite'].update(archiveUrl='https://example.org/archive.zip'),
+            lambda x: x['sqliteVec'].update(releaseUrl='https://github.com/other/project'),
+            lambda x: x['sqliteVec'].update(version='0.1.9-alpha.1'),
+            lambda x: x['sqliteVec'].update(digestUrl='https://example.org/digest')]
+        for mutation in mutations:
+            with self.subTest(mutation=mutation):
+                candidate = copy.deepcopy(lock()); mutation(candidate)
+                with self.assertRaises(inputs.InputError): inputs.validate_lock(candidate)
+
+    def test_duplicate_json_fields(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / 'lock.json'; path.write_text('{"schemaVersion":1,"schemaVersion":2}')
+            with self.assertRaises(inputs.InputError): inputs.read_json(path)
+
+    def test_exact_versions_only(self):
+        for v in ('latest', '^0.1.9', '0.1.9-rc.1', '01.1.9', '', None):
+            with self.subTest(v=v), self.assertRaises(inputs.InputError): inputs.version(v, 'sqliteVec')
+        self.assertEqual(inputs.version('v0.1.9', 'sqliteVec'), '0.1.9')
+
+
+
+def metadata():
+    sqlite = 'PRODUCT,3.53.4,2026/sqlite-src-3530400.zip,100,' + 'a' * 64
+    releases = [{'tag_name': 'v0.1.9', 'draft': False, 'prerelease': False,
+        'published_at': '2026-03-31T08:00:23Z',
+        'html_url': lock()['sqliteVec']['releaseUrl'], 'url': inputs.VEC_API + '/123',
+        'assets': [{'name': 'sqlite-vec-0.1.9-amalgamation.tar.gz', 'state': 'uploaded',
+            'browser_download_url': lock()['sqliteVec']['archiveUrl'], 'digest': 'sha256:' + 'b' * 64}]}]
+    return sqlite, releases
+
+
+def release_page(url):
+    v = url.rsplit('/', 1)[1].removesuffix('.html').replace('_', '.')
+    return f'<title>SQLite Release {v} On 2026-01-01</title>'
+
+
+class ResolutionTests(unittest.TestCase):
+    def resolve(self, sql=None, releases=None, **kwargs):
+        base_sql, base_releases = metadata()
+        return inputs.resolve_pair(sql if sql is not None else base_sql,
+            releases if releases is not None else base_releases, fetch=release_page, **kwargs)
+
+    def test_latest_and_independent_overrides(self):
+        self.assertEqual(self.resolve(), lock())
+        older_sql = 'PRODUCT,3.52.0,2026/sqlite-src-3520000.zip,100,' + 'c' * 64
+        sql, releases = metadata()
+        older = copy.deepcopy(releases[0]); older['tag_name'] = 'v0.1.8'
+        older['html_url'] = older['html_url'].replace('0.1.9', '0.1.8')
+        older['url'] = inputs.VEC_API + '/122'
+        older['assets'][0]['name'] = older['assets'][0]['name'].replace('0.1.9', '0.1.8')
+        older['assets'][0]['browser_download_url'] = older['assets'][0]['browser_download_url'].replace('0.1.9', '0.1.8')
+        releases = [older, *releases]
+        for sv, vv, expected_s, expected_v in [(None,None,'3.53.4','0.1.9'),
+                ('3.52.0',None,'3.52.0','0.1.9'),(None,'v0.1.8','3.53.4','0.1.8'),
+                ('3.52.0','0.1.8','3.52.0','0.1.8')]:
+            with self.subTest(sv=sv,vv=vv):
+                result=self.resolve(sql=older_sql+'\n'+sql,releases=releases,sqlite_version=sv,vec_version=vv)
+                self.assertEqual((result['sqlite']['version'],result['sqliteVec']['version']),(expected_s,expected_v))
+
+    def test_draft_prerelease_development_absent_and_missing_digest(self):
+        for mutation in [lambda r:r.update(draft=True),lambda r:r.update(prerelease=True),
+                lambda r:r.update(published_at=None),lambda r:r.update(tag_name='v0.2.0-alpha.1'),
+                lambda r:r['assets'][0].update(digest=None),lambda r:r.update(assets=[]),
+                lambda r:r['assets'][0].update(digest='sha256:bad')]:
+            sql,releases=metadata();mutation(releases[0])
+            with self.subTest(mutation=mutation),self.assertRaises(inputs.InputError): self.resolve(releases=releases)
+        for kwargs in [{'vec_version':'0.1.8'},{'sqlite_version':'3.52.0'},{'sqlite_version':'3.53.4-rc1'}, {'vec_version':'latest'}]:
+            with self.subTest(kwargs=kwargs),self.assertRaises(inputs.InputError):self.resolve(**kwargs)
+        with self.assertRaises(inputs.InputError):self.resolve(sql=metadata()[0].replace('a'*64,''))
+
+    def test_latest_does_not_fallback_on_missing_digest(self):
+        sql, releases=metadata();new=copy.deepcopy(releases[0]);new['tag_name']='v0.2.0';new['assets']=[]
+        with self.assertRaises(inputs.InputError):self.resolve(releases=[*releases,new])
+
+    def test_malformed_latest_metadata_never_selects_an_older_release(self):
+        sql,releases=metadata()
+        with self.assertRaises(inputs.InputError):self.resolve(sql=sql+'\nPRODUCT,3.54.0,2026/sqlite-src-3540000.zip,100')
+        new=copy.deepcopy(releases[0]);new['tag_name']='v0.2.0';new['published_at']='invalid'
+        with self.assertRaises(inputs.InputError):self.resolve(releases=[*releases,new])
+        releases[0]['assets']=None
+        with self.assertRaises(inputs.InputError):self.resolve(releases=releases)
+
+    def test_ambiguous_or_wrong_origin_metadata(self):
+        sql,releases=metadata()
+        with self.assertRaises(inputs.InputError):self.resolve(sql=sql+'\n'+sql)
+        with self.assertRaises(inputs.InputError):self.resolve(releases=releases+releases)
+        releases[0]['assets'][0]['browser_download_url']='https://example.org/fake.tar.gz'
+        with self.assertRaises(inputs.InputError):self.resolve(releases=releases)
+        with self.assertRaises(inputs.InputError): inputs.resolve_pair(sql,metadata()[1],fetch=lambda url:'not a release')
+
+
+class PinTests(unittest.TestCase):
+    resolve = ResolutionTests.resolve
+    def test_preserve_and_fail_on_drift(self):
+        baseline=lock();before=copy.deepcopy(baseline)
+        self.assertEqual(self.resolve(baseline=baseline),baseline)
+        sql,releases=metadata()
+        for changes in [(sql.replace('a'*64,'c'*64),releases),
+                (sql.replace('/2026/','/2025/').replace('2026/sqlite','2025/sqlite'),releases)]:
+            with self.assertRaises(inputs.InputError): self.resolve(sql=changes[0],releases=changes[1],baseline=baseline)
+        releases[0]['assets'][0]['digest']='sha256:'+'c'*64
+        with self.assertRaises(inputs.InputError):self.resolve(releases=releases,baseline=baseline)
+        releases=metadata()[1];releases[0]['assets'][0]['browser_download_url']='https://example.org/replaced.tar.gz'
+        with self.assertRaises(inputs.InputError):self.resolve(releases=releases,baseline=baseline)
+        self.assertEqual(baseline,before)
+
+    def test_retained_official_digest_when_metadata_is_missing(self):
+        sql,releases=metadata();releases[0]['assets'][0]['digest']=None
+        self.assertEqual(self.resolve(releases=releases,baseline=lock()),lock())
+        self.assertEqual(self.resolve(sql='',sqlite_version='3.53.4',baseline=lock()),lock())
+
+    def test_atomic_complete_output(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'lock.json';path.write_text('previous')
+            bad=lock();bad['sqliteVec']['digest']['value']='invalid'
+            with self.assertRaises(inputs.InputError):inputs.write_lock(path,bad)
+            self.assertEqual(path.read_text(),'previous')
+            with patch.object(inputs.os,'replace',side_effect=OSError('interrupted')):
+                with self.assertRaises(OSError):inputs.write_lock(path,lock())
+            self.assertEqual(path.read_text(),'previous');self.assertEqual(list(Path(d).iterdir()),[path])
+            inputs.write_lock(path,lock());self.assertEqual(inputs.read_json(path),lock())
+
+
+def archives(directory):
+    sql=directory/'authored.zip';vec=directory/'authored.tar.gz'
+    with zipfile.ZipFile(sql,'w') as archive:
+        for name in ('configure','Makefile.in','src/sqlite.h.in','ext/wasm/GNUmakefile'):
+            entry=zipfile.ZipInfo('sqlite-src-3530400/'+name)
+            entry.external_attr=(0o100755 if name=='configure' else 0o100644)<<16
+            archive.writestr(entry,'authored test fixture\n')
+    with tarfile.open(vec,'w:gz') as archive:
+        for name in ('sqlite-vec.c','sqlite-vec.h'):
+            entry=tarfile.TarInfo(name);data=b'authored test fixture\n';entry.size=len(data);entry.mode=0o644
+            archive.addfile(entry,io.BytesIO(data))
+    candidate=lock()
+    candidate['sqlite']['digest']['value']=hashlib.sha3_256(sql.read_bytes()).hexdigest()
+    candidate['sqliteVec']['digest']['value']=hashlib.sha256(vec.read_bytes()).hexdigest()
+    return candidate,sql,vec
+
+
+class AcquisitionTests(unittest.TestCase):
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
+        self.directory=Path(self.temp.name);self.candidate,self.sql,self.vec=archives(self.directory)
+        self.raw=json.dumps(self.candidate).encode();self.parent=self.directory/'work'
+        self.parent.mkdir();self.older=self.parent/'older';self.older.mkdir();(self.older/'keep').write_text('keep')
+        self.calls=[]
+
+    def fetch(self,url,dest):
+        self.calls.append(url)
+        source=self.sql if 'sqlite.org' in url else self.vec
+        dest.write_bytes(source.read_bytes())
+
+    def acquire(self,fetch=None,extract=None):
+        kwargs={'fetch':fetch or self.fetch}
+        if extract:kwargs['extract']=extract
+        return inputs.acquire_lock(self.raw,self.parent,**kwargs)
+
+    def assert_clean_failure(self,fetch=None,extract=None):
+        with self.assertRaises((inputs.InputError, OSError, subprocess.CalledProcessError, zipfile.BadZipFile, tarfile.TarError)):
+            self.acquire(fetch,extract)
+        self.assertEqual(list(self.parent.iterdir()),[self.older])
+        self.assertEqual((self.older/'keep').read_text(),'keep')
+
+    def test_fresh_downloads_frozen_pair_and_handoff(self):
+        one=self.acquire();two=self.acquire()
+        self.assertNotEqual(one['workspace'],two['workspace']);self.assertEqual(len(self.calls),4)
+        self.assertEqual(self.calls,[self.candidate['sqlite']['archiveUrl'],self.candidate['sqliteVec']['archiveUrl']]*2)
+        for handoff in (one,two):
+            self.assertEqual(handoff['lockDigest']['value'],hashlib.sha256(self.raw).hexdigest())
+            self.assertEqual(inputs.read_json(Path(handoff['workspace'])/'handoff.json'),handoff)
+            self.assertTrue((Path(handoff['sqlite']['sourcePath'])/'configure').stat().st_mode & 0o111)
+            self.assertTrue((Path(handoff['sqliteVec']['sourcePath'])/'sqlite-vec.h').is_file())
+        self.assertEqual(self.raw,json.dumps(self.candidate).encode())
+
+    def test_altered_and_truncated_archives_fail_before_extraction(self):
+        for data in (b'changed',self.sql.read_bytes()[:10]):
+            def changed(url,dest):dest.write_bytes(data)
+            with patch.object(inputs,'archive_members') as inspect:
+                self.assert_clean_failure(changed)
+                inspect.assert_not_called()
+
+    def test_http_failure_and_second_source_failure(self):
+        for second in (False,True):
+            def failure(url,dest):
+                if second and 'sqlite.org' in url:self.fetch(url,dest)
+                else:raise subprocess.CalledProcessError(22,['curl'])
+            self.assert_clean_failure(failure)
+        def corrupt_second(url,dest):
+            self.fetch(url,dest)
+            if 'github.com' in url:dest.write_bytes(b'changed')
+        self.assert_clean_failure(corrupt_second)
+
+    def test_incomplete_lock_fails_before_download(self):
+        self.raw=b'{}'
+        with self.assertRaises(inputs.InputError):self.acquire()
+        self.assertEqual(self.calls,[])
+
+    def test_extraction_error(self):
+        def fail(*args):raise subprocess.CalledProcessError(2,['unzip'])
+        self.assert_clean_failure(extract=fail)
+
+    def test_missing_content_unusable_archive_and_vendored_sqlite(self):
+        for contents in [('unrelated.txt',),('sqlite-vec.c',),('sqlite-vec.c','sqlite-vec.h','sqlite3.c')]:
+            with tarfile.open(self.vec,'w:gz') as archive:
+                for name in contents:
+                    e=tarfile.TarInfo(name);e.size=1;archive.addfile(e,io.BytesIO(b'x'))
+            self.candidate['sqliteVec']['digest']['value']=hashlib.sha256(self.vec.read_bytes()).hexdigest()
+            self.raw=json.dumps(self.candidate).encode();self.assert_clean_failure()
+        self.sql.write_bytes(b'not zip')
+        self.candidate['sqlite']['digest']['value']=hashlib.sha3_256(self.sql.read_bytes()).hexdigest()
+        self.raw=json.dumps(self.candidate).encode();self.assert_clean_failure()
+
+    def test_unsafe_tar_paths_and_links(self):
+        for name,kind in [('../escape',tarfile.REGTYPE),('/escape',tarfile.REGTYPE),
+                ('link',tarfile.SYMTYPE),('link',tarfile.LNKTYPE),('fifo',tarfile.FIFOTYPE)]:
+            with tarfile.open(self.vec,'w:gz') as archive:
+                e=tarfile.TarInfo(name);e.type=kind;e.linkname='../escape';e.size=0;archive.addfile(e,io.BytesIO(b''))
+            self.candidate['sqliteVec']['digest']['value']=hashlib.sha256(self.vec.read_bytes()).hexdigest()
+            self.raw=json.dumps(self.candidate).encode();self.assert_clean_failure()
+        self.assertFalse((self.directory/'escape').exists())
+
+    def test_unsafe_zip_paths_and_links(self):
+        for name,mode in [('../escape',0o100644),('/escape',0o100644),('link',0o120777)]:
+            with zipfile.ZipFile(self.sql,'w') as archive:
+                e=zipfile.ZipInfo(name);e.external_attr=mode<<16;archive.writestr(e,'../escape')
+            self.candidate['sqlite']['digest']['value']=hashlib.sha3_256(self.sql.read_bytes()).hexdigest()
+            self.raw=json.dumps(self.candidate).encode();self.assert_clean_failure()
+        self.assertFalse((self.directory/'escape').exists())
+
+    def test_missing_sqlite_content_and_executable_mode(self):
+        for mode in (0o100755,0o100644):
+            with zipfile.ZipFile(self.sql,'w') as archive:
+                names=('configure',) if mode==0o100755 else ('configure','Makefile.in','src/sqlite.h.in','ext/wasm/GNUmakefile')
+                for name in names:
+                    e=zipfile.ZipInfo('sqlite-src-3530400/'+name);e.external_attr=mode<<16;archive.writestr(e,'fixture')
+            self.candidate['sqlite']['digest']['value']=hashlib.sha3_256(self.sql.read_bytes()).hexdigest()
+            self.raw=json.dumps(self.candidate).encode();self.assert_clean_failure()
+
+    def test_production_lock_requires_recorded_unchanged_candidate(self):
+        path=self.directory/'sources.lock.json';path.write_bytes(self.raw)
+        with patch.object(inputs,'ROOT',self.directory):
+            with patch.object(inputs.subprocess,'run',return_value=subprocess.CompletedProcess([],1,b'',b'')):
+                with self.assertRaises(inputs.InputError):inputs.recorded_lock(path)
+            with patch.object(inputs.subprocess,'run',return_value=subprocess.CompletedProcess([],0,b'other',b'')):
+                with self.assertRaises(inputs.InputError):inputs.recorded_lock(path)
+            with patch.object(inputs.subprocess,'run',return_value=subprocess.CompletedProcess([],0,self.raw,b'')):
+                self.assertEqual(inputs.recorded_lock(path),self.raw)
+
+
+class CommandTests(unittest.TestCase):
+    def test_resolver_uses_recorded_baseline_and_preserves_output_on_failure(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);(root/'inputs').mkdir();baseline=root/'inputs/sources.lock.json'
+            baseline.write_text(json.dumps(lock()));output=root/'candidate.json';output.write_text('previous')
+            args=argparse.Namespace(sqlite_version=None,sqlite_vec_version=None,baseline_lock=None,output=str(output))
+            sql,releases=metadata();releases[0]['assets'][0]['digest']='sha256:'+'c'*64
+            def metadata_fetch(url):
+                if url==inputs.SQLITE_DOWNLOAD:return sql
+                if url.startswith(inputs.VEC_API):return json.dumps(releases)
+                return release_page(url)
+            with patch.object(inputs,'ROOT',root),patch.object(inputs,'MetadataFetch',return_value=metadata_fetch):
+                with self.assertRaises(inputs.InputError):inputs.resolve_command(args)
+            self.assertEqual(output.read_text(),'previous');self.assertEqual(json.loads(baseline.read_text()),lock())
+
+    def test_cli_transport_failure_emits_no_handoff(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);bin_dir=root/'bin';bin_dir.mkdir()
+            fake=bin_dir/'curl';fake.write_text('#!/bin/sh\nexit 22\n');fake.chmod(0o755)
+            import os
+            env=dict(os.environ,PATH=str(bin_dir)+':/usr/bin:/bin')
+            result=subprocess.run(['bash',str(inputs.ROOT/'tools/inputs.sh'),'_fetch',
+                'https://sqlite.org/2026/sqlite-src-3530400.zip',str(root/'download')],env=env,capture_output=True)
+            self.assertEqual(result.returncode,22);self.assertEqual(result.stdout,b'')
+
+if __name__ == '__main__':
+    unittest.main()

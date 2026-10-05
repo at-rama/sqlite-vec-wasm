@@ -26,11 +26,13 @@ This repository is developed agentically. Changes are driven by versioned engine
 
 Read [AGENTS.md](AGENTS.md) and the [development rules](.42p/standards/software.md) for repository requirements. Work on a branch and open a pull request targeting `main`.
 
-For the lightweight repository check, Git and a POSIX shell are sufficient. Stage new files before running:
+The lightweight repository check uses Git, a POSIX shell and the existing system Bash, Python 3, tar and unzip for offline source checks. Stage new files before running:
 
 ```sh
 sh tools/check-repository.sh
 ```
+
+To select exact upstream versions and acquire verified sources without the SDK, follow the [source acquisition instructions](docs/source-acquisition.md).
 
 To set up and check the Linux browser/build tools, follow the [harness architecture](.42p/engineering/2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md) for prerequisites and temporary-directory guidance, then run from the repository root:
 

@@ -12,7 +12,35 @@ When Verification is invoked after Apply, the agent MUST read and use the reposi
 
 ## Evidence and verdict
 
-Record a concise report with the Change and allocation-unit identities, candidate commit and any working-tree differences, results of all three controls, implementation/evidence references and unresolved gaps. Keep raw outputs and generated evidence in ignored `.work/` or outside the checkout, following the technical canon; a repository-authored verification report may link to or summarize those results in the Change directory. Do not duplicate an existing suitable coverage or evidence record.
+The mandatory output is `verification.md` in the selected Change directory returned by OpenSpec. Write or update this repository-authored report after every completed or blocked Verification invocation, including failures. Commit it on the working branch so the PR contains the evidence. Native archive moves it with the Change; synchronization does not relocate the report into the realization specs.
+
+Use Markdown with a YAML frontmatter delimited by `---`. The following template defines version 1; placeholders MUST be replaced with actual identities and results:
+
+```yaml
+---
+schema_version: 1
+change: <change-name>
+allocation_unit: <allocation-handle>
+checked_commit: <full-git-commit-sha>
+verdict: blocked
+coverage:
+  allocation_to_change: 0
+  change_to_allocation: 0
+openspec_verify: blocked
+repository_checks: blocked
+applicable_tests: blocked
+---
+```
+
+All fields shown are required. `schema_version` MUST be the integer `1`; `change` MUST match the Change's original name, including after dated archival, and `allocation_unit` MUST match its allocated handle. `checked_commit` MUST identify the clean committed candidate actually reviewed before writing the report. Commit implementation and planning changes before Verification; do not claim a passing verdict for uncommitted reviewed inputs. The report's own commit and a subsequent native archive commit need not equal `checked_commit`; they MUST NOT silently introduce unverified implementation or requirement changes.
+
+The two coverage values are numeric percentages from 0 through 100 representing semantic coverage, not confidence. If a direction cannot be evaluated, use YAML `null` and explain why in the body; it cannot pass. `openspec_verify`, `repository_checks`, `applicable_tests` and `verdict` accept only `passed`, `failed` or `blocked`. Use `failed` for an established conformity gap or failed mandatory check, and `blocked` for missing or unusable evidence, unavailable prerequisites, or a required control that could not be completed. If both conditions exist, use `failed` for the aggregate verdict and document the blockers as well.
+
+`verdict: passed` is permitted only when both coverage values equal 100 and all three result fields equal `passed`, under the acceptance rules below. If no test beyond the repository check is applicable, record the scope and justification in the body; do not invent tests or silently skip a required test.
+
+The Markdown body MUST give the Allocation snapshot and evidence references for both coverage directions, the official verify findings and their dispositions, repository/test commands and outcomes with material prerequisites, and unresolved gaps or blockers. Reference existing suitable coverage and Apply evidence instead of duplicating them. Keep raw outputs and generated evidence in ignored `.work/` or outside the checkout under the technical canon; summarize necessary results durably in this report.
+
+This frontmatter is the machine-readable contract for a future PR gate. A gate MUST reject a missing report, malformed or duplicate YAML keys, missing or unknown fields, an unsupported schema version, invalid values, identity mismatches or an inconsistent/non-passing verdict. A passing declaration is evidence metadata, not an independent proof of semantic conformity or freshness; the review and applicable executable checks remain necessary. This standard defines the artifact; it does not install that CI gate.
 
 Verification is satisfactory only when both coverage directions are 100%, OpenSpec verify establishes conformity for every applicable obligation, and all mandatory repository checks and applicable tests pass. An unresolved conformity gap or an applicable check marked `Not verified` prevents a satisfactory verdict. Assess warnings by their substance: an unresolved obligation remains blocking regardless of its OpenSpec severity label. Optional improvement suggestions do not add obligations or block conformity. Record each finding's disposition and reason without silently waiving requirements.
 

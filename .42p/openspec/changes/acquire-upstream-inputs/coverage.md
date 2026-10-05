@@ -24,20 +24,17 @@ All seven delta requirements map back to `A-inputs`; none is an independent new 
 
 This is complete planning coverage of `A-inputs`, not full Capture coverage or full product acceptance. R-inputs' same-SQLite-release invariant remains owned by `A-build`; source acquisition supplies one SQLite release tree without claiming correct subsequent core/WASM/JS integration. Candidate pin changes remain a responsibility of the future `A-updates` caller, using this resolver; source helpers do not commit or adopt changes.
 
-## Cumulative gate status
+## Unit-scoped gate decision
 
-At the baseline there are no synchronized OpenSpec specs and no prior Change mappings. This delta represents `A-inputs`; it does not represent these remaining allocation units:
+The governing [OpenSpec usage canon](../../../standards/openspec.md#authority-and-lifecycle), revised on `main` at `79b773ff04fc432dd447e0415438cd9b6ddf3576` and integrated into this branch at `2460e0e4c6ce1310d329e17537d105fc84244c72`, requires each Change to realize exactly one allocation unit and both directions of coverage to be complete for that unit. It explicitly does not require other units to be proposed or synchronized first. The source Allocation, Capture and SPEC snapshots above are unchanged by that process revision.
 
-| Allocation unit | Cumulative realization coverage |
-| --- | --- |
-| A-build | Not yet represented |
-| A-package | Not yet represented |
-| A-acceptance | Not yet represented |
-| A-updates | Not yet represented |
-| A-release | Not yet represented |
-| A-bootstrap | Not yet represented |
-| A-lifecycle | Not yet represented |
+**Coverage gate: PASS for `A-inputs` ↔ `acquire-upstream-inputs`.**
 
-**The repository's cumulative 100% Allocation-to-OpenSpec gate is NOT satisfied.** No prior mapping can cover these omissions. Per [the OpenSpec usage canon](../../../standards/openspec.md#authority-and-lifecycle), incremental Changes must account for the complete Allocation before sync; an `A-inputs`-only mapping cannot waive that rule. OpenSpec-to-Allocation grounding for this delta is complete, but bidirectional cumulative coverage is not.
+- **Allocation unit → Change: 100%.** The table accounts for every material obligation and acquisition context of `A-inputs` through the seven OpenSpec requirements, their 20 scenarios and the corresponding implementation tasks; no unit obligation is missing.
+- **Change → allocation unit: 100%.** All seven requirements are grounded in `A-inputs` with the confirmed realization choices. There are no orphan requirements or additional allocation units in this Change.
 
-No sync, Apply or archive is performed in this planning Change. To proceed beyond proposal, the upstream process authority must resolve the incompatibility between the current cumulative gate and an intended allocation-by-allocation Apply, or the complete cumulative realization coverage must be established through separately authorized work. This PR neither changes the canon nor drafts other allocations. OpenSpec planning-complete status and strict structural validation must not be reported as repository Apply readiness.
+The same-SQLite-release integration responsibility and the caller's candidate/publication responsibilities remain explicit composition boundaries, not missing `A-inputs` obligations. Other units have not been formalized by this Change; their absence is not a coverage failure or a prerequisite for its sync/Apply. The unit-scoped verdict claims neither complete product coverage nor implementation acceptance.
+
+## Next stage
+
+The next stage is `openspec-sync-specs` for this delta, followed by strict validation of the synchronized realization canon. Apply remains conditional on that synchronization and separate implementation authorization; distinct 42P Verification must follow implementation before archive. This planning update performs no sync, Apply or archive, leaves all 12 tasks unchecked and changes no product requirements, implementation files or repository canon.

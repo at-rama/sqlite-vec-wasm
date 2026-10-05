@@ -1,6 +1,6 @@
 # Tasks
 
-These tasks remain unstarted. Complete planning artifacts do not satisfy the cumulative coverage gate recorded in [coverage](coverage.md). Sync and separately authorized Apply must satisfy the repository prerequisites before implementation; this list does not waive them.
+These tasks remain unstarted. The complete bidirectional `A-inputs`/Change mapping and passed unit-scoped coverage gate are recorded in [coverage](coverage.md). Synchronization and its strict validation must precede separately authorized Apply; other allocation units are not prerequisites. This planning update performs neither sync nor implementation.
 
 ## 1. Official resolution and source lock
 

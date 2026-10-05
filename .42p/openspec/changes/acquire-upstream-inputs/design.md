@@ -60,8 +60,8 @@ An isolated clean-checkout acquisition with no SDK, source cache or outputs esta
 - Fresh downloads use more network than caching: accepted for the two source archives; cache machinery is deferred until a measured need exists.
 - Latest stable releases may be incompatible: keep the frozen pair, report the later failure and require human intervention; no compatibility search or source patch is introduced.
 - A complete source tree is not an accepted distribution: source checks establish `A-inputs` only, not static integration or browser/API/persistence acceptance.
-- Local planning is complete before cumulative realization coverage: the [coverage record](coverage.md) leaves sync/Apply blocked; do not infer readiness from OpenSpec file-existence status.
+- Planning coverage is not implementation acceptance: the [coverage record](coverage.md) establishes the unit-scoped gate for `A-inputs`, while sync, separately authorized Apply and distinct 42P Verification remain subsequent stages. OpenSpec file-existence status proves none of those stages.
 
 ## Migration Plan
 
-After the repository's coverage and synchronization prerequisites are satisfied and Apply is separately authorized, add the source tooling, generated/reviewed initial source lock, focused tests and contributor acquisition instructions. No harness migration or deployed runtime replacement is needed. Rollback removes those repository-authored surfaces and leaves acquired/generated state disposable under `.work/`.
+The `A-inputs`/Change coverage gate is satisfied under the revised canon. Synchronize this delta through `openspec-sync-specs`, validate the synchronized canon strictly, and obtain separate Apply authorization before adding the source tooling, generated/reviewed initial source lock, focused tests and contributor acquisition instructions. No other allocation unit must be proposed or synchronized first. No harness migration or deployed runtime replacement is needed. Rollback removes those repository-authored surfaces and leaves acquired/generated state disposable under `.work/`.

@@ -1,6 +1,6 @@
 # Tasks
 
-These tasks track Apply separately authorized on 2026-10-05. The mandatory 100% bidirectional allocation-unit/Change coverage gate preceded implementation; its mapping is recorded in [coverage](coverage.md). Other allocation units are not prerequisites. [Apply evidence](apply-evidence.md) records implementation and checks for distinct 42P Verification, the next stage. Archive follows a satisfactory Verification verdict using normal OpenSpec behavior.
+These tasks track initial Apply separately authorized on 2026-10-05 and the corrective work planned below. The mandatory 100% bidirectional allocation-unit/Change coverage gate preceded implementation; its mapping is recorded in [coverage](coverage.md). Other allocation units are not prerequisites. [Apply evidence](apply-evidence.md) records initial implementation and checks; [Verification](verification.md) records the previously checked candidate. The three subsequently identified CodeQL alerts require corrective Apply, then renewed 42P Verification before archive using normal OpenSpec behavior.
 
 ## 1. Official resolution and source lock
 
@@ -22,3 +22,12 @@ These tasks track Apply separately authorized on 2026-10-05. The mandatory 100% 
 - [x] 3.1 Integrate inexpensive offline source-tooling validation into `tools/check-repository.sh` when its implementation exists; verify the gateway stays network-free, passes valid fixtures and meaningfully fails an isolated invalid-lock probe without adding runtime/dependency installation.
 - [x] 3.2 Reconstruct acquisition in an isolated clean checkout with empty source state and no installed SDK/tool/npm state, using the documented existing system prerequisites; record official origins, release classifications, expected/observed digests, resulting paths and command outcomes, then verify acquired archives/trees remain untracked and ignored.
 - [x] 3.3 Review the final implementation diff against `A-inputs`, update its requirement/scenario/task evidence mapping and run the canonical repository check; deliver evidence for distinct 42P Verification, with no harness refactor, compilation, browser-acceptance claim, dispatch/PR automation, release deduplication or publication.
+
+## 4. CodeQL fixture correction
+
+CodeQL check `112184556619` on PR #10 reported three high-severity `Incomplete URL substring sanitization` alerts in `tools/tests/test_inputs.py`, at lines 194, 229 and 234 of commit `f3b99ffeff1c6958cb80fd0eb512817e0cc11f37`. These locations belong to the simulated fixture transport. The correction refines existing test evidence for tasks 2.1–2.3 without changing requirements, scenarios, design, allocation coverage, production helpers, source pins or dependencies.
+
+- [ ] 4.1 Replace the fixture transport's domain-substring selection with an exact URL-to-authored-archive mapping using the fixture lock; reject unexpected URLs instead of selecting a default archive. Replace the HTTP-failure and second-source-corruption conditions with comparisons to the exact SQLite and sqlite-vec fixture URLs, preserving their existing scenarios.
+- [ ] 4.2 Run `sh tools/check-repository.sh`, `sh tools/test-repository.sh` and strict OpenSpec validation from `.42p`; commit the correction, then confirm the new candidate's CodeQL analysis clears all three alerts without suppressions or exclusions. Record the correction and applicable check outcomes in Apply evidence for renewed 42P Verification.
+
+After corrective Apply, invoke `42p-verify-change` on the clean committed candidate and update `verification.md` with its identity, findings and verdict, including the actual CodeQL result. The existing report does not establish conformity of the revised candidate or dispose of these alerts. Archive requires the renewed satisfactory verdict; updating this plan neither performs the correction nor authorizes archive.

@@ -47,6 +47,8 @@ The authority chain is:
 
 SPEC.md remains the sole authoritative product contract. [Capture and Allocation](../engineering/) remain the authoritative rationale and allocation toward realization within their derived scope, subordinate to SPEC.md. Neither OpenSpec artifacts nor task completion can change that authority or establish implementation acceptance.
 
+Only realization of an allocation unit requires a Change in this repository. Evolution of design or canon, including governance tooling, is exempt. The [pull-request gate canon](gates.md) defines executable Verification/Archive checks for affected Changes; it does not infer omitted Changes or replace review of evidence freshness.
+
 The normal operational path is:
 
 Allocation → `propose` → allocation/change coverage gate → `apply` → 42P Verification → `archive`.

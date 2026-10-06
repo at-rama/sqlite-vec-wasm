@@ -18,3 +18,55 @@ jobs:
       - name: Check repository
         shell: sh
         run: sh tools/check-repository.sh
+
+  tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Run repository tests
+        shell: sh
+        run: sh tools/test-repository.sh
+
+  verification:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Check Change verification
+        shell: sh
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          if [ "$EVENT_NAME" = pull_request ]; then
+              python3 tools/change-gates.py verification --base "$BASE_SHA" --head "$HEAD_SHA"
+          else
+              echo 'verification: not applicable (post-merge push).'
+          fi
+
+  archive:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Check Change archive
+        shell: sh
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          if [ "$EVENT_NAME" = pull_request ]; then
+              python3 tools/change-gates.py archive --base "$BASE_SHA" --head "$HEAD_SHA"
+          else
+              echo 'archive: not applicable (post-merge push).'
+          fi

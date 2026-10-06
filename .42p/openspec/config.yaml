@@ -9,6 +9,9 @@ context: |
   Every Change MUST realize exactly one allocation unit and MUST NOT add unallocated product
   requirements. Insufficiency, contradiction or required upstream semantic change
   MUST cause escalation; never reinterpret upstream authority locally.
+  Design and canon evolution, including governance tooling, is exempt from Changes.
+  Follow standards/gates.md for PR checks/tests and declared-Change merge gates.
+  Gates do not classify implementation changes or establish evidence freshness.
   Before Apply, allocation unit -> Change and Change -> allocation unit coverage MUST
   both be 100% for that unit, not the complete Allocation.
   openspec/specs/ is the cumulative synchronized realization canon derived

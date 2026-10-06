@@ -118,3 +118,34 @@ Apply's 12 tasks are complete. Distinct 42P Verification against A-inputs and th
 Change remains the next stage; archive follows only a satisfactory verdict using
 normal OpenSpec behavior. Pair compatibility and full product acceptance belong
 to subsequent allocated responsibilities and are not asserted by this evidence.
+
+
+## Alignment with main on 2026-10-06
+
+The PR incorporates `main` at
+`65728fb5879b966809d294e08d4c9493d979198e`, including PRs #13, #14 and #15.
+They add the repository-owned Verification composition, the version-1 report
+contract and independent `check`, `tests`, `verification` and `archive` jobs.
+The prior Apply evidence above records the 2026-10-05 snapshot; it is not a
+Verification verdict for this aligned candidate.
+
+Acquisition helpers, source pins, the 24 acquisition tests, all seven delta
+requirements and their 20 scenarios are unchanged from
+`a813dae04b5ef7affbb6e019e47b374daa98dcff`. The harness, dependency records,
+SPEC, Capture and Allocation are unchanged. All 12 tasks remain complete.
+Source-lock validation remains in `check-repository.sh`; the acquisition suite
+runs once through main's existing registration in `test-repository.sh`, alongside
+the gate suite. Documentation now distinguishes these commands.
+
+After alignment, `sh tools/check-repository.sh` passed,
+`sh tools/test-repository.sh` passed 19 gate tests and 24 acquisition tests, and
+strict OpenSpec validation passed. The generated verify skill and the
+repository-owned composition skill are taken unchanged from main. The existing
+correction removing synchronized canon as an Apply prerequisite is preserved.
+
+The next stage uses [42p-verify-change](../../../.agents/skills/42p-verify-change/SKILL.md)
+under [the Verification standard](../../../standards/verification.md). Its three
+controls produce and commit `verification.md`; normal archive follows a
+satisfactory verdict. The aligned PR deliberately retains its active Change
+without that report: the new `verification` and `archive` merge gates cannot yet
+pass. This alignment neither performs those stages nor invents a passing report.

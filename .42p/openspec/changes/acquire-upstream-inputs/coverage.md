@@ -39,4 +39,4 @@ The same-SQLite-release integration responsibility and the caller's candidate/pu
 
 The [Apply evidence](apply-evidence.md#requirement-scenario-and-task-evidence) connects all seven requirements, their 20 scenarios and the 12 completed tasks to implementation and applicable checks. The mandatory bidirectional coverage gate above preceded separately authorized Apply. Its completion does not establish implementation acceptance.
 
-The next stage is distinct 42P Verification against `A-inputs` and this Change. After a satisfactory verdict, archive follows normal OpenSpec behavior, including native delta-spec synchronization. No sync, archive, merge or publication has been performed.
+The next stage is distinct 42P Verification against `A-inputs` and this Change, using [42p-verify-change](../../../.agents/skills/42p-verify-change/SKILL.md) under [the Verification standard](../../../standards/verification.md). Its three controls must produce and commit the Change-local `verification.md`. After a satisfactory verdict, archive follows normal OpenSpec behavior, including native delta-spec synchronization. No sync, archive, merge or publication has been performed.

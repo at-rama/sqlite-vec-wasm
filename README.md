@@ -26,10 +26,16 @@ This repository is developed agentically. Changes are driven by versioned engine
 
 Read [AGENTS.md](AGENTS.md) and the [development rules](.42p/standards/software.md) for repository requirements. Work on a branch and open a pull request targeting `main`.
 
-The lightweight repository check uses Git, a POSIX shell and the existing system Bash, Python 3, tar and unzip for offline source checks. Stage new files before running:
+The lightweight repository check uses Git, a POSIX shell and Python 3.9 or newer for offline source-lock validation. Stage new files before running:
 
 ```sh
 sh tools/check-repository.sh
+```
+
+Run the registered automated suites separately, with the existing system Bash, Python, tar and unzip:
+
+```sh
+sh tools/test-repository.sh
 ```
 
 To select exact upstream versions and acquire verified sources without the SDK, follow the [source acquisition instructions](docs/source-acquisition.md).

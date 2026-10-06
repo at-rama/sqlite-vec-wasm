@@ -1,6 +1,6 @@
 # Source acquisition
 
-Run these commands from the repository root on Linux with Bash, Python 3, curl,
+Run these commands from the repository root on Linux with Bash, Python 3.9 or newer, curl,
 Git, tar and unzip. Source acquisition uses existing system tools; it does not
 install or require the WASM SDK, Node.js, npm or browser tooling.
 
@@ -68,10 +68,11 @@ Run the inexpensive offline checks with the existing system Python and archive
 tools; no network or dependency installation is needed:
 
 ```sh
-PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/tests -v
 sh tools/check-repository.sh
+sh tools/test-repository.sh
 ```
 
 The [technical repository canon](../.42p/standards/software.md) describes the
-repository gateway. Real clean-checkout acquisition remains a separate check;
+repository integrity gateway and separate registered test command. Real
+clean-checkout acquisition remains a separate check;
 the authored offline fixtures do not replace official-archive evidence.

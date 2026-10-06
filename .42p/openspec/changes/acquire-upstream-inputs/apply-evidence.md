@@ -149,3 +149,19 @@ controls produce and commit `verification.md`; normal archive follows a
 satisfactory verdict. The aligned PR deliberately retains its active Change
 without that report: the new `verification` and `archive` merge gates cannot yet
 pass. This alignment neither performs those stages nor invents a passing report.
+
+## Corrective Apply — CodeQL fixture transport, 2026-10-06
+
+Separately authorized corrective Apply completed tasks 4.1 and 4.2. The code correction is committed at `c7ea95a1d8153985d218b97cf3a1d534b0f30fe5`, following the planning revision at `74e7b54f1ffffcc042c17e82b97bee02a06ebc3c`.
+
+`tools/tests/test_inputs.py` now maps the two exact fixture-lock archive URLs to their authored local archives. An unexpected URL raises `KeyError` before writing downloaded bytes. The simulated HTTP failure and second-source corruption compare against the exact fixture URLs. Existing acquisition scenarios are preserved; a new negative test rejects misleading domain substrings and an altered fixture URL. The three alert-producing substring conditions are removed. No suppression, exclusion, dependency or production helper change was introduced; source pins, requirements, scenarios and the 100% bidirectional allocation coverage remain unchanged.
+
+| Control | Outcome for the corrected candidate |
+| --- | --- |
+| `sh tools/check-repository.sh` | Passed locally and in GitHub CI. |
+| `sh tools/test-repository.sh` | Passed locally and in GitHub CI: 19 gate tests and 25 acquisition tests, 44 total. |
+| From `.42p`: `OPENSPEC_TELEMETRY=0 /tmp/sqlite-vec-wasm-openspec-cli/node_modules/.bin/openspec validate acquire-upstream-inputs --strict` | Passed. |
+| `git diff --cached --check` before the correction commit | Passed. |
+| [CodeQL check 112197375164](https://github.com/at-rama/sqlite-vec-wasm/runs/112197375164) on `c7ea95a1d8153985d218b97cf3a1d534b0f30fe5` | Completed with `success`: “No new alerts in code changed by this pull request”; zero annotations. Python, actions and JavaScript/TypeScript analysis jobs completed successfully. The three previously reported fixture alerts are cleared. |
+
+The final task/evidence update records these observed outcomes; it does not change the corrected Python file. The existing `verification.md` predates this correction and is not a renewed verdict. GitHub's `verification` job checks report metadata, not evidence freshness. The next stage is renewed `42p-verify-change` on the clean committed candidate, including the actual CodeQL result. The active Change continues to fail the Archive gate as expected. No synchronization, archive, merge or publication occurred during corrective Apply.

@@ -12,7 +12,9 @@ sh tools/check-repository.sh
 
 Stage new files before checking so Git includes them in the candidate snapshot. The command checks the complete tracked working snapshot for Git whitespace errors, requires the unique root `SPEC.md` and the agent/canon entry points, and rejects tracked files matching repository `.gitignore` rules, even if force-added. Local/global ignore configuration does not affect that rejection. It returns nonzero on any failure. It does not check arbitrary untracked files or prove absence of renamed/copied upstream sources; review still enforces those source boundaries.
 
-The same command is mandatory for every proposed change and runs as `Repository / check` in pull-request and `main` CI. A successful repository check is not product acceptance or permission to publish. Changes to this gateway or its configuration must retain meaningful failure behavior; new checks enter this command when their implementation subjects exist. Do not bypass failures or substitute always-successful commands.
+The same command is mandatory for every proposed change and runs as `Repository / check` in pull-request and `main` CI. A successful repository check is not product acceptance or permission to publish. Changes to this gateway or its configuration must retain meaningful failure behavior; new integrity checks enter this command when their implementation subjects exist; automated test suites enter the separate test command below. Do not bypass failures or substitute always-successful commands.
+
+Run `sh tools/test-repository.sh` for the registered automated suites, using Python 3.9 or newer. It runs independently as the `tests` CI job; mandatory tests must not be replaced by report declarations. The [pull-request gate canon](gates.md) defines the separate Verification and Archive jobs and required-check configuration. These merge gates do not enter the lightweight local command or become prerequisites for producing a Verification report.
 
 ## Controlled and generated material
 

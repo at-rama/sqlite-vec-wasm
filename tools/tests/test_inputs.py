@@ -191,7 +191,8 @@ class AcquisitionTests(unittest.TestCase):
 
     def fetch(self,url,dest):
         self.calls.append(url)
-        source=self.sql if 'sqlite.org' in url else self.vec
+        source={self.candidate['sqlite']['archiveUrl']:self.sql,
+                self.candidate['sqliteVec']['archiveUrl']:self.vec}[url]
         dest.write_bytes(source.read_bytes())
 
     def acquire(self,fetch=None,extract=None):
@@ -216,6 +217,14 @@ class AcquisitionTests(unittest.TestCase):
             self.assertTrue((Path(handoff['sqliteVec']['sourcePath'])/'sqlite-vec.h').is_file())
         self.assertEqual(self.raw,json.dumps(self.candidate).encode())
 
+    def test_fixture_transport_rejects_unexpected_urls(self):
+        destination=self.directory/'unexpected-download'
+        for url in ('https://example.org/sqlite.org/archive.zip',
+                    'https://example.org/github.com/archive.tar.gz',
+                    self.candidate['sqlite']['archiveUrl']+'?unexpected=1'):
+            with self.subTest(url=url),self.assertRaises(KeyError):self.fetch(url,destination)
+            self.assertFalse(destination.exists())
+
     def test_altered_and_truncated_archives_fail_before_extraction(self):
         for data in (b'changed',self.sql.read_bytes()[:10]):
             def changed(url,dest):dest.write_bytes(data)
@@ -226,12 +235,12 @@ class AcquisitionTests(unittest.TestCase):
     def test_http_failure_and_second_source_failure(self):
         for second in (False,True):
             def failure(url,dest):
-                if second and 'sqlite.org' in url:self.fetch(url,dest)
+                if second and url==self.candidate['sqlite']['archiveUrl']:self.fetch(url,dest)
                 else:raise subprocess.CalledProcessError(22,['curl'])
             self.assert_clean_failure(failure)
         def corrupt_second(url,dest):
             self.fetch(url,dest)
-            if 'github.com' in url:dest.write_bytes(b'changed')
+            if url==self.candidate['sqliteVec']['archiveUrl']:dest.write_bytes(b'changed')
         self.assert_clean_failure(corrupt_second)
 
     def test_incomplete_lock_fails_before_download(self):

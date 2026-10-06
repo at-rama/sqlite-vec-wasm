@@ -68,7 +68,7 @@ On separate fixture copies, removing WASM, Worker1 or the OPFS proxy, and replac
 | Integration and runtime boundaries: Unmodified upstream sources; Unsupported runtime outputs; Incompatibility requires a patch | Original-member byte comparison; local bridge; exact eleven-file inventory rejects extra Node asset; release/recipe guards, no patch needed | 1.3, 2.2, 2.3, 2.4, 5.2 |
 | Traceable runtime handoff: Complete successful output; Missing runtime file; Packaging boundary | Actual eleven-file size/hash checks; missing loader/worker/proxy/WASM fixtures; documented handoff schema/lifetime with no acceptance/publication verdict | 2.3, 3.1, 3.3, 4.1, 5.2 |
 | Failure does not reuse previous output: Compilation failure with earlier success; Diagnostic retention; Successful workspace lifetime | Negative command/generation/inventory/write fixtures retain logs without handoff; earlier success untouched; real success retained for caller | 1.1, 1.2, 2.1, 2.2, 3.2, 3.3 |
-| Reproduction and browser prerequisites are documented: Reproduction instructions; Storage prerequisites | README links [build instructions](../../../../docs/build.md); executed isolated sequence and pinned source-informed storage table | 1.4, 2.4, 3.3, 4.5, 5.1 |
+| Reproduction and browser prerequisites are documented: Reproduction instructions; Storage prerequisites | README links [build instructions](../../../../../docs/build.md); executed isolated sequence and pinned source-informed storage table | 1.4, 2.4, 3.3, 4.5, 5.1 |
 
 ## Repository checks
 

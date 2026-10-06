@@ -12,7 +12,7 @@ Verified upstream sources now exist, but the repository cannot yet construct the
 - Emit a success-only build handoff with source identities, actual tools/options, runtime locations and output hashes; retain diagnostics on failure without reusing earlier outputs.
 - Document clean-checkout reproduction and upstream browser/storage prerequisites, and add applicable build and browser checks scoped to A-build.
 
-This Change realizes exactly `A-build` from [Allocation](../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`, at baseline `3a0dc12b598f93b122a38e90f03452e3626d84e9`. [SPEC.md](../../../../SPEC.md) remains authoritative. The confirmed 2026-10-06 exploration selects the thin orchestrator, single static C bridge, explicit upstream targets, absolute source inclusion and fresh acquisition. The build-handoff proposal is retained as a realization detail in this requested planning capture. [Coverage](coverage.md) maps the unit in both directions.
+This Change realizes exactly `A-build` from [Allocation](../../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`, at baseline `3a0dc12b598f93b122a38e90f03452e3626d84e9`. [SPEC.md](../../../../../SPEC.md) remains authoritative. The confirmed 2026-10-06 exploration selects the thin orchestrator, single static C bridge, explicit upstream targets, absolute source inclusion and fresh acquisition. The build-handoff proposal is retained as a realization detail in this requested planning capture. [Coverage](coverage.md) maps the unit in both directions.
 
 ## Capabilities
 

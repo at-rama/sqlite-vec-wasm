@@ -2,7 +2,7 @@
 
 ## Source snapshot and boundaries
 
-Direct source: [Allocation](../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`, at baseline `3a0dc12b598f93b122a38e90f03452e3626d84e9`. [Capture](../../../engineering/2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) snapshot: `1fa058a1d65708d69495b59d8e04b42a38a2cccc3093f114db538edb52621b67`. [SPEC.md](../../../../SPEC.md) snapshot: `40d0cf9e9de1a70c95f6648cdbfa57ecd7c067c2c334344347ad6fc20f404eb4`; it remains the product authority.
+Direct source: [Allocation](../../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`, at baseline `3a0dc12b598f93b122a38e90f03452e3626d84e9`. [Capture](../../../../engineering/2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) snapshot: `1fa058a1d65708d69495b59d8e04b42a38a2cccc3093f114db538edb52621b67`. [SPEC.md](../../../../../SPEC.md) snapshot: `40d0cf9e9de1a70c95f6648cdbfa57ecd7c067c2c334344347ad6fc20f404eb4`; it remains the product authority.
 
 This Change realizes exactly `A-build`, grounded in `C-purpose`, `C-nonmodification`, `C-inputs`, `R-inputs`, `C-browser`, `C-static` and `C-storage`. The confirmed 2026-10-06 discussion selects canonical build orchestration, one static C bridge, explicit browser targets, an absolute include in temporary glue and fresh acquisition in the build invocation. The requested planning capture also retains the proposed traceable success-only handoff as a realization of A-build's integration-output/environment evidence and composition with A-package. File names, JSON layout and test tooling are realization details, not new product authority.
 
@@ -45,7 +45,7 @@ All ten requirements are grounded in this one unit; there are no orphan product 
 
 ## Unit-scoped planning gate
 
-Under [the OpenSpec usage canon](../../../standards/openspec.md#authority-and-lifecycle), **planning coverage: PASS for `A-build` ↔ `build-canonical-browser`**.
+Under [the OpenSpec usage canon](../../../../standards/openspec.md#authority-and-lifecycle), **planning coverage: PASS for `A-build` ↔ `build-canonical-browser`**.
 
 - **Allocation unit → Change: 100%.** All material A-build content is mapped above, including default capabilities beyond named examples, common-release identity, static registration, preservation boundaries and both reproduction/storage documentation.
 - **Change → allocation unit: 100%.** All ten delta requirements and their realization choices map back to A-build. No additional allocation unit is introduced.

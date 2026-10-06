@@ -20,7 +20,7 @@ overrides and the existing baseline produced the same lock bytes.
 | SQLite | 3.53.4 | sha3-256: `b834d474b9b393d85a9e3ee4cc11f1329e007e9376a424ee740796f5c4bda3a8` |
 | sqlite-vec | 0.1.9 | sha256: `3acd67cb4aff080c7050926fd3cf8227905fe5b7ee3829d8ee5024ab1283cf61` |
 
-The [recorded lock](../../../../inputs/sources.lock.json) supplies exact official
+The [recorded lock](../../../../../inputs/sources.lock.json) supplies exact official
 archive, release and digest-provenance URLs. It was staged before production
 acquisition; its byte-level SHA-256 is
 `4dfa30a7af5cee2e09d7021a48f904de8f3d295367ccc80db95f9c448ebec1c8`.
@@ -93,7 +93,7 @@ the repository. The following hashes identify the exact implementation tested:
 
 The existing [coverage table](coverage.md#bidirectional-mapping-within-a-inputs)
 remains the allocation → requirement/scenario/task map. This table completes its
-implementation/check direction. Test names refer to [the offline suite](../../../../tools/tests/test_inputs.py).
+implementation/check direction. Test names refer to [the offline suite](../../../../../tools/tests/test_inputs.py).
 
 | Delta requirement and scenarios | Implementation and check evidence | Tasks |
 | --- | --- | --- |
@@ -143,8 +143,8 @@ strict OpenSpec validation passed. The generated verify skill and the
 repository-owned composition skill are taken unchanged from main. The existing
 correction removing synchronized canon as an Apply prerequisite is preserved.
 
-The next stage uses [42p-verify-change](../../../.agents/skills/42p-verify-change/SKILL.md)
-under [the Verification standard](../../../standards/verification.md). Its three
+The next stage uses [42p-verify-change](../../../../.agents/skills/42p-verify-change/SKILL.md)
+under [the Verification standard](../../../../standards/verification.md). Its three
 controls produce and commit `verification.md`; normal archive follows a
 satisfactory verdict. The aligned PR deliberately retains its active Change
 without that report: the new `verification` and `archive` merge gates cannot yet

@@ -2,7 +2,7 @@
 
 ## Source snapshot and boundaries
 
-Direct source: [Allocation](../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`, at baseline `36963803407ede039605f9c7dc8ce92cddd79cf9`. The [Capture](../../../engineering/2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) snapshot is `1fa058a1d65708d69495b59d8e04b42a38a2cccc3093f114db538edb52621b67`; [SPEC.md](../../../../SPEC.md) remains authoritative, snapshot `40d0cf9e9de1a70c95f6648cdbfa57ecd7c067c2c334344347ad6fc20f404eb4`.
+Direct source: [Allocation](../../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`, at baseline `36963803407ede039605f9c7dc8ce92cddd79cf9`. The [Capture](../../../../engineering/2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) snapshot is `1fa058a1d65708d69495b59d8e04b42a38a2cccc3093f114db538edb52621b67`; [SPEC.md](../../../../../SPEC.md) remains authoritative, snapshot `40d0cf9e9de1a70c95f6648cdbfa57ecd7c067c2c334344347ad6fc20f404eb4`.
 
 This Change realizes only `A-inputs`, through `C-inputs`, `R-inputs` and the official-input aspect of `C-purpose`. The confirmed 2026-10-05 exploration supplies realization choices: independently latest stable or explicit exact versions, no automatic fallback, official digests with pin preservation, fresh acquisition, and existing dependencies only. It does not extend product scope or implement the invoking `A-updates` workflow.
 
@@ -26,7 +26,7 @@ This is complete planning coverage of `A-inputs`, not full Capture coverage or f
 
 ## Unit-scoped gate decision
 
-The governing [OpenSpec usage canon](../../../standards/openspec.md#authority-and-lifecycle), revised on `main` at `79b773ff04fc432dd447e0415438cd9b6ddf3576` and integrated into this branch at `2460e0e4c6ce1310d329e17537d105fc84244c72`, requires each Change to realize exactly one allocation unit and both directions of coverage to be complete for that unit. It explicitly does not require other units to be proposed or synchronized first. The source Allocation, Capture and SPEC snapshots above are unchanged by that process revision.
+The governing [OpenSpec usage canon](../../../../standards/openspec.md#authority-and-lifecycle), revised on `main` at `79b773ff04fc432dd447e0415438cd9b6ddf3576` and integrated into this branch at `2460e0e4c6ce1310d329e17537d105fc84244c72`, requires each Change to realize exactly one allocation unit and both directions of coverage to be complete for that unit. It explicitly does not require other units to be proposed or synchronized first. The source Allocation, Capture and SPEC snapshots above are unchanged by that process revision.
 
 **Coverage gate: PASS for `A-inputs` ↔ `acquire-upstream-inputs`.**
 
@@ -39,4 +39,4 @@ The same-SQLite-release integration responsibility and the caller's candidate/pu
 
 The [Apply evidence](apply-evidence.md#requirement-scenario-and-task-evidence) connects all seven requirements, their 20 scenarios and the 12 completed tasks to implementation and applicable checks. The mandatory bidirectional coverage gate above preceded separately authorized Apply. Its completion does not establish implementation acceptance.
 
-The next stage is distinct 42P Verification against `A-inputs` and this Change, using [42p-verify-change](../../../.agents/skills/42p-verify-change/SKILL.md) under [the Verification standard](../../../standards/verification.md). Its three controls must produce and commit the Change-local `verification.md`. After a satisfactory verdict, archive follows normal OpenSpec behavior, including native delta-spec synchronization. No sync, archive, merge or publication has been performed.
+The next stage is distinct 42P Verification against `A-inputs` and this Change, using [42p-verify-change](../../../../.agents/skills/42p-verify-change/SKILL.md) under [the Verification standard](../../../../standards/verification.md). Its three controls must produce and commit the Change-local `verification.md`. After a satisfactory verdict, archive follows normal OpenSpec behavior, including native delta-spec synchronization. No sync, archive, merge or publication has been performed.

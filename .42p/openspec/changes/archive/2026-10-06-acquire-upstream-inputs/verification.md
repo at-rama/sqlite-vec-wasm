@@ -18,7 +18,7 @@ Renewed on 2026-10-06 after corrective Apply, using the repository-owned `42p-ve
 
 ## Allocation unit ↔ Change coverage
 
-The [Allocation](../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md) snapshot has SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`. The Capture and authoritative SPEC snapshots remain those recorded in [coverage.md](coverage.md#source-snapshot-and-boundaries); all three hashes were rechecked against the candidate.
+The [Allocation](../../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md) snapshot has SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`. The Capture and authoritative SPEC snapshots remain those recorded in [coverage.md](coverage.md#source-snapshot-and-boundaries); all three hashes were rechecked against the candidate.
 
 The [bidirectional mapping](coverage.md#bidirectional-mapping-within-a-inputs) was reviewed semantically against the Allocation, delta requirements, scenarios and tasks. Allocation → Change is 100%: official stable inputs, exact recorded identities, integrity before use, sufficient official archives without vendoring, and reconstructible acquisition with a complete handoff are represented. Change → allocation is 100%: all seven requirements are justified by `A-inputs`; independent latest/exact selection, preserved official pins and existing dependencies are its confirmed realization choices. None introduces another allocation unit.
 
@@ -66,7 +66,7 @@ Commands ran on the candidate with existing Bash, system Python 3/standard libra
 | `bash tools/inputs.sh acquire --lock inputs/sources.lock.json` in that clone | Passed: fresh downloads, verification before extraction, required source contents and complete pair handoff. Independently recomputed archive digests match below. |
 | Clean Git status after acquisition | Passed: acquired/generated state stays ignored; no tracked or untracked repository changes. |
 
-The consumed lock SHA-256 is `4dfa30a7af5cee2e09d7021a48f904de8f3d295367ccc80db95f9c448ebec1c8`. SQLite 3.53.4 archive SHA3-256 is `b834d474b9b393d85a9e3ee4cc11f1329e007e9376a424ee740796f5c4bda3a8`; sqlite-vec 0.1.9 archive SHA-256 is `3acd67cb4aff080c7050926fd3cf8227905fe5b7ee3829d8ee5024ab1283cf61`. Official endpoints are retained in [the source lock](../../../../inputs/sources.lock.json); these values were checked against downloaded bytes, not promoted from those bytes into new authority.
+The consumed lock SHA-256 is `4dfa30a7af5cee2e09d7021a48f904de8f3d295367ccc80db95f9c448ebec1c8`. SQLite 3.53.4 archive SHA3-256 is `b834d474b9b393d85a9e3ee4cc11f1329e007e9376a424ee740796f5c4bda3a8`; sqlite-vec 0.1.9 archive SHA-256 is `3acd67cb4aff080c7050926fd3cf8227905fe5b7ee3829d8ee5024ab1283cf61`. Official endpoints are retained in [the source lock](../../../../../inputs/sources.lock.json); these values were checked against downloaded bytes, not promoted from those bytes into new authority.
 
 Raw resolution evidence and acquired sources remain outside the working checkout in the disposable verification clone's ignored `.work/`; necessary outcomes and identities are recorded here. The current candidate’s `check` and `tests` CI jobs also passed. The report-metadata `verification` job is not substituted for the agent workflow above, and the active-Change `archive` failure is an expected lifecycle condition. There are no unresolved prerequisites, skipped mandatory tests, gaps or blockers.
 

@@ -38,6 +38,8 @@ Run the registered automated suites separately, with the existing system Bash, P
 sh tools/test-repository.sh
 ```
 
+The build orchestrator's offline tests also require Node 18 or newer and a native C compiler. Follow the [canonical browser build instructions](docs/build.md) to construct the engine and inspect its handoff.
+
 To select exact upstream versions and acquire verified sources without the SDK, follow the [source acquisition instructions](docs/source-acquisition.md).
 
 To set up and check the Linux browser/build tools, follow the [harness architecture](.42p/engineering/2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md) for prerequisites and temporary-directory guidance, then run from the repository root:

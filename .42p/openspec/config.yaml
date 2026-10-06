@@ -23,9 +23,12 @@ context: |
   allocation-unit/Change coverage, delegates to the intact generated
   openspec-verify-change skill, and runs repository
   checks and applicable tests. These three controls constitute 42P Verification;
-  do not add a fourth verification procedure. Write and commit verification.md
-  in the selected Change directory with the versioned YAML verdict and evidence
-  required by the standard, including failures or blockers.
+  do not add a fourth verification procedure. Follow the standard's report
+  prerequisite and stop rules: write and commit verification.md in the selected
+  Change directory with the versioned YAML verdict and available evidence,
+  including failures or blockers; return a diagnostic if report prerequisites
+  are unresolved. The official skill must be available before invocation;
+  installation and updates belong to separate preparation.
   Verification MUST precede archive; completed tasks and structural validation
   alone cannot establish it. Archive does not authorize merge or publication.
   Read ../AGENTS.md, standards/openspec.md and standards/verification.md. Normal CLI commands MUST run from

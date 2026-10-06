@@ -8,7 +8,7 @@ This Change realizes exactly `A-build`, grounded in `C-purpose`, `C-nonmodificat
 
 ## Allocation unit to Change
 
-Requirement names identify [delta-spec blocks](specs/browser-build/spec.md); task numbers identify [pending Apply work](tasks.md). Scenario coverage states expected behavior, not acquired implementation evidence.
+Requirement names identify [delta-spec blocks](specs/browser-build/spec.md); task numbers identify [Apply work](tasks.md). Scenario coverage states expected behavior; acquired implementation evidence is recorded separately in [Apply evidence](apply-evidence.md).
 
 | Allocated content | OpenSpec requirement | Scenario coverage | Tasks |
 | --- | --- | --- | --- |
@@ -50,10 +50,10 @@ Under [the OpenSpec usage canon](../../../standards/openspec.md#authority-and-li
 - **Allocation unit → Change: 100%.** All material A-build content is mapped above, including default capabilities beyond named examples, common-release identity, static registration, preservation boundaries and both reproduction/storage documentation.
 - **Change → allocation unit: 100%.** All ten delta requirements and their realization choices map back to A-build. No additional allocation unit is introduced.
 
-The coverage verdict assesses the authored plan, not runtime correctness. Compilation of the bridge, header resolution, actual browser/VFS behavior and baseline preservation remain to be demonstrated during Apply. An incompatibility needing a patch, contract change or omitted capability must be escalated rather than waived; a semantic artifact revision requires renewed coverage.
+The coverage verdict assesses the authored plan, not runtime correctness. [Apply evidence](apply-evidence.md) records compilation, header resolution, actual browser/VFS behavior and baseline preservation. An incompatibility needing a patch, contract change or omitted capability must be escalated rather than waived; a semantic artifact revision requires renewed coverage.
 
 ## Composition and next stage
 
 A-inputs remains the existing source-selection/integrity capability and is not modified here. A-package owns consumer payload assembly, licensing and publication-ready contents. A-acceptance owns the complete clean production CI path and mandatory browser gates on final packaged assets, including independently known vector/Hamming results and persistence across runtime termination/reopen. Build-time checks do not establish those outcomes. A-updates/A-release retain candidate, human-merge and publication responsibilities.
 
-This planning PR contains no implementation, Apply evidence, Verification report, synchronized main spec or archive. After separate Apply authorization, complete the tasks and obtain distinct 42P Verification through the repository-owned composition skill, then archive under the repository canon. Existing merge gates are expected to block this active, unverified Change; no gate is bypassed and no passing Verification is invented for planning.
+Apply was authorized and its implementation/execution is recorded in [Apply evidence](apply-evidence.md). The requirement/authority mapping above is unchanged. Distinct 42P Verification through the repository-owned composition skill remains required before archive under the repository canon. This active Change has no Verification report, synchronized main spec or archive; merge gates remain applicable and no passing Verification is invented.

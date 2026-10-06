@@ -26,6 +26,6 @@ None. The existing `upstream-inputs` capability is consumed without changing its
 
 ## Impact
 
-Planned implementation adds `tools/build.sh`, build helpers/template and tests, using the existing acquisition and harness entry points. It records build options in repository-authored configuration and adds focused contributor documentation linked from the existing documentation entry point. It introduces no new third-party dependency or product API.
+Implementation adds `tools/build.sh`, build helpers/template and tests, using the existing acquisition and harness entry points. It records build options in repository-authored configuration and adds focused contributor documentation linked from the existing documentation entry point. It introduces no new third-party dependency or product API.
 
-A-package owns consumer packaging, licenses and published payload assembly; A-acceptance owns complete CI and browser acceptance of final packaged assets; A-updates and A-release own candidate/publication workflows. No source pins, upstream source patches, packaging/publication workflows, generated skills or repository canon are changed by this planning PR. All implementation tasks remain pending; no compilation, product verification or archive is claimed.
+A-package owns consumer packaging, licenses and published payload assembly; A-acceptance owns complete CI and browser acceptance of final packaged assets; A-updates and A-release own candidate/publication workflows. No source pins, upstream source patches, packaging/publication workflows, generated skills or repository canon are changed. [Apply evidence](apply-evidence.md) records completed construction and checks; distinct post-Apply 42P Verification and archive remain pending.

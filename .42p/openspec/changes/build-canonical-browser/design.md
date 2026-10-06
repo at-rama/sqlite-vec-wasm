@@ -8,7 +8,7 @@ The baseline checkout already provides `tools/inputs.sh acquire --lock inputs/so
 
 The retained [harness architecture](../../../engineering/2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md) supplies Linux x86-64 tooling, SDK activation, exact tool identities, integrity checks and a real-browser/loopback fixture. `tools/harness.sh exec` checks the environment and prioritizes SDK Node/npm and WABT. Its progress output must be redirected so the build command's stdout can contain only its result JSON. The harness itself implements neither product compilation nor sqlite-vec integration.
 
-This design is required because the change connects acquisition, native generation, WASM recipes, static initialization and browser verification. The source-based exploration has not executed the proposed integration.
+This design is required because the change connects acquisition, native generation, WASM recipes, static initialization and browser verification. The initial source-based exploration did not execute the proposed integration; [Apply evidence](apply-evidence.md) now records its construction and checks.
 
 ## Goals / Non-Goals
 
@@ -107,4 +107,4 @@ These checks establish A-build behavior. They do not replace A-acceptance's comp
 
 ## Migration Plan
 
-No published consumer API exists to migrate. Implement on this PR's working branch only after separate Apply authorization and coverage confirmation. After the actual build/tests, run distinct 42P Verification and archive under repository rules before human merge. Reverting the eventual build implementation leaves the existing A-inputs/harness available; source and generated outputs remain ignored temporary material. This planning PR itself changes only Change artifacts.
+No published consumer API exists to migrate. Apply was authorized after coverage confirmation, and its execution is recorded in [Apply evidence](apply-evidence.md). Distinct 42P Verification and archive under repository rules remain required before human merge. Reverting the build implementation leaves the existing A-inputs/harness available; source and generated outputs remain ignored temporary material.

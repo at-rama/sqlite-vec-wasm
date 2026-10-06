@@ -12,3 +12,9 @@ if [ -f tools/inputs.py ]; then
 else
     echo 'Acquisition tests: not applicable (A-inputs implementation absent).'
 fi
+
+# Offline orchestration tests use Node's built-in runner and the system C compiler.
+if [ -f tools/build/build.mjs ]; then
+    test -f tools/build/tests/build.test.mjs
+    node --test tools/build/tests/*.test.mjs
+fi

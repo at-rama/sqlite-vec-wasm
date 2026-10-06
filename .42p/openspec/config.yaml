@@ -16,7 +16,7 @@ context: |
   both be 100% for that unit, not the complete Allocation.
   openspec/specs/ is the cumulative synchronized realization canon derived
   from Allocation, not a second product specification or implementation evidence.
-  Apply MUST respect the Change, synchronized canon and repository standards.
+  Apply MUST respect the Change and repository standards.
   When post-Apply Verification is invoked, use the repository-owned
   .agents/skills/42p-verify-change/SKILL.md under standards/verification.md.
   It confirms 100% bidirectional

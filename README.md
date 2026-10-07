@@ -38,7 +38,7 @@ Run the registered automated suites separately, with the existing system Bash, P
 sh tools/test-repository.sh
 ```
 
-The build orchestrator's offline tests also require Node 18 or newer and a native C compiler. Follow the [canonical browser build instructions](docs/build.md) to construct the engine and inspect its handoff. Follow the [browser packaging instructions](docs/packaging.md) to assemble its distributable files and check the final archive.
+The build orchestrator's offline tests also require Node 18 or newer and a native C compiler; the packaging suite uses npm for local archive packing/installation and Python for archive inspection. Follow the [canonical browser build instructions](docs/build.md) to construct the engine and inspect its handoff. Follow the [browser packaging instructions](docs/packaging.md) to assemble its distributable files and check the final archive.
 
 To select exact upstream versions and acquire verified sources without the SDK, follow the [source acquisition instructions](docs/source-acquisition.md).
 

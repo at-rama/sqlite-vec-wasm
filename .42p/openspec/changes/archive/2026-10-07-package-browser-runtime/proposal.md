@@ -12,7 +12,7 @@ A-build now supplies a traceable browser runtime, but its files still reside in 
 - Include upstream licensing notices and focused usage material, with no consumer compilation or install-time build.
 - Emit final-file and archive digests and a success-only package handoff for A-acceptance and A-release; check asset resolution from extracted deliverables independently of the build directories.
 
-This Change realizes exactly `A-package` from [Allocation](../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`, at baseline `14c4c8fc545cd69ee083632505cbaf581905e6b0`. [SPEC.md](../../../../SPEC.md) remains authoritative. The confirmed 2026-10-07 exploration selects direct upstream exposure, conservative assembly and a common runtime payload for both channels. Lower-level packaging choices are recorded in [design](design.md); [coverage](coverage.md) accounts for the unit in both directions.
+This Change realizes exactly `A-package` from [Allocation](../../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`, at baseline `14c4c8fc545cd69ee083632505cbaf581905e6b0`. [SPEC.md](../../../../../SPEC.md) remains authoritative. The confirmed 2026-10-07 exploration selects direct upstream exposure, conservative assembly and a common runtime payload for both channels. Lower-level packaging choices are recorded in [design](design.md); [coverage](coverage.md) accounts for the unit in both directions.
 
 ## Capabilities
 

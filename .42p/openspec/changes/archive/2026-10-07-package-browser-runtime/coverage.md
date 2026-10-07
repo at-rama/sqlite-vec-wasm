@@ -2,7 +2,7 @@
 
 ## Source snapshot and boundaries
 
-Direct source: [Allocation](../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`, at baseline `14c4c8fc545cd69ee083632505cbaf581905e6b0`. [Capture](../../../engineering/2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) SHA-256: `1fa058a1d65708d69495b59d8e04b42a38a2cccc3093f114db538edb52621b67`. [SPEC.md](../../../../SPEC.md) SHA-256: `40d0cf9e9de1a70c95f6648cdbfa57ecd7c067c2c334344347ad6fc20f404eb4`; it remains the product authority.
+Direct source: [Allocation](../../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `4025fb3e203677d97bb952add6683f2ee8e4f83bad66fa065aa989084857a33b`, at baseline `14c4c8fc545cd69ee083632505cbaf581905e6b0`. [Capture](../../../../engineering/2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) SHA-256: `1fa058a1d65708d69495b59d8e04b42a38a2cccc3093f114db538edb52621b67`. [SPEC.md](../../../../../SPEC.md) SHA-256: `40d0cf9e9de1a70c95f6648cdbfa57ecd7c067c2c334344347ad6fc20f404eb4`; it remains the product authority.
 
 This Change realizes exactly `A-package`, grounded in `C-purpose`, `C-nonmodification`, `C-inputs`, `C-browser`, `C-storage` and `C-release`. The confirmed 2026-10-07 exploration selects direct upstream exposure, unchanged runtime names/bytes/layout and a common runtime payload for npm and GitHub Releases. One shared npm-compatible archive, explicit caller-supplied metadata, controlled notices and a success-only package handoff are proposed realization details under those obligations, not additional product authority.
 
@@ -41,7 +41,7 @@ All eight requirements are grounded in this one allocation unit. Their 17 scenar
 
 ## Unit-scoped planning gate
 
-Under [the OpenSpec usage canon](../../../standards/openspec.md#authority-and-lifecycle), **planning coverage: PASS for `A-package` ↔ `package-browser-runtime`**.
+Under [the OpenSpec usage canon](../../../../standards/openspec.md#authority-and-lifecycle), **planning coverage: PASS for `A-package` ↔ `package-browser-runtime`**.
 
 - **Allocation unit → Change: 100%.** Every material obligation and composition boundary of A-package is mapped above.
 - **Change → allocation unit: 100%.** All eight delta requirements and their scenarios/tasks trace to A-package without an orphan product requirement.

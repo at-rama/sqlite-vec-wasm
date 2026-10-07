@@ -125,7 +125,7 @@ Each material handle has one classification. Multiple units in a covered row joi
 | --- | --- | --- |
 | C-purpose | Covered | A-inputs, A-build, A-package, A-release: official integrated browser distribution and publication boundary. |
 | C-nonmodification | Covered | A-build, A-package, A-updates: allowed glue, exclusions, unchanged semantics, patch/revision and intervention boundary. |
-| C-inputs | Covered | A-inputs, A-build, A-package, A-acceptance, A-updates: origins/pins/digests, acquisition exclusions, toolchain pins, artifact exclusions, reproduction, proposed updates and documented prerequisites. |
+| C-inputs | Covered | A-inputs, A-build, A-package, A-acceptance, A-updates: origins/pins/digests, acquisition exclusions, toolchain pins, artifact exclusions, reproduction, proposed updates and documented prerequisites. A-watch reuses the stable-release classification without owning source acquisition or integrity verification. |
 | R-inputs | Covered | A-inputs retains source-stated acquisition context; A-build owns the embedded same-SQLite-release MUST. Context does not create separate work. |
 | C-browser | Covered | A-build, A-package, A-acceptance: full retained baseline, assets/variants, exclusions and omission checks. |
 | C-static | Covered | A-build, A-acceptance: supported static registration, every connection, unchanged extension semantics and availability evidence. |

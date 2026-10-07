@@ -109,14 +109,6 @@ Own the permitted one-time publication-setup exception: minimum unavoidable manu
 
 **Composition:** the first publication remains constrained by A-acceptance and A-release; established configuration supports A-release's subsequent automatic post-merge publications. **Evidence target:** initial-versus-steady-state publishing configuration and the bounded publication-setup exception, if exercised.
 
-### A-lifecycle — Obsolescence boundary
-
-**Capture:** C-obsolescence. **Surface:** project lifecycle/maintenance state.
-
-Own the condition under which the project is considered obsolete: SQLite or sqlite-vec upstream publishes and maintains an equivalent distribution satisfying the browser, API, vector, and persistence contract. A demonstration package alone is insufficient. This allocates the lifecycle criterion, not new monitoring, retirement automation, or an unestablished shutdown/publication rule.
-
-**Composition:** equivalence is judged against the retained contract represented by the other units. **Evidence target:** any later obsolescence determination and its grounding in the captured condition.
-
 ## Coverage accounting
 
 Each material handle has one classification. Multiple units in a covered row jointly account for its content; context and obligations within a handle are distinguished rather than assigning the handle two classifications.
@@ -137,12 +129,12 @@ Each material handle has one classification. Multiple units in a covered row joi
 | R-updates | Non-allocatable | Adopted complexity/value and human-authority rationale informs A-watch and A-updates; no additional implementation obligation or technically refuted alternative. |
 | C-failure | Covered | A-updates, A-release: no eligibility for merge/integration/tag/channel publication on any mandatory failure; human approval waives no gate; no required automatic repair. |
 | C-bootstrap | Covered | A-bootstrap, A-release: bounded initial exception overrides only automatic npm publication; no recurring manual release path, waived verification or weakened revision/payload identity; recurring human trigger/merge authority, trusted publishing/provenance and explicit unsupported fallbacks retained. |
-| C-obsolescence | Covered | A-lifecycle: exact equivalent-maintained-upstream condition and demo insufficiency. |
+| C-obsolescence | Non-allocatable | Terminal lifecycle condition retained as a project invariant: SQLite or sqlite-vec upstream publishes and maintains an equivalent distribution satisfying the browser, API, vector, and persistence contract; a demonstration package alone is insufficient. It creates no current implementation responsibility. If the condition becomes plausibly satisfied, any concrete retirement behavior requires a new design decision and allocation. |
 | S-spec | Non-allocatable | Provenance and ultimate-authority identity, retained through the current Capture and source links; not implementation work or independent corroboration. |
 | S-watch-model | Non-allocatable | User adoption and designated derived consolidation for the awareness revision materialized in S-spec; no separate implementation work or independent corroboration. |
 | S-release-model | Non-allocatable | Primary user provenance for the retained human-authority boundary and original R-updates rationale, revised by S-watch-model; not separate implementation work or independent corroboration. |
 | S-doc-model | Non-allocatable | Primary user provenance for removing the standalone README checklist while preserving substantive product obligations in S-spec; not separate implementation work or independent corroboration. |
 
-**Capture coverage: 100% — 19/19 material handles examined; 14 covered, five non-allocatable, none unresolved or omitted.** All nine A- units cite explicit Capture handles. **Allocation grounding: 100% — 9/9 units grounded; no orphan units.**
+**Capture coverage: 100% — 19/19 material handles examined; 13 covered, six non-allocatable, none unresolved or omitted.** All eight A- units cite explicit Capture handles. **Allocation grounding: 100% — 8/8 units grounded; no orphan units.**
 
 Authority and epistemic distinctions outside the Capture handles are retained in this document's source boundary, and its material relationships are represented in unit composition. Lifecycle invariants are not reclassified as current readiness conditions. No explicit unresolved Capture issue prevents allocation; unspecified lower-level mechanisms remain open. Coverage certifies responsibility/grounding accounting, not successful implementation, technical compatibility, completed bootstrap, or passed production gates.

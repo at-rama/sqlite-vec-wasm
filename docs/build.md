@@ -46,7 +46,7 @@ sh tools/test-repository.sh
 sh tools/check-repository.sh
 ```
 
-The offline suite needs system Node 18 or newer and `cc`, in addition to the existing Python/Bash/archive prerequisites. It neither installs the SDK nor downloads sources. Stage new repository files before the repository check.
+The offline suite needs system Node 18 or newer and `cc`, in addition to the existing Python/Bash/archive prerequisites. The packaging suite additionally uses npm for local archive packing/installation and Python for archive inspection. These suites neither install the SDK nor download sources. Stage new repository files before the repository check.
 
 Browser construction checks are implemented separately from these lightweight checks. A-build evidence uses raw constructed assets. A-acceptance will test final packaged bytes, the complete known vector/Hamming fixtures and persistence through runtime shutdown/reopen.
 

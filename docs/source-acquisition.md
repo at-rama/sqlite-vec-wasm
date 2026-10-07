@@ -64,8 +64,10 @@ successful workspace lifetime and may remove it after use. Temporary paths are
 specific to that invocation. A successful handoff establishes source acquisition,
 not compatibility of the selected pair, a completed build or product acceptance.
 
-Run the inexpensive offline checks with the existing system Python and archive
-tools; no network or dependency installation is needed:
+Run the inexpensive offline checks with the existing system Python, Bash and archive
+tools. The registered build-orchestration suite additionally requires Node 18 or newer
+and a native C compiler; packaging tests also use npm for local packing/installation.
+No SDK installation, network or dependency installation is needed:
 
 ```sh
 sh tools/check-repository.sh

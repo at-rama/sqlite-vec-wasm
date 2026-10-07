@@ -73,8 +73,8 @@ sh tools/test-repository.sh
 sh tools/check-repository.sh
 ```
 
-The packaging suite uses synthetic handoffs and local tarball fixtures without
-SDK downloads. It does not replace real-archive browser checks. Notice texts and
+The packaging suite uses existing Node, npm and Python with synthetic handoffs
+and local tarball fixtures, without SDK downloads or dependency installation. It does not replace real-archive browser checks. Notice texts and
 their source/version/digest associations are recorded in `tools/package/`;
 changing upstream or toolchain identities requires reviewed notice reconciliation.
 

@@ -1,5 +1,21 @@
 # Upstream-watch design verification
 
+## Targeted re-verification — current PASS
+
+**Verdict: PASS for the design revision after closure of F1, at `223cbdf18b2b9ef0263ad2250b7fdc6e5dbe9d82`.** The renewed examination is targeted to the authorized accounting correction. The earlier whole-corpus semantic review below is reused for unchanged content, not represented as a second complete independent review. This remains design verification, not implementation acceptance of A-watch.
+
+**F1 resolved.** [The corrected Allocation](https://github.com/at-rama/sqlite-vec-wasm/blob/223cbdf18b2b9ef0263ad2250b7fdc6e5dbe9d82/.42p/engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), section “Coverage accounting”, now explicitly includes `A-watch` in the `C-inputs` row and limits its contribution to reuse of stable-release classification. Source acquisition and integrity verification remain with their existing owners. The `A-watch` unit and its obligations were not reinterpreted.
+
+**Renewed targeted evidence.** On 2026-10-07, the canonical repository check exited zero. Re-examination of all unit-to-handle declarations against reciprocal accounting found no missing relation across nine units and 19 classified handles. Capture → SPEC and Allocation → Capture source SHA-256 references were recomputed and remain valid. The corrected Allocation SHA-256 is `d20671c4e658e4704a15a95d3c5d1ea96fc4c578b084bc12f4f0616e08e35edd`.
+
+**Non-regression of the correction.** Exact remote tree comparison with the prior PR head `32fe8275d278313e156b80f791104e64e0383276` established that the correction changes only one Allocation row; all other 66 tracked files are unchanged. SPEC, Capture, all unit bodies, source pins, code, workflows, dependency records and archives retain their identities. The change is a reciprocal-traceability correction, with no new obligation or transfer of responsibility. Source digests embedded in Capture and Allocation need no revision because their upstream sources did not change; this report records the new Allocation identity.
+
+**Evidence reuse and limits.** The earlier 63-test execution and hosted CI records below remain historical evidence applicable to unchanged implementation/test/workflow bytes. Tests and browser builds were not rerun for this one-row prose correction; the repository gateway and relation/digest/delta checks were renewed. No success of a later CI run is asserted here. The previous review's source-scope, authorship and runtime-evidence limitations remain in force. The report's subsequent commit changes only this evidence record and is distinct from the reviewed correction commit.
+
+The initial FAIL below is retained as the result for its original candidate and is superseded for the corrected candidate only by this explicitly scoped closure. No unresolved design-review finding remains from that review. No merge, archive, monitoring implementation or publication was performed.
+
+## Initial verification — historical FAIL
+
 ## Institutional view
 
 **Verdict: FAIL for documentary coherence of PR #20 at `1f8a4ed48fae749ab87cc100508758fee08c0a57`.** The examined decision is captured and materialized faithfully, and the substantive monitoring obligations have allocation owners. One new inconsistency prevents a strict pass: `A-watch` cites and applies `C-inputs`, but the reciprocal coverage row omits `A-watch`. This is an accounting defect, not an observed missing monitoring implementation. No implementation is demanded by this design PR.

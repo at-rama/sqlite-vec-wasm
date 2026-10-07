@@ -37,7 +37,7 @@ The unit's surface and evidence targets are represented: distributable contents,
 | Traceable final package handoff | Explicit output digests and final-assets/exact-payload composition with A-acceptance/A-release; success-only output distinguishes actual assembly from partial/old results |
 | Generated outputs remain uncommitted | Explicit JavaScript/WASM artifact exclusion under `C-inputs`; clean packaging specializes the repository-input reproduction boundary without claiming full production CI |
 
-All eight requirements are grounded in this one allocation unit. Their 17 scenarios and all 16 pending tasks map to its obligations or their scoped tests/documentation. Name/version argument validation, controlled notice associations, the flat file layout, exact archive inspection and handoff mechanics realize the allocation; they do not introduce a registry identity decision, release policy, new application API or additional allocation unit.
+All eight requirements are grounded in this one allocation unit. Their 17 scenarios and all 16 tasks map to its obligations or their scoped tests/documentation. Name/version argument validation, controlled notice associations, the flat file layout, exact archive inspection and handoff mechanics realize the allocation; they do not introduce a registry identity decision, release policy, new application API or additional allocation unit.
 
 ## Unit-scoped planning gate
 
@@ -52,4 +52,4 @@ This is an assessment of the authored plan. It does not establish correctness of
 
 `browser-build` and `upstream-inputs` requirements remain unchanged. A-acceptance owns complete clean-production CI, final-payload API/default-capability checks, deterministic vector/Hamming fixtures, restart persistence and applicability of evidence to the authoritative revision/payload. A-release owns package identity policy, revision/tag/version/publication synchronization and publication gates; A-bootstrap owns registry/trusted-publishing setup. One hashed tarball supports the shared runtime-payload requirement without performing those responsibilities.
 
-All planning artifacts exist and all implementation tasks remain unchecked. Apply is the next workflow after review and explicit authorization. Distinct 42P Verification and Archive remain required; no `verification.md`, acceptance evidence or completed archive is fabricated for this proposal. The affected active Change intentionally leaves the repository's Verification/Archive merge gates unsatisfied at this stage.
+Planning artifacts remain the reviewed basis for implementation. [Apply evidence](apply-evidence.md) records the implementation and scoped checks; [tasks](tasks.md) records completion. Distinct 42P Verification and Archive remain required; Apply does not supply their report or establish full acceptance. The affected active Change intentionally leaves the repository's Verification/Archive merge gates unsatisfied at this stage.

@@ -18,3 +18,9 @@ if [ -f tools/build/build.mjs ]; then
     test -f tools/build/tests/build.test.mjs
     node --test tools/build/tests/*.test.mjs
 fi
+
+# Packaging fixtures inspect final tarballs without downloading sources or SDK tools.
+if [ -f tools/package/package.mjs ]; then
+    test -f tools/package/tests/package.test.mjs
+    node --test tools/package/tests/*.test.mjs
+fi

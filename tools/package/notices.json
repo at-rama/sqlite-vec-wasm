@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "notices": [
+    {
+      "name": "SQLite-LICENSE.txt",
+      "project": "sqlite",
+      "version": "3.53.4",
+      "origin": "LICENSE.md",
+      "sha256": "9f2f6a13fc880c9ae10cb3a67f028a5e76d028759dc41eee593165400bfd1661",
+      "normalization": "Trailing horizontal whitespace and blank EOF lines removed; notice wording preserved."
+    },
+    {
+      "name": "SQLite-WASM-NOTICE.txt",
+      "project": "sqlite",
+      "version": "3.53.4",
+      "origin": "ext/wasm/api/sqlite3-license-version-header.js",
+      "sha256": "5cd1320b663c1b10e635f19c8c397488d5b48b85460177b575ac5d1b4d7ce88a"
+    },
+    {
+      "name": "sqlite-vec-MIT.txt",
+      "project": "sqliteVec",
+      "version": "0.1.9",
+      "origin": "https://github.com/asg017/sqlite-vec/blob/v0.1.9/LICENSE-MIT",
+      "sha256": "6ce72bbe12d975bd5286e5ab0a064c069693300c47bccbc57bec18485f1621ea",
+      "normalization": "Trailing horizontal whitespace and blank EOF lines removed; notice wording preserved."
+    },
+    {
+      "name": "sqlite-vec-APACHE.txt",
+      "project": "sqliteVec",
+      "version": "0.1.9",
+      "origin": "https://github.com/asg017/sqlite-vec/blob/v0.1.9/LICENSE-APACHE",
+      "sha256": "a38070a94d4afd9cd710e3ce67bd1de78097cfe1784c1f0109ac95d3c196bfdc",
+      "normalization": "Trailing horizontal whitespace and blank EOF lines removed; notice wording preserved."
+    },
+    {
+      "name": "Emscripten-LICENSE.txt",
+      "project": "emscripten",
+      "version": "4.0.23",
+      "origin": "https://github.com/emscripten-core/emscripten/blob/4.0.23/LICENSE",
+      "sha256": "2fd38dc06e484cdd7a3f1e2f6577f5d53062052a2fd85131b56b89fbd673731c",
+      "normalization": "Trailing horizontal whitespace and blank EOF lines removed; notice wording preserved."
+    },
+    {
+      "name": "musl-COPYRIGHT.txt",
+      "project": "emscripten",
+      "version": "4.0.23",
+      "origin": "https://github.com/emscripten-core/emscripten/blob/4.0.23/system/lib/libc/musl/COPYRIGHT",
+      "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af"
+    },
+    {
+      "name": "compiler-rt-LICENSE.txt",
+      "project": "emscripten",
+      "version": "4.0.23",
+      "origin": "https://github.com/emscripten-core/emscripten/blob/4.0.23/system/lib/compiler-rt/LICENSE.TXT",
+      "sha256": "1a8f1058753f1ba890de984e48f0242a3a5c29a6a8f2ed9fd813f36985387e8d"
+    },
+    {
+      "name": "llvm-libc-LICENSE.txt",
+      "project": "emscripten",
+      "version": "4.0.23",
+      "origin": "https://github.com/emscripten-core/emscripten/blob/4.0.23/system/lib/llvm-libc/LICENSE.TXT",
+      "sha256": "ebcd9bbf783a73d05c53ba4d586b8d5813dcdf3bbec50265860ccc885e606f47"
+    },
+    {
+      "name": "libcxx-LICENSE.txt",
+      "project": "emscripten",
+      "version": "4.0.23",
+      "origin": "https://github.com/emscripten-core/emscripten/blob/4.0.23/system/lib/libcxx/LICENSE.TXT",
+      "sha256": "539dd7aed86e8a4f12cbdd0e6c50c189c7d74847e4fecc64ce2c6ee3a01da38b"
+    },
+    {
+      "name": "libcxxabi-LICENSE.txt",
+      "project": "emscripten",
+      "version": "4.0.23",
+      "origin": "https://github.com/emscripten-core/emscripten/blob/4.0.23/system/lib/libcxxabi/LICENSE.TXT",
+      "sha256": "e2b35be49f7284a45b7baca8fc7b3ab7440e7902392b2528a457816b5bb2a15c"
+    }
+  ]
+}

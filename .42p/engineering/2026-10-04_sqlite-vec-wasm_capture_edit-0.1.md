@@ -1,10 +1,12 @@
-# Specification-derived Capture
+# Distribution Capture
 
 ## Purpose, scope, and authority
 
-Purpose: structure the current `sqlite-vec-wasm` project contract for later reasoning. Scope: the root specification and the user's validated rationale in S-release-model, S-doc-model, and S-watch-model. This Capture is a derived, non-authoritative working set; [S-spec](../../SPEC.md) governs every difference in reading. It introduces no decision, allocation, implementation choice, or implementation plan.
+Purpose: retain the reconciled design of the canonical `sqlite-vec-wasm` distribution for later reasoning and allocation. Scope: the product decisions recorded in S-spec and the user's validated rationale in S-release-model, S-doc-model, and S-watch-model. This Capture is a non-authoritative working projection; it neither institutes decisions nor proves implementation, acceptance, or publication.
 
-All normative modalities below report S-spec's requirements, permissions, preferences, and exceptions; they confer no independent authority. MUST denotes a requirement; SHOULD denotes a preference whose departure needs a concrete justification. S-spec establishes the contract, not evidence that bootstrap, compatibility, verification, or publication has already succeeded. Source-stated technical context remains attributed to S-spec and is not independently validated here. R-updates records the user's adopted rationale from S-release-model as revised by S-watch-model, not a new product requirement. The operational reconciliation order for this revision is Capture, materialization in S-spec, then Allocation; S-spec retains product authority.
+The user mission of 2026-10-08, “Mission Work — Réconcilier le design 42p et intégrer A-Site”, explicitly preserves the existing product design while replacing the live root specification with distinct Captures and a global Allocation. Decisions and instituted sources ground the design; Captures retain reconciled working projections; Allocation organizes responsibility coverage; OpenSpec contractualizes realization. This migration changes representation and provenance, not the requirements retained below. S-spec is the immutable historical contract source, not a live file that this Capture must regenerate. Prior assistant projections and receipts are not independent sources or decision authority.
+
+All normative modalities below preserve S-spec's requirements, permissions, preferences, and exceptions under that user instruction. MUST denotes a requirement; SHOULD denotes a preference whose departure needs a concrete justification. Source-stated technical context remains attributed to S-spec and is not independently validated here. R-updates records the user's adopted rationale from S-release-model as revised by S-watch-model, not a new product requirement. An explicit contract revision means a revision instituted by the competent decision authority; it does not require a living root `SPEC.md`. The root specification has been removed; its immutable history remains available through S-spec.
 
 The [technical architecture](2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md) describes current harness realization choices under the existing Allocation. It is a derived projection, not a substantive source for this product Capture or evidence that product acceptance and publication have succeeded.
 
@@ -12,7 +14,7 @@ The [technical architecture](2026-10-04_sqlite-vec-wasm_technical_architecture_e
 
 ### C-purpose — Responsibility and runtime boundary
 
-Source: [S-spec, responsibility and boundaries](../../SPEC.md#responsibility-and-boundaries).
+Source: [S-spec, responsibility and boundaries](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#responsibility-and-boundaries).
 
 The project MUST build and publish the canonical SQLite browser/WASM distribution with an official stable `sqlite-vec` release statically integrated, without functionally modifying either upstream.
 
@@ -20,13 +22,13 @@ Browser execution is the only supported runtime. Node.js runtime support, native
 
 ### C-nonmodification — Added behavior and patch boundary
 
-Source: [S-spec, responsibility and boundaries](../../SPEC.md#responsibility-and-boundaries).
+Source: [S-spec, responsibility and boundaries](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#responsibility-and-boundaries).
 
 The project MUST NOT add SQL abstractions, ORM functionality, application APIs, FluidJ behavior, or custom vector-search semantics. Integration and packaging glue are permitted only to build, initialize, locate, and expose upstream functionality. Upstream source patches are excluded; an unavoidable compatibility patch would require an explicit contract revision identifying its necessity and isolation.
 
 ### C-inputs — Source authority, integrity, acquisition, and reproduction
 
-Source: [S-spec, inputs and reproduction](../../SPEC.md#inputs-and-reproduction).
+Source: [S-spec, inputs and reproduction](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#inputs-and-reproduction).
 
 - SQLite and `sqlite-vec` inputs MUST come from their official upstreams and identify exact released versions. Stable means released, non-draft, non-prerelease versions; alpha, beta, release-candidate, and development snapshots are excluded, including prereleases displayed by current documentation.
 - Every downloaded source input MUST have a cryptographic digest recorded in the repository state being verified and checked before use. A mismatch MUST fail the build; fetching a checksum alongside changed bytes MUST NOT silently authorize them. Official release archives SHOULD be preferred when sufficient.
@@ -35,13 +37,13 @@ Source: [S-spec, inputs and reproduction](../../SPEC.md#inputs-and-reproduction)
 
 ### R-inputs — Source-stated build context
 
-Source: [S-spec, inputs and reproduction](../../SPEC.md#inputs-and-reproduction).
+Source: [S-spec, inputs and reproduction](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#inputs-and-reproduction).
 
 The supported canonical SQLite build currently needs the full SQLite source tree, rather than only its amalgamation. Temporary acquisition satisfies the no-vendoring boundary. SQLite core, WASM support, and JavaScript bindings MUST originate from the same SQLite release. Official `sqlite-vec` amalgamation releases provide its C source and generated header without requiring its source repository or vendored SQLite copy.
 
 ### C-browser — Retained browser baseline
 
-Source: [S-spec, distribution contract](../../SPEC.md#distribution-contract).
+Source: [S-spec, distribution contract](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#distribution-contract).
 
 The baseline is the pinned SQLite release's canonical default browser/WASM distribution, excluding demos, benchmarks, test applications, and optional experimental build variants.
 
@@ -49,19 +51,19 @@ The package MUST preserve that baseline's documented browser APIs, loading modes
 
 ### C-static — Per-connection extension availability
 
-Source: [S-spec, distribution contract](../../SPEC.md#distribution-contract).
+Source: [S-spec, distribution contract](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#distribution-contract).
 
 `sqlite-vec` MUST be compiled and automatically registered through SQLite's supported WASM static-extension initialization mechanism, making its SQL functionality available on every newly opened connection. Consumers MUST NOT load an extension dynamically or register it themselves. Upstream extension semantics MUST be preserved.
 
 ### C-storage — Conditional browser and persistence availability
 
-Source: [S-spec, distribution contract](../../SPEC.md#distribution-contract).
+Source: [S-spec, distribution contract](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#distribution-contract).
 
 Browser and storage availability remain subject to the pinned upstream's prerequisites and limitations. The project MUST document required Worker contexts, secure hosting, and VFS-specific isolation/header requirements; it MUST NOT promise OPFS on the main thread or silently substitute transient storage when persistence was requested.
 
 ### C-release — Version, revision, payload, and distribution identity
 
-Source: [S-spec, distribution contract](../../SPEC.md#distribution-contract).
+Source: [S-spec, distribution contract](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#distribution-contract).
 
 The distribution MUST be consumable through npm and as downloadable GitHub Release assets without a consumer-side native/WASM compilation step. Every published project version MUST correspond to one authoritative source revision, one Git tag, one GitHub Release, and one npm publication. Both publication channels MUST use the same project version, derive from that verified revision, contain the same verified runtime payload, and identify the included SQLite WASM and `sqlite-vec` versions. Every release MUST identify upstream and output digests and build environment/options, and preserve required upstream licensing notices. Automatically derived concise version information is sufficient; manually maintained narrative release notes are not required.
 
@@ -69,7 +71,7 @@ Publication MUST be supported by acceptance evidence applicable to the authorita
 
 ### C-verification — Required evidence and test conditions
 
-Source: [S-spec, acceptance gates](../../SPEC.md#acceptance-gates).
+Source: [S-spec, acceptance gates](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#acceptance-gates).
 
 CI MUST demonstrate the complete clean-checkout production path. Browser acceptance tests MUST consume the final packaged assets, rather than a separate development build, and establish:
 
@@ -84,7 +86,7 @@ At least one real browser satisfying the relevant upstream prerequisites MUST ex
 
 ### C-watch — Upstream awareness and notification boundary
 
-Source: S-watch-model; [S-spec, updates and publication](../../SPEC.md#updates-and-publication).
+Source: S-watch-model; [S-spec, updates and publication](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#updates-and-publication).
 
 The repository MUST monitor official stable releases of both SQLite and `sqlite-vec` through a daily scheduled GitHub Actions workflow. Stable classification remains as defined under inputs and reproduction. Detection MUST use official SQLite release publications and official `sqlite-vec` GitHub Releases, and signal stable versions newer than the corresponding currently integrated repository pins, without notifying the full historical release backlog on first execution.
 
@@ -94,7 +96,7 @@ Monitoring MUST stop at notification. It MUST NOT change source pins, initiate c
 
 ### C-autonomy — Manually initiated candidate and human adoption lifecycle
 
-Source: [S-spec, updates and publication](../../SPEC.md#updates-and-publication).
+Source: [S-spec, updates and publication](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#updates-and-publication).
 
 C-watch owns automated upstream awareness. The decision to evaluate a version and initiate candidate preparation remains human. An issue may supply evaluation context but is neither an automatic trigger nor a prerequisite.
 
@@ -114,19 +116,19 @@ Source consultation, version comparison, and deduplication mechanisms remain rea
 
 ### C-failure — Failed update and intervention boundary
 
-Source: [S-spec, updates and publication](../../SPEC.md#updates-and-publication).
+Source: [S-spec, updates and publication](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#updates-and-publication).
 
 Automation MUST fail closed: failure of any mandatory build, compatibility, packaging, integrity, or acceptance requirement MUST stop the candidate before it is eligible for merge, before successful integration, and before release tagging, GitHub Release publication, or npm publication. Human approval does not waive mandatory gates. Automatic repair of upstream incompatibilities is not required; the upstream non-modification boundary continues to apply.
 
 ### C-bootstrap — Publication setup exception and publication mechanisms
 
-Source: [S-spec, updates and publication](../../SPEC.md#updates-and-publication).
+Source: [S-spec, updates and publication](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#updates-and-publication).
 
 Initial repository/registry bootstrap MAY include the minimum unavoidable manual registry configuration and first npm publication needed to establish trusted publishing. This bounded initial publication-setup exception MAY override the normal automatic post-merge npm-publication requirement only for the minimum unavoidable first-publication/bootstrap case. It MUST NOT waive mandatory verification, weaken source/revision/payload identity requirements, provide a recurring manual release path, or alter recurring human candidate initiation or merge authority. After bootstrap is established, the normal automatic post-merge tagging, GitHub Release publication, and npm publication rule applies without this exception. Steady-state publication MUST use npm trusted publishing and verifiable build provenance/asset attestations where supported by the chosen publishing environment; any unsupported mechanism and fallback MUST be explicit. Persistent npm publishing credentials MUST NOT be the normal mechanism where trusted publishing provides secretless publication.
 
 ### C-obsolescence — End of project responsibility
 
-Source: [S-spec, updates and publication](../../SPEC.md#updates-and-publication).
+Source: [S-spec, updates and publication](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#updates-and-publication).
 
 The project is obsolete when SQLite or `sqlite-vec` upstream publishes and maintains an equivalent distribution satisfying this browser, API, vector, and persistence contract. A demonstration package alone does not meet that condition.
 
@@ -138,12 +140,12 @@ C-watch separates automated awareness ending at an assigned issue from C-autonom
 
 ## Material sources
 
-**S-spec** — [root SPEC.md](../../SPEC.md), the user-designated authoritative project specification. Its current requirements govern this projection; prior assistant receipts and this Capture are not corroboration. Snapshot SHA-256: `23c94ad50be9559a5846b083996d46bc12607a73473d5272726d0faae4c6acb1`.
+**S-spec** — [historical SPEC.md](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md), the user-designated product contract as last changed by commit `d463c4034604d6593cf45bbf5a523598dd3f53cc` and present unchanged at the migration baseline `87f7d0c0fc7e721c018461d77405d176ec84104a`. SHA-256: `23c94ad50be9559a5846b083996d46bc12607a73473d5272726d0faae4c6acb1`. Its historical authority and the decisions it records are preserved; the 2026-10-08 user mission authorizes retaining that design without a live root specification. This immutable source predates the reconciled Capture and does not derive its authority from it. Copies, related user decisions, and this projection are not independent corroboration.
 
-**S-release-model** — User mission for `at-rama/sqlite-vec-wasm`, submitted 2026-10-04 in the sqlite-vec-wasm project conversation, beginning “Correct the repository design to replace the previously specified autonomous upstream detection and release model”. The explicit validated decision and execution requirement 4 supply the mechanical-automation/human-authority boundary and original complexity/value rationale in R-updates. S-watch-model revises only the awareness and polling exclusion; this source remains relevant to the retained human authority boundary. Product obligations are now expressed in S-spec; this primary user instruction and the updated specification are related sources, not independent corroboration.
+**S-release-model** — User mission for `at-rama/sqlite-vec-wasm`, submitted 2026-10-04 in the sqlite-vec-wasm project conversation, beginning “Correct the repository design to replace the previously specified autonomous upstream detection and release model”. The explicit validated decision and execution requirement 4 supply the mechanical-automation/human-authority boundary and original complexity/value rationale in R-updates. S-watch-model revises only the awareness and polling exclusion; this source remains relevant to the retained human authority boundary. Product obligations were materialized in S-spec; this primary user instruction and the updated specification are related sources, not independent corroboration.
 
 **S-doc-model** — User mission for PR #8 in `at-rama/sqlite-vec-wasm`, submitted 2026-10-04 in the same project conversation, beginning “Amend the existing PR to complete the strict inter-document coherence correction discovered during review”. The validated decision removes a premature standalone README checklist without replacing it with a generic documentation obligation. Documentation remains attached to substantive product concerns and emerges with their concrete surfaces; C-storage, C-inputs, C-release, and C-verification retain their existing prerequisites and record requirements. The existing editorial standard governs README presentation. S-spec expresses the resulting product requirements; this primary user instruction and S-spec are related sources, not independent corroboration.
 
-**S-watch-model** — User decisions in the sqlite-vec-wasm project conversation on 2026-10-07: adoption of the common notification mechanism for both upstreams; validation of the exploration and the newer-than-pins orientation; confirmation that the operational order is reconciled Capture then materialization in the Specification; and the instruction beginning “Ouvre une PR et applique l'évolution présentée en détail dans le message précédent”. That instruction explicitly designates the preceding assistant-authored consolidation, “Objet : évolution du design de sqlite-vec-wasm — surveillance des versions upstream”, as the revision input. The consolidation is a designated derived source, not independent corroboration; the user decisions establish adoption. The discovery motivating the revision is retrievable from the [official SQLite mirror](https://github.com/sqlite/sqlite), its [empty GitHub Releases page](https://github.com/sqlite/sqlite/releases), and the [official release timeline](https://sqlite.org/src/timeline?t=release). The adopted revision is materialized in S-spec; neither this Capture nor its operational receipt supplies independent evidence.
+**S-watch-model** — User decisions in the sqlite-vec-wasm project conversation on 2026-10-07: adoption of the common notification mechanism for both upstreams; validation of the exploration and the newer-than-pins orientation; confirmation that the operational order is reconciled Capture then materialization in the Specification; and the instruction beginning “Ouvre une PR et applique l'évolution présentée en détail dans le message précédent”. That instruction explicitly designates the preceding assistant-authored consolidation, “Objet : évolution du design de sqlite-vec-wasm — surveillance des versions upstream”, as the revision input. The consolidation is a designated derived source, not independent corroboration; the user decisions establish adoption. The discovery motivating the revision is retrievable from the [official SQLite mirror](https://github.com/sqlite/sqlite), its [empty GitHub Releases page](https://github.com/sqlite/sqlite/releases), and the [official release timeline](https://sqlite.org/src/timeline?t=release). The adopted revision was materialized in S-spec; neither this Capture nor its operational receipt supplies independent evidence.
 
-The specification's [upstream references](../../SPEC.md#upstream-references) remain retrievable through S-spec; their contents are not additional acquired evidence for this Capture. S-spec states: references explain upstream mechanisms; moving documentation does not change its requirements, and version-specific behavior is evaluated against pinned releases.
+The specification's [upstream references](https://github.com/at-rama/sqlite-vec-wasm/blob/d463c4034604d6593cf45bbf5a523598dd3f53cc/SPEC.md#upstream-references) remain retrievable through S-spec; their contents are not additional acquired evidence for this Capture. S-spec states: references explain upstream mechanisms; moving documentation does not change its requirements, and version-specific behavior is evaluated against pinned releases.

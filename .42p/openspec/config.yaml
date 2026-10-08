@@ -1,11 +1,15 @@
 schema: spec-driven
 context: |
-  42P authority: SPEC.md -> Capture -> Allocation -> OpenSpec realization canon
-  -> Proposition -> implementation -> Verification.
-  SPEC.md remains the authoritative product contract.
-  Capture owns rationale and Allocation owns allocation toward realization,
-  both subordinate to SPEC.md. Current Capture and Allocation live in
-  .42p/engineering/ relative to the repository root (parent of this project root).
+  Instituted decisions and sources ground the design.
+  Distinct Distribution and Site Captures retain reconciled non-authoritative
+  working projections; one global Allocation organizes responsibility coverage.
+  OpenSpec contractualizes realization, followed by implementation and Verification.
+  Captures do not institute decisions or corroborate themselves. Instituted
+  sources retain authority; historical Distribution contract provenance is immutable.
+  Current Captures and Allocation live in .42p/engineering/ relative to the
+  repository root (parent of this project root). README is public documentation.
+  A-site consumes the published canonical runtime without extending the package
+  API, publication responsibility or canonical runtime distributions.
   Every Change MUST realize exactly one allocation unit and MUST NOT add unallocated product
   requirements. Insufficiency, contradiction or required upstream semantic change
   MUST cause escalation; never reinterpret upstream authority locally.

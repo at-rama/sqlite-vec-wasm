@@ -1,6 +1,6 @@
 # Pull-request gates
 
-This repository canon defines the merge checks implemented by [the Repository workflow](../../.github/workflows/repository.yml), subordinate to [SPEC.md](../../SPEC.md). Follow the [Verification standard](verification.md) for evidence and the [OpenSpec usage canon](openspec.md) for the Change lifecycle.
+This repository canon defines the merge checks implemented by [the Repository workflow](../../.github/workflows/repository.yml), subordinate to [instituted design decisions and sources](../../AGENTS.md). Follow the [Verification standard](verification.md) for evidence and the [OpenSpec usage canon](openspec.md) for the Change lifecycle.
 
 ## Activation and outcomes
 

@@ -4,11 +4,13 @@ Read [the editorial standard](.42p/standards/editorial.md) before writing human-
 
 Read [the technical canon](.42p/standards/software.md) before changing repository files. It defines the shared engineering rules and current validation command.
 
-[SPEC.md](SPEC.md) is the authoritative product contract. The Capture and Allocation under [.42p/engineering/](.42p/engineering/) are derived sources, not additional authority. Do not infer implementation progress from them or from a passing repository check.
+Instituted decisions and sources ground the design. The [Distribution Capture](.42p/engineering/2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) and [Site Capture](.42p/engineering/2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md) retain distinct reconciled, non-authoritative working projections; the [global Allocation](.42p/engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md) organizes their coverage by responsibilities. OpenSpec contractualizes realization of each unit. Captures do not institute decisions or corroborate themselves; unresolved authority or required semantic revisions must return to the competent decision authority. Do not infer implementation progress from these projections or from a passing repository check. The README remains public product documentation, not another design authority.
 
 The repository-owned [base Capture skill](.42p/.agents/skills/42p-capture/SKILL.md) is available for creating or updating a Capture when requested.
 
-Use a working branch and pull request targeting protected `main`; do not write to `main` directly. Run the canonical repository check on every proposed change. Integration and publication remain governed by `SPEC.md`.
+Historical qualification/Verification reports and archived Changes retain their original source snapshots and evidence limits; their authority statements are historical context, not current instructions. Resolve historical references at the recorded revision and hash. See the [design reconciliation review](.42p/engineering/2026-10-08_sqlite-vec-wasm_design-reconciliation_edit-0.1.md) for this migration's source comparison and boundaries.
+
+Use a working branch and pull request targeting protected `main`; do not write to `main` directly. Run the canonical repository check on every proposed change. Integration and publication retain the instituted human authority and mandatory gates preserved in the Distribution Capture, particularly `C-autonomy`, `C-release`, `C-failure` and `C-bootstrap`. Site realization remains separate from canonical runtime/package publication.
 
 Follow [the pull-request gate canon](.42p/standards/gates.md) and run `sh tools/test-repository.sh` for registered automated tests. Only allocation-unit realization requires an OpenSpec Change; design and canon evolution, including governance tooling, is exempt. Merge gates control the Changes affected by the PR; they do not classify code changes or prove evidence freshness. Review must enforce those responsibilities.
 

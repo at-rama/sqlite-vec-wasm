@@ -1,6 +1,6 @@
 # OpenSpec usage canon
 
-This normative canon governs OpenSpec as the repository's 42P change mechanism, subordinate to [SPEC.md](../../SPEC.md). **MUST** and **MUST NOT** are mandatory. Apply the [editorial standard](editorial.md) and [technical canon](software.md) throughout.
+This normative canon governs OpenSpec as the repository's 42P change mechanism, subordinate to [instituted design decisions and sources](../../AGENTS.md). **MUST** and **MUST NOT** are mandatory. Apply the [editorial standard](editorial.md) and [technical canon](software.md) throughout.
 
 ## Project and CLI location
 
@@ -43,9 +43,9 @@ Use the generated skills directly in ChatGPT Work by reading their files through
 
 The authority chain is:
 
-`SPEC.md` → Capture → Allocation → OpenSpec realization canon → Proposition → implementation → Verification.
+Instituted sources → distinct reconciled Captures → global Allocation → OpenSpec realization canon → Proposition → implementation → Verification.
 
-SPEC.md remains the sole authoritative product contract. [Capture and Allocation](../engineering/) remain the authoritative rationale and allocation toward realization within their derived scope, subordinate to SPEC.md. Neither OpenSpec artifacts nor task completion can change that authority or establish implementation acceptance.
+Decisions and instituted sources retain design authority under AGENTS.md. The [Distribution and Site Captures and global Allocation](../engineering/) preserve reconciled working projections and responsibility coverage; they do not institute decisions or supply independent corroboration. The historic Distribution contract remains retrievable through its immutable S-spec provenance. The README is public product documentation. Neither OpenSpec artifacts nor task completion can change upstream authority or establish implementation acceptance. A-site consumes the published canonical distribution; it neither extends the package API nor introduces another canonical runtime distribution.
 
 Only realization of an allocation unit requires a Change in this repository. Evolution of design or canon, including governance tooling, is exempt. The [pull-request gate canon](gates.md) defines executable Verification/Archive checks for affected Changes; it does not infer omitted Changes or replace review of evidence freshness.
 

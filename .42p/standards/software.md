@@ -1,6 +1,6 @@
 # Technical repository canon
 
-This is the repository-wide engineering authority, subordinate to [SPEC.md](../../SPEC.md). It translates repository concerns from the current [Capture and Allocation](../engineering/) without changing their product obligations. Executable configuration defines the current checks; this document explains their scope and prerequisites.
+This is the repository-wide engineering authority, subordinate to the instituted design decisions and sources under [the repository authority rules](../../AGENTS.md). It translates repository concerns from the two current [Captures and global Allocation](../engineering/) without changing their scoped obligations or giving the Captures decision authority. Executable configuration defines the current checks; this document explains their scope and prerequisites.
 
 ## Lightweight repository gateway
 
@@ -10,7 +10,7 @@ The lightweight check uses a Git checkout, Git 2.18 or newer, a POSIX shell with
 sh tools/check-repository.sh
 ```
 
-Stage new files before checking so Git includes them in the candidate snapshot. The command checks the complete tracked working snapshot for Git whitespace errors, requires the unique root `SPEC.md` and the agent/canon entry points, and rejects tracked files matching repository `.gitignore` rules, even if force-added. Local/global ignore configuration does not affect that rejection. It returns nonzero on any failure. It also validates the source lock offline; automated suites run in the separate test command below. It does not check arbitrary untracked files or prove absence of renamed/copied upstream sources; review still enforces those source boundaries.
+Stage new files before checking so Git includes them in the candidate snapshot. The command checks the complete tracked working snapshot for Git whitespace errors and rejects tracked files matching repository `.gitignore` rules, even if force-added. Local/global ignore configuration does not affect that rejection. It rejects a root `SPEC.md` in any letter case, including an untracked root entry. It requires tracked regular public/agent/canon entry points and current Capture inputs, and checks that the single global Allocation names every tracked Capture exactly once with its current SHA-256. The number of Captures is not fixed by this check; input identities do not establish semantic coverage. It returns nonzero on any failure and also validates the source lock offline. Automated suites run in the separate test command below. Apart from the retired root specification, it does not check arbitrary untracked files or prove absence of renamed/copied upstream sources; review still enforces those source boundaries.
 
 The same command is mandatory for every proposed change and runs as `Repository / check` in pull-request and `main` CI. A successful repository check is not product acceptance or permission to publish. Changes to this gateway or its configuration must retain meaningful failure behavior; new integrity checks enter this command when their implementation subjects exist; automated test suites enter the separate test command below. Do not bypass failures or substitute always-successful commands.
 
@@ -24,7 +24,7 @@ Before introducing any build or verification dependency, record the exact versio
 
 ## Shared engineering boundaries
 
-Keep upstream boundaries and allowable glue as defined by the Specification and allocated responsibilities; do not introduce a shared framework ahead of a concrete need. Component-specific realization choices belong in the [technical architecture](../engineering/2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md), subordinate to the product contract; they are not repository-wide engineering rules.
+Keep upstream boundaries and allowable glue as preserved in the Distribution Capture and allocated responsibilities; do not introduce a shared framework ahead of a concrete need. Component-specific realization choices belong in the [technical architecture](../engineering/2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md), subordinate to instituted product decisions; they are not repository-wide engineering rules.
 
 ## Validation obligations
 
@@ -39,4 +39,4 @@ sh tools/check-repository.sh
 
 Use `bash tools/harness.sh check` for an independent identity check and `bash tools/harness.sh exec COMMAND [ARG ...]` to run a command in the verified tooling environment.
 
-These tooling checks do not replace product acceptance or human merge authority defined in SPEC.md. Missing prerequisites or failed checks must fail rather than silently skip required verification. Do not infer broader qualification or release readiness from a passing tooling check.
+These tooling checks do not replace product acceptance or human merge authority preserved in the Distribution Capture. Missing prerequisites or failed checks must fail rather than silently skip required verification. Do not infer broader qualification or release readiness from a passing tooling check.

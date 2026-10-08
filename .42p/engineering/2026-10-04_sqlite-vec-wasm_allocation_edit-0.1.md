@@ -4,7 +4,7 @@
 
 Direct inputs are the two current Captures:
 
-- [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `388f09f801393d8d72846813aa13b84f1fd6b537ac555b4e418c2c095458b41a`.
+- [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `c54fd0987c4ab340d2d6f614d98057d6752d7afe0bd851411472589fe4994bef`.
 - [Site Capture](2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md), snapshot SHA-256 `a1dd3e0c22716b32457fd933aeed927c28573387bd0f75c1f980bf54b0da034f`.
 
 Their handles retain their identity within each Capture; references below identify the corresponding scope. Instituted decisions and sources ground the design. Captures are reconciled non-authoritative projections; this Allocation organizes their responsibility coverage without instituting requirements or proving implementation. Distribution's S-spec retains the immutable historical contract provenance; Site's S-site-design and S-site-mission ground the new site responsibility. OpenSpec contractualizes each unit's realization. The two scopes do not create competing product authorities.
@@ -124,7 +124,7 @@ Consume JS/WASM extracted from A-release's actually published archive without re
 
 Use all 1,661 emoji2vec emojis with their original precomputed 300-dimensional embeddings and enriched English names/associated words. Identify the upstream data revision and retain the MIT notice and credit. Use system Unicode rendering without an image collection; retain the old-corpus/recent-emoji limitation and exclusion of initial French labels. Dataset preparation belongs to this site responsibility, not A-inputs' engine-source acquisition or A-package's payload.
 
-Import demo data into an exclusively in-memory SQLite database, destroyed on explicit connection closure, without authentication, persistence or OPFS cleanup. Text search finds a starting emoji by names/words; sqlite-vec searches its existing embedding, without free-sentence vectorization, a model, remote embedding service or API key. Provide the matching grid, six neighbors excluding the selected emoji, clickable neighbor exploration, copy button, binary/Float32 selector and collapsible distances/technical controls.
+Import demo data into an exclusively in-memory SQLite database, destroyed on explicit connection closure. No authentication, local persistence or OPFS cleanup is needed. Text search finds a starting emoji by names/words; sqlite-vec searches its existing embedding, without free-sentence vectorization; no model, remote embedding service or API key is required. Provide the matching grid, six neighbors excluding the selected emoji, clickable neighbor exploration, copy button, binary/Float32 selector and collapsible distances/technical controls.
 
 Load sign-quantized binary vectors by default, padded to 304 dimensions with four equal noncontributing components, and search by Hamming distance. Load original 300-dimensional Float32 vectors on first selection and retain them in memory; search by cosine distance. Preserve common emoji identifiers and the selected emoji on mode switching, then rerun its query. Semantic neighbor quality is not an acceptance criterion; representation differences remain observable.
 

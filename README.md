@@ -6,7 +6,9 @@ The goal is a ready-to-use browser distribution that saves you from building WAS
 
 ## Browser support
 
-The distribution targets browsers, with JavaScript and ES module loading, FTS5, Worker1 and its promise interface, and OPFS where supported by the browser and hosting environment. Static integration makes sqlite-vec available without loading an extension or compiling anything yourself.
+The distribution targets browsers, with JavaScript and ES module loading, C-style and OO1 APIs, BigInt, FTS5, Worker1 and its promise interface, and OPFS where supported by the browser and hosting environment. Static integration makes sqlite-vec available without loading an extension or compiling anything yourself.
+
+OPFS requires the appropriate Worker context and supported browser/hosting conditions. See the [storage prerequisites](docs/build.md#browser-storage-conditions) for VFS-specific secure-hosting and isolation requirements. Requested persistence must not be silently replaced with transient storage.
 
 Node.js runtime support, native binaries and WASI are outside the project's scope. For server use, use `node:sqlite` with native sqlite-vec. The project adds no SQL abstractions, ORM, application APIs or custom vector-search behavior.
 
@@ -55,7 +57,6 @@ These commands set up development tools and test a small browser fixture. They d
 
 ## Project documentation
 
-- [SPEC.md](SPEC.md) defines the product requirements.
 - [Engineering notes](.42p/engineering/) record the technical analysis and build investigation.
 - [Development rules](.42p/standards/) describe how to work in this repository.
 

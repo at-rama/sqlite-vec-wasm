@@ -10,7 +10,7 @@ Site acquisition used the visible preceding user exploration and the full edited
 
 ## Distribution semantic comparison
 
-All 22 substantive paragraphs/list groups of the historic contract were compared against the [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md). The groups contain 57 occurrences of MUST, one SHOULD and four MAY; these lexical counts identify the examined source, not a substitute for semantic review. All modalities, exclusions, conditions, exceptions and verification duties are retained. The 14 constraint/rationale sections and material relationships are byte-identical to the baseline after replacing only source locators with the immutable URL.
+All 22 substantive paragraphs/list groups of the historic contract were compared against the [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md). The groups contain 57 occurrences of MUST, one SHOULD and four MAY; these lexical counts identify the examined source, not a substitute for semantic review. All modalities, exclusions, conditions, exceptions and verification duties are retained. The 15 constraint/rationale sections and material relationships are byte-identical to the baseline after replacing only source locators with the immutable URL.
 
 | Source group in document order | Capture treatment | Responsibility / boundary retained |
 | --- | --- | --- |

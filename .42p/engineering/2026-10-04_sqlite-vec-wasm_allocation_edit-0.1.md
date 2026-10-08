@@ -2,7 +2,7 @@
 
 ## Identity, source, and authority
 
-Direct input: [the current Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `20ea53df5d3cb59a9c0c2e327d7c01e9cb3ef8173f7d9f7ecdc147abc8c32df5`. Capture handles below retain their existing identity. [SPEC.md](../../SPEC.md) remains the ultimate authority through S-spec; this Allocation is a derived responsibility model, not a new contract or evidence of implementation progress.
+Direct input: [the current Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `388f09f801393d8d72846813aa13b84f1fd6b537ac555b4e418c2c095458b41a`. Capture handles below retain their existing identity. Instituted decisions and sources ground the product design; S-spec retains the immutable historical contract provenance through the reconciled Capture; this Allocation is a derived responsibility model, not a new contract or evidence of implementation progress.
 
 An allocation surface denotes a responsibility boundary, not a prescribed file, workflow, library, API, or architectural component. The modalities, exclusions, conditions, and exceptions attributed to the Capture retain their force. Evidence described below identifies what later Verification must connect to that responsibility; it is not a separate Verification model.
 
@@ -130,7 +130,7 @@ Each material handle has one classification. Multiple units in a covered row joi
 | C-failure | Covered | A-updates, A-release: no eligibility for merge/integration/tag/channel publication on any mandatory failure; human approval waives no gate; no required automatic repair. |
 | C-bootstrap | Covered | A-bootstrap, A-release: bounded initial exception overrides only automatic npm publication; no recurring manual release path, waived verification or weakened revision/payload identity; recurring human trigger/merge authority, trusted publishing/provenance and explicit unsupported fallbacks retained. |
 | C-obsolescence | Non-allocatable | Terminal lifecycle condition retained as a project invariant: SQLite or sqlite-vec upstream publishes and maintains an equivalent distribution satisfying the browser, API, vector, and persistence contract; a demonstration package alone is insufficient. It creates no current implementation responsibility. If the condition becomes plausibly satisfied, any concrete retirement behavior requires a new design decision and allocation. |
-| S-spec | Non-allocatable | Provenance and ultimate-authority identity, retained through the current Capture and source links; not implementation work or independent corroboration. |
+| S-spec | Non-allocatable | Immutable historical contract provenance and its instituted design, retained through the current Capture and source links; not implementation work or independent corroboration. |
 | S-watch-model | Non-allocatable | User adoption and designated derived consolidation for the awareness revision materialized in S-spec; no separate implementation work or independent corroboration. |
 | S-release-model | Non-allocatable | Primary user provenance for the retained human-authority boundary and original R-updates rationale, revised by S-watch-model; not separate implementation work or independent corroboration. |
 | S-doc-model | Non-allocatable | Primary user provenance for removing the standalone README checklist while preserving substantive product obligations in S-spec; not separate implementation work or independent corroboration. |

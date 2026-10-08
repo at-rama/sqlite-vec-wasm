@@ -1,8 +1,13 @@
-# Capture-derived Allocation
+# Global Capture-derived Allocation
 
 ## Identity, source, and authority
 
-Direct input: [the current Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `388f09f801393d8d72846813aa13b84f1fd6b537ac555b4e418c2c095458b41a`. Capture handles below retain their existing identity. Instituted decisions and sources ground the product design; S-spec retains the immutable historical contract provenance through the reconciled Capture; this Allocation is a derived responsibility model, not a new contract or evidence of implementation progress.
+Direct inputs are the two current Captures:
+
+- [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `388f09f801393d8d72846813aa13b84f1fd6b537ac555b4e418c2c095458b41a`.
+- [Site Capture](2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md), snapshot SHA-256 `a1dd3e0c22716b32457fd933aeed927c28573387bd0f75c1f980bf54b0da034f`.
+
+Their handles retain their identity within each Capture; references below identify the corresponding scope. Instituted decisions and sources ground the design. Captures are reconciled non-authoritative projections; this Allocation organizes their responsibility coverage without instituting requirements or proving implementation. Distribution's S-spec retains the immutable historical contract provenance; Site's S-site-design and S-site-mission ground the new site responsibility. OpenSpec contractualizes each unit's realization. The two scopes do not create competing product authorities.
 
 An allocation surface denotes a responsibility boundary, not a prescribed file, workflow, library, API, or architectural component. The modalities, exclusions, conditions, and exceptions attributed to the Capture retain their force. Evidence described below identifies what later Verification must connect to that responsibility; it is not a separate Verification model.
 
@@ -99,7 +104,7 @@ Permit publication only with A-acceptance evidence applicable to the authoritati
 
 Any mandatory gate failure prevents the corresponding release tag, GitHub Release, and npm version. Steady-state publication uses npm trusted publishing and verifiable build provenance/asset attestations where supported by the chosen environment; unsupported mechanisms/fallbacks are explicit. Persistent npm credentials cannot be the normal mechanism where trusted publishing provides secretless publication.
 
-**Composition:** consumes A-package's exact verified payload, applicable A-acceptance evidence, A-updates' human-approved merged authoritative revision, and the publishing relationship established under A-bootstrap. Bootstrap does not waive this unit's verification or source/revision/payload identity obligations. **Evidence target:** approved candidate merge as the normal publication trigger, any bounded initial npm-publication exception, tag/revision/version identity, both channel payloads and metadata, applicable acceptance evidence and publication gate outcomes, authentication mechanism, and supported provenance/attestations.
+**Composition:** consumes A-package's exact verified payload, applicable A-acceptance evidence, A-updates' human-approved merged authoritative revision, and the publishing relationship established under A-bootstrap. Bootstrap does not waive this unit's verification or source/revision/payload identity obligations. Its published archive supplies A-site; site consumption adds no package or publication responsibility here. **Evidence target:** approved candidate merge as the normal publication trigger, any bounded initial npm-publication exception, tag/revision/version identity, both channel payloads and metadata, applicable acceptance evidence and publication gate outcomes, authentication mechanism, and supported provenance/attestations.
 
 ### A-bootstrap — Initial publishing relationship
 
@@ -109,9 +114,27 @@ Own the permitted one-time publication-setup exception: minimum unavoidable manu
 
 **Composition:** the first publication remains constrained by A-acceptance and A-release; established configuration supports A-release's subsequent automatic post-merge publications. **Evidence target:** initial-versus-steady-state publishing configuration and the bounded publication-setup exception, if exercised.
 
+### A-site — Public presentation and published-runtime demonstration
+
+**Capture:** Site: C-site, C-readme, C-demo-release, C-emoji, C-vector-modes, C-interaction, C-search, C-memory, C-demo-checks. **Surface:** the static GitHub Pages site, its demo-specific data and its deployment, separate from the npm package and canonical runtime publication.
+
+Own two pages with common minimal mobile-adapted styling and three navigation entries: clean README presentation, emoji-search demo and a direct GitHub repository link. Render the README as HTML at deployment from that single presentation source; adapt relative links and images. Presentation may follow `main` independently of engine releases. Documentation-only updates require no engine publication and preserve the demo release identity. No CMS or application-framework selection is instituted.
+
+Consume JS/WASM extracted from A-release's actually published archive without rebuilding the engine. Resolve the latest stable release when deploying/updating the demo and then retain that exact release until the next demo update. Show the project, SQLite and sqlite-vec SQL versions and a link to the release. Keep site/data separate from package contents, without adding a package API, runtime capability or third canonical runtime distribution.
+
+Use all 1,661 emoji2vec emojis with their original precomputed 300-dimensional embeddings and enriched English names/associated words. Identify the upstream data revision and retain the MIT notice and credit. Use system Unicode rendering without an image collection; retain the old-corpus/recent-emoji limitation and exclusion of initial French labels. Dataset preparation belongs to this site responsibility, not A-inputs' engine-source acquisition or A-package's payload.
+
+Import demo data into an exclusively in-memory SQLite database, destroyed on explicit connection closure, without authentication, persistence or OPFS cleanup. Text search finds a starting emoji by names/words; sqlite-vec searches its existing embedding, without free-sentence vectorization, a model, remote embedding service or API key. Provide the matching grid, six neighbors excluding the selected emoji, clickable neighbor exploration, copy button, binary/Float32 selector and collapsible distances/technical controls.
+
+Load sign-quantized binary vectors by default, padded to 304 dimensions with four equal noncontributing components, and search by Hamming distance. Load original 300-dimensional Float32 vectors on first selection and retain them in memory; search by cosine distance. Preserve common emoji identifiers and the selected emoji on mode switching, then rerun its query. Semantic neighbor quality is not an acceptance criterion; representation differences remain observable.
+
+Own deterministic comparisons of a few searches in each mode against expectations calculated independently of sqlite-vec, exercising published WASM loading, automatic extension availability, vector insertion and searches. Surprising neighbors alone establish no vector execution. Also check navigation, README rendering and links from GitHub Pages. This scoped demonstration complements A-acceptance without replacing its API, OPFS, persistence or production obligations. Retain reported-size and unverified-browser limitations; Q-volume and Q-realization remain open, without invented size gates, data formats, pipeline or framework choices. Realize this one unit through a later OpenSpec Change; this Allocation records no implementation or publication progress.
+
+**Composition:** consumes A-release's published archive and the public README; independent README updates preserve the demo runtime identity. A-release supplies that artifact without gaining site deployment responsibility. Demo data remain site-specific; A-build/A-package and A-acceptance retain their existing contracts. **Evidence target:** the deployed navigation/presentation and valid README links/images, fixed published archive/version identity and reported SQL versions, credited pinned corpus, actual text/vector interactions and mode/lifetime behavior, and independently expected scoped query results with their limits. Build/deployment and fixture details remain realization choices.
+
 ## Coverage accounting
 
-Each material handle has one classification. Multiple units in a covered row jointly account for its content; context and obligations within a handle are distinguished rather than assigning the handle two classifications.
+Each material handle in the union of the two Captures has one classification. Distribution handles are listed first; Site handles follow. Multiple units in a covered row jointly account for its content; context and obligations within a handle are distinguished rather than assigning the handle two classifications.
 
 | Capture handle | Classification | Allocation / treatment |
 | --- | --- | --- |
@@ -135,6 +158,27 @@ Each material handle has one classification. Multiple units in a covered row joi
 | S-release-model | Non-allocatable | Primary user provenance for the retained human-authority boundary and original R-updates rationale, revised by S-watch-model; not separate implementation work or independent corroboration. |
 | S-doc-model | Non-allocatable | Primary user provenance for removing the standalone README checklist while preserving substantive product obligations in S-spec; not separate implementation work or independent corroboration. |
 
-**Capture coverage: 100% — 19/19 material handles examined; 13 covered, six non-allocatable, none unresolved or omitted.** All eight A- units cite explicit Capture handles. **Allocation grounding: 100% — 8/8 units grounded; no orphan units.**
+| Site Capture handle | Classification | Allocation / treatment |
+| --- | --- | --- |
+| C-site | Covered | A-site: GitHub Pages, two pages, common mobile presentation and the three navigation destinations; no selected CMS/framework. |
+| C-readme | Covered | A-site: single README source, deployment rendering, usable relative links/images, optional main-following presentation and documentation-only release-identity preservation. |
+| C-demo-release | Covered | A-site: exact published archive consumption, latest stable at demo deployment then fixed identity, visible project/SQL versions and release link, site/data/package/API boundary. A-release supplies its existing archive; no runtime publication ownership moves. |
+| C-emoji | Covered | A-site: complete precomputed corpus, identified upstream revision, English enriched descriptions, system Unicode, MIT notice/credit, recent-emoji limitation and initial French-label exclusion. |
+| C-vector-modes | Covered | A-site: default sign-bit/304/Hamming with noncontributing padding; optional original 300/Float32/cosine, first-selection load and memory reuse, common identifiers, selection retention/requery, no semantic-quality gate. |
+| C-interaction | Covered | A-site: name/word field and grid, six neighbors excluding self, clickable exploration, copy, mode selector and collapsible technical information. |
+| C-search | Covered | A-site: SQLite import, text starting point and existing query embedding, actual sqlite-vec vector execution, no free-sentence vectorization or required model/service/key. |
+| C-memory | Covered | A-site: exclusively in-memory database and destruction on explicit close; no authentication, persistence, OPFS cleanup or invented logout flow. |
+| C-demo-checks | Covered | A-site: both-mode independent expectations and exercised initialization/registration/insertion/query paths; navigation/README/link checks and explicit complement-to-acceptance boundary. A-acceptance's full obligations remain unchanged. |
+| R-demo | Non-allocatable | Web-friendly use case, functional rather than semantic-quality rationale and reported file-size observations; not new size requirements or independent browser evidence. |
+| O-corpus | Non-allocatable | Unselected miniature alternative and rejection of unrelated commercial promotion; no extra corpus implementation. The selected full corpus is covered by C-emoji. |
+| Q-volume | Non-allocatable | Explicitly open final SQLite/vec0 volume; no instituted threshold or gate. Future observation is not a hidden uncovered product obligation. |
+| Q-realization | Non-allocatable | Open lower-level choices for the one future A-site Change, not additional obligations or allocation units; decisions must stay within the captured behavior. |
+| S-site-design | Non-allocatable | User-designated edited consolidation, including reported observations and superseded SPEC integration; provenance, not independent evidence or realization work. |
+| S-site-exploration | Non-allocatable | Primary user intent/rationale and earlier alternatives; no unseen assistant proposal is promoted into a requirement. |
+| S-site-mission | Non-allocatable | Human authority for the local migration, one A-site unit and deferred realization; not a site implementation obligation or independent corroboration of measurements. |
 
-Authority and epistemic distinctions outside the Capture handles are retained in this document's source boundary, and its material relationships are represented in unit composition. Lifecycle invariants are not reclassified as current readiness conditions. No explicit unresolved Capture issue prevents allocation; unspecified lower-level mechanisms remain open. Coverage certifies responsibility/grounding accounting, not successful implementation, technical compatibility, completed bootstrap, or passed production gates.
+**Distribution coverage: 100% — 19/19 material handles examined; 13 covered, six non-allocatable. Site coverage: 100% — 16/16 examined; nine covered, seven non-allocatable. Union coverage: 100% — 35/35 examined; 22 covered, 13 non-allocatable; no unassigned obligation or omitted element. Allocation grounding: 100% — 9/9 units grounded; no orphan units.**
+
+The two explicit Site questions remain open and represented; 100% responsibility accounting does not claim their answers are known. Source authority and scope prose outside handles is non-allocatable provenance/boundary material, retained in the source descriptions and compositions. C-demo-release is a consumer dependency on A-release, not a new publication channel. C-demo-checks is a limited additional site check, not duplicated ownership or weakening of C-verification.
+
+Authority and epistemic distinctions outside the Capture handles are retained in this document's source boundary, and its material relationships are represented in unit composition. Lifecycle invariants are not reclassified as current readiness conditions. No unassigned design obligation prevents allocation; unspecified lower-level mechanisms remain open. Coverage certifies responsibility/grounding accounting, not successful implementation, technical compatibility, completed bootstrap, or passed production gates.

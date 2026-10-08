@@ -2,7 +2,7 @@
 
 ## Source snapshot and boundaries
 
-Direct source: [Allocation](../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `3db3cd9cd944c765b8168a1ce4bcc15c9960e4bf52c44c7319d6f3b65250772b`, at baseline `9049129ace2473ca83a3ca4aa72bdcb092645fee`. The [Distribution Capture](../../../engineering/2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), SHA-256 `c54fd0987c4ab340d2d6f614d98057d6752d7afe0bd851411472589fe4994bef`, projects instituted decisions and sources; it does not institute or corroborate them. Its immutable S-spec provenance retains the historical contract. The current source snapshots ground exactly `A-acceptance`, through Distribution `C-inputs`, `C-browser`, `C-static`, `C-storage`, `C-verification` and `C-release`.
+Direct source: [Allocation](../../../../engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md), SHA-256 `3db3cd9cd944c765b8168a1ce4bcc15c9960e4bf52c44c7319d6f3b65250772b`, at baseline `9049129ace2473ca83a3ca4aa72bdcb092645fee`. The [Distribution Capture](../../../../engineering/2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), SHA-256 `c54fd0987c4ab340d2d6f614d98057d6752d7afe0bd851411472589fe4994bef`, projects instituted decisions and sources; it does not institute or corroborate them. Its immutable S-spec provenance retains the historical contract. The current source snapshots ground exactly `A-acceptance`, through Distribution `C-inputs`, `C-browser`, `C-static`, `C-storage`, `C-verification` and `C-release`.
 
 Requirements below identify [delta](specs/browser-acceptance/spec.md) blocks and their scenarios; task numbers identify [tasks](tasks.md). [Design](design.md) decisions select realization mechanisms within this unit: existing harness/producers, deterministic fixtures, two Workers per VFS, live baseline, fresh hosted production and authoritative-revision evidence renewal. These choices are proposed here, not previously instituted product requirements or observed acceptance results.
 
@@ -48,7 +48,7 @@ All twelve requirements and 21 scenarios trace to this unit. All 21 tasks implem
 
 ## Unit-scoped planning gate
 
-Under [OpenSpec usage](../../../standards/openspec.md), **planning coverage: PASS for `A-acceptance` ↔ `accept-packaged-browser`**.
+Under [OpenSpec usage](../../../../standards/openspec.md), **planning coverage: PASS for `A-acceptance` ↔ `accept-packaged-browser`**.
 
 - **Allocation unit → Change: 100%.** Every material obligation and composition/evidence boundary is mapped above.
 - **Change → allocation unit: 100%.** Every delta requirement, scenario and task is grounded in this unit or its necessary scoped realization.

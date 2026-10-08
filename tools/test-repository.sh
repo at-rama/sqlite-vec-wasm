@@ -25,3 +25,9 @@ if [ -f tools/package/package.mjs ]; then
     test -f tools/package/tests/package.test.mjs
     node --test tools/package/tests/*.test.mjs
 fi
+
+# Acceptance control tests are offline; real production/browser evidence is separate.
+if [ -f tools/acceptance/run.mjs ]; then
+    test -f tools/acceptance/tests/acceptance.test.mjs
+    node --test tools/acceptance/tests/*.test.mjs
+fi

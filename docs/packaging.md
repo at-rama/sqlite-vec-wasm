@@ -1,5 +1,8 @@
 # Browser distribution assembly
 
+For complete browser and restart-persistence checks on the resulting archive,
+see [final-package acceptance](acceptance.md).
+
 Use the [canonical build prerequisites and commands](build.md) first. Keep
 its handoff and input/build directories until assembly has consumed them.
 Packaging uses the same qualified SDK Node/npm; Python 3 checks tarball

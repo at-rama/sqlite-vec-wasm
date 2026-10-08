@@ -5,6 +5,7 @@ export async function probe(sqlite3, vector, worker) {
   const db = new oo1.DB(':memory:', 'c');
   try {
     const version = db.selectValue('select sqlite_version()');
+    const vecVersion = vector ? db.selectValue('select vec_version()') : null;
     check(db.selectValue('select 9007199254740993') === 9007199254740993n, 'BigInt');
     db.exec("create virtual table f using fts5(text); insert into f values('browser vector'),('other');");
     check(db.selectValue("select count(*) from f where f match 'browser'") === 1, 'FTS5');
@@ -21,6 +22,15 @@ export async function probe(sqlite3, vector, worker) {
       native = w.peekPtr(pointer);
       check(native !== db.pointer, 'independent connections');
       check(c.sqlite3_exec(native, 'create table independent(x)', 0, 0, 0) === 0, 'C execution');
+      const statementPointer = w.allocPtr();
+      let statement;
+      try {
+        check(c.sqlite3_prepare_v2(native, vector ? 'select sqlite_version(), vec_version()' : 'select sqlite_version()', -1, statementPointer, 0) === 0, 'C prepare versions');
+        statement = w.peekPtr(statementPointer);
+        check(c.sqlite3_step(statement) === c.SQLITE_ROW, 'C version row');
+        check(c.sqlite3_column_text(statement, 0) === version, 'independent C SQLite version');
+        if (vector) check(c.sqlite3_column_text(statement, 1) === `v${vector}`, 'independent C vec version');
+      } finally { if (statement) c.sqlite3_finalize(statement); w.dealloc(statementPointer); }
       if (vector) check(c.sqlite3_exec(native, 'select vec_version(); create virtual table cv using vec0(x float[2])', 0, 0, 0) === 0, 'automatic C initialization');
       check(db.selectValue("select count(*) from sqlite_schema where name='independent'") === 0, 'connection separation');
     } finally { if (native) check(c.sqlite3_close_v2(native) === 0, 'C close'); w.dealloc(pointer); }
@@ -50,7 +60,7 @@ export async function probe(sqlite3, vector, worker) {
       try { pooled.exec('create table if not exists probe(x); delete from probe; insert into probe values(29)'); check(pooled.selectValue('select x from probe') === 29, 'SAH pool read/write'); }
       finally { pooled.close(); }
     }
-    return { version, capi: Object.keys(c).sort(), oo1: Object.keys(oo1).sort(),
+    return { version, vecVersion, independentVersionsChecked: true, capi: Object.keys(c).sort(), oo1: Object.keys(oo1).sort(),
       dbMethods: Object.getOwnPropertyNames(oo1.DB.prototype).sort(),
       exports: Object.keys(w.exports).sort(), vfs: c.sqlite3_js_vfs_list().sort(),
       options: db.selectArrays('pragma compile_options').flat().sort(),

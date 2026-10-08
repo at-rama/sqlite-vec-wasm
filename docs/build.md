@@ -1,5 +1,8 @@
 # Canonical browser construction
 
+For complete clean production and final-package browser evidence, see
+[final-package acceptance](acceptance.md).
+
 Run from the repository root on the harness's qualified Linux x86-64 host. Install the system prerequisites described in the [harness architecture](../.42p/engineering/2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md), including a native C compiler and GNU Make. Their actual versions are recorded; they are not an immutable OS image.
 
 ```sh

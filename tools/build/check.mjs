@@ -8,7 +8,7 @@ import { serveAssets } from '../harness/server.mjs';
 import { launchBrowser } from '../harness/browser.mjs';
 
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
-async function reference(workspace) {
+export async function reference(workspace) {
   const run = commandRunner(join(workspace, 'reference.log'));
   const env = buildEnvironment(process.env);
   const execute = (command,args,cwd=root,capture=false)=>run(command,args,{cwd,env,capture});
@@ -22,7 +22,7 @@ async function reference(workspace) {
   return {inputs,runtimeDirectory,runtimeFiles:await runtimeInventory(runtimeDirectory)};
 }
 
-async function fixture(workspace,label,handoff) {
+export async function fixture(workspace,label,handoff) {
   const directory=join(workspace,label); await mkdir(directory);
   for(const file of handoff.runtimeFiles) {
     const bytes=await readFile(join(handoff.runtimeDirectory,file.name));

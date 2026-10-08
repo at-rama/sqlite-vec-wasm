@@ -1,9 +1,9 @@
 ---
-name: capture
+name: 42p-capture
 description: Maintain a compact, reconciled, non-authoritative working projection of the current design state for one change. Use when the user asks to create or update a Capture from exploration or source material, or explicitly invokes the Capture skill.
 ---
 
-skill capture
+skill 42p-capture
 
 Purpose
 Maintain, for one change, the smallest persistent, reconciled, non-authoritative projection of the current design state that is sufficient for a fresh context to resume and revise the work correctly.

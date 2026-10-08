@@ -6,7 +6,7 @@ Read [the technical canon](.42p/standards/software.md) before changing repositor
 
 [SPEC.md](SPEC.md) is the authoritative product contract. The Capture and Allocation under [.42p/engineering/](.42p/engineering/) are derived sources, not additional authority. Do not infer implementation progress from them or from a passing repository check.
 
-The repository-owned [base Capture skill](.42p/.agents/skills/capture/SKILL.md) is available for creating or updating a Capture when requested.
+The repository-owned [base Capture skill](.42p/.agents/skills/42p-capture/SKILL.md) is available for creating or updating a Capture when requested.
 
 Use a working branch and pull request targeting protected `main`; do not write to `main` directly. Run the canonical repository check on every proposed change. Integration and publication remain governed by `SPEC.md`.
 

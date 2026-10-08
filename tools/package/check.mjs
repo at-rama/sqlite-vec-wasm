@@ -59,7 +59,7 @@ export async function inspect(browser,directory,vector,version) {
         try {
           await ready;
           const opened=await request('open',{filename:':memory:'});
-          const sql=vector?'select sqlite_version(), vec_version()':'select sqlite_version()';
+          const sql=vector?"select sqlite_version(), vec_version(), vec_length(vec_f32('[1,0]'))":'select sqlite_version()';
           const result=await request('exec',{sql,resultRows:[],rowMode:'array'},opened.dbId);
           await request('close',{},opened.dbId);
           return result.result.resultRows;
@@ -67,6 +67,7 @@ export async function inspect(browser,directory,vector,version) {
       },{mode,vector});
       assert.equal(workerResult[0][0],version);
       if(vector) assert.equal(workerResult[0][1],`v${vector}`);
+      if(vector) assert.equal(workerResult[0][2],2);
       results[`${mode}-worker1`]={version:workerResult[0][0],vecVersion:workerResult[0][1],sqlRows:workerResult};
       console.error(`  ${mode}: Worker1 passed`);
       const promiseResult=await page.evaluate(async ({mode,vector})=>{
@@ -76,7 +77,7 @@ export async function inspect(browser,directory,vector,version) {
         try {
           const p=await Promise.race([factory(),new Promise((_,reject)=>setTimeout(()=>reject(Error('Promiser init timeout')),30000))]);
           const opened=await p('open',{filename:':memory:'});
-          const sql=vector?'select sqlite_version(), vec_version()':'select sqlite_version()';
+          const sql=vector?"select sqlite_version(), vec_version(), vec_length(vec_f32('[1,0]'))":'select sqlite_version()';
           const result=await p({type:'exec',dbId:opened.dbId,args:{sql,resultRows:[],rowMode:'array'}});
           await p({type:'close',dbId:opened.dbId});
           return result.result.resultRows;
@@ -84,6 +85,7 @@ export async function inspect(browser,directory,vector,version) {
       },{mode,vector});
       assert.equal(promiseResult[0][0],version);
       if(vector) assert.equal(promiseResult[0][1],`v${vector}`);
+      if(vector) assert.equal(promiseResult[0][2],2);
       results[`${mode}-promiser`]={version:promiseResult[0][0],vecVersion:promiseResult[0][1],sqlRows:promiseResult};
       console.error(`  ${mode}: promiser passed`);
       await page.close();

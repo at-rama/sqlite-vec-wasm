@@ -2,10 +2,10 @@
 
 ## 1. Production composition and evidence foundation
 
-- [ ] 1.1 Add the acceptance entry point composing fresh harness install/check/deps/smoke, existing build and package producers with explicit package metadata; verify synthetic step failures return nonzero without reusing previous outputs.
-- [ ] 1.2 Add a versioned report and required-case matrix carrying clean Git/CI identities, inputs/tools/options and available stage outcomes; verify offline tests reject dirty revision claims, missing mandatory cases, skipped gates and substituted historical success.
-- [ ] 1.3 Add final archive/handoff identity validation and independent extraction for browser use; verify altered bytes, missing files and mismatching input identities fail with retained diagnostics.
-- [ ] 1.4 Register the new offline acceptance suite in `tools/test-repository.sh` and document production commands/state lifetime in `docs/acceptance.md`; verify the registered suite and documentation links.
+- [x] 1.1 Add the acceptance entry point composing fresh harness install/check/deps/smoke, existing build and package producers with explicit package metadata; verify synthetic step failures return nonzero without reusing previous outputs.
+- [x] 1.2 Add a versioned report and required-case matrix carrying clean Git/CI identities, inputs/tools/options and available stage outcomes; verify offline tests reject dirty revision claims, missing mandatory cases, skipped gates and substituted historical success.
+- [x] 1.3 Add final archive/handoff identity validation and independent extraction for browser use; verify altered bytes, missing files and mismatching input identities fail with retained diagnostics.
+- [x] 1.4 Register the new offline acceptance suite in `tools/test-repository.sh` and document production commands/state lifetime in `docs/acceptance.md`; verify the registered suite and documentation links.
 
 ## 2. Packaged loading surfaces and baseline
 

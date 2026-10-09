@@ -4,8 +4,8 @@
 
 Direct inputs are the two current Captures:
 
-- [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `9b6de240118c7328634164ad9fca329cd78cad03bee7a71a138ffb7f08f29e38`.
-- [Site Capture](2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md), snapshot SHA-256 `73d4b7d0e004226de879defa40cffeade605ea96af11f13364e39929c99fc389`.
+- [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `0277e215b08c8a9cbff9758d75054a45e577292127a541f1e1733eb20f2476a8`.
+- [Site Capture](2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md), snapshot SHA-256 `1929858e9903605dc6f052a9afc158c87076d009eb207cae4dd3953d67737727`.
 
 Their handles retain their identity within each Capture; references below identify the corresponding scope. Instituted decisions and sources ground the design. Captures are reconciled non-authoritative projections; this Allocation organizes their responsibility coverage without instituting requirements or proving implementation. Distribution's S-spec retains the immutable historical contract provenance; Site's S-site-design and S-site-mission ground the new site responsibility. OpenSpec contractualizes each unit's realization. The two scopes do not create competing product authorities. Their S-product-design records the scoped 2026-10-09 user revision. The same nine units remain; identity reconciliation neither changes completion status nor realizes future watch/update/release/bootstrap/site responsibilities.
 
@@ -47,7 +47,7 @@ Own the complete browser runtime payload from A-build, including required loader
 
 Packaging must preserve A-build's behavior and allowed glue boundary, including no silent transient-storage substitution for requested persistence. Include required upstream licensing notices. A-release owns the shared independent product SemVer/revision/publication identity under C-release; A-package carries the caller's explicit name/version, supplies the runtime payload and output digests, and retains exact SQLite and selected-engine identities in the existing runtime manifest. `inputs.sqliteVec` explicitly identifies sqlite-vec; it is upstream identity, not product identity. No competing version registry is required.
 
-**Exclusion:** the administrative GitHub repository rename and migration of existing external settings are not packaging realization. Correct product identity and package metadata remain in scope.
+**Exclusion:** the administrative GitHub repository rename and migration of existing external settings required by that rename are not packaging realization. Correct product identity and package metadata remain in scope.
 
 **Composition:** consumes A-build; supplies the final assets to A-acceptance and the exact verified payload to A-release. **Evidence target:** distributable contents, asset resolution, output digests, notices, and repository artifact exclusions.
 
@@ -94,7 +94,7 @@ The candidate must include an explicitly justified independent product-version c
 
 A failed mandatory build, compatibility, packaging, integrity, or acceptance requirement stops the candidate before it is eligible for merge and before successful integration. Human approval does not waive mandatory gates. Automatic upstream incompatibility repair is not required; human initiation and adoption do not relax the patch prohibition or authorize a new design decision here.
 
-**Exclusion:** the administrative GitHub repository rename and migration of existing external settings are not upstream candidate preparation or integration.
+**Exclusion:** the administrative GitHub repository rename and migration of existing external settings required by that rename are not upstream candidate preparation or integration.
 
 **Composition:** optionally receives A-watch issue context through a human decision; supplies candidates to A-inputs and requires complete A-acceptance outcomes before the candidate PR is eligible for human merge. Identify the human-approved merged authoritative revision and corresponding payload for A-acceptance/A-release; merge alone does not establish applicability of candidate evidence to them. **Evidence target:** manual invocation and selected-version records, preparation independent of notification issues/history, candidate changes and mandatory check outcomes, PR creation/update and stop before merge/publication, human-approved merge, the authoritative revision/payload and applicable acceptance evidence, and captured failure stops; no polling history is required.
 
@@ -108,7 +108,7 @@ Permit publication only with A-acceptance evidence applicable to the authoritati
 
 Any mandatory gate failure prevents the corresponding release tag, GitHub Release, and npm version. Steady-state publication uses npm trusted publishing and verifiable build provenance/asset attestations where supported by the chosen environment; unsupported mechanisms/fallbacks are explicit. Persistent npm credentials cannot be the normal mechanism where trusted publishing provides secretless publication.
 
-**Exclusion:** the administrative GitHub repository rename and migration of existing external settings are not release realization. Correct channel identities, metadata and the publishing relationship remain required.
+**Exclusion:** the administrative GitHub repository rename and migration of existing external settings required by that rename are not release realization. Correct channel identities, metadata and the publishing relationship remain required.
 
 **Composition:** consumes A-package's exact verified payload, applicable A-acceptance evidence, A-updates' human-approved merged authoritative revision, and the publishing relationship established under A-bootstrap. Bootstrap does not waive this unit's verification or source/revision/payload identity obligations. Its published archive supplies A-site; site consumption adds no package or publication responsibility here. **Evidence target:** approved candidate merge as the normal publication trigger, any bounded initial npm-publication exception, tag/revision/version identity, both channel payloads and metadata, applicable acceptance evidence and publication gate outcomes, authentication mechanism, and supported provenance/attestations.
 
@@ -118,7 +118,7 @@ Any mandatory gate failure prevents the corresponding release tag, GitHub Releas
 
 Own the permitted one-time publication-setup exception: minimum unavoidable manual registry configuration and first npm publication needed to establish trusted publishing MAY occur during initial bootstrap. Only for that minimum unavoidable initial setup/first-publication case, this exception MAY override A-release's normal automatic post-merge npm-publication behavior. It MUST NOT waive mandatory verification, weaken source/revision/payload identity requirements, provide a recurring manual release path, or alter recurring human candidate initiation or merge authority. It supplies the relationship A-release uses for automatic post-merge publication; no bootstrap implementation procedure is selected.
 
-**Exclusion:** the administrative GitHub repository rename and migration of existing external settings are not publication bootstrap. This excludes neither the minimum unavoidable initial registry setup nor establishment of trusted publishing under C-bootstrap.
+**Exclusion:** the administrative GitHub repository rename and migration of existing external settings required by that rename are not publication bootstrap. This excludes neither the minimum unavoidable initial registry setup nor establishment of trusted publishing under C-bootstrap.
 
 **Composition:** the first publication remains constrained by A-acceptance and A-release; established configuration supports A-release's subsequent automatic post-merge publications. **Evidence target:** initial-versus-steady-state publishing configuration and the bounded publication-setup exception, if exercised.
 
@@ -138,7 +138,7 @@ Load sign-quantized binary vectors by default, padded to 304 dimensions with fou
 
 Own deterministic comparisons of a few searches in each mode against expectations calculated independently of sqlite-vec, exercising published WASM loading, automatic extension availability, vector insertion and searches. Surprising neighbors alone establish no vector execution. Also check navigation, README rendering and links from GitHub Pages. This scoped demonstration complements A-acceptance without replacing its API, OPFS, persistence or production obligations. Retain reported-size and unverified-browser limitations; Q-volume and Q-realization remain open, without invented size gates, data formats, pipeline or framework choices. Realize this one unit through a later OpenSpec Change; this Allocation records no implementation or publication progress.
 
-**Exclusion:** the administrative GitHub repository rename and migration of existing external settings are not site realization. Valid repository navigation, Pages links and site deployment remain in scope.
+**Exclusion:** the administrative GitHub repository rename and migration of existing external settings required by that rename are not site realization. Valid repository navigation, Pages links and site deployment remain in scope.
 
 **Composition:** consumes A-release's published archive and the public README; independent README updates preserve the demo runtime identity. A-release supplies that artifact without gaining site deployment responsibility. Demo data remain site-specific; A-build/A-package and A-acceptance retain their existing contracts. **Evidence target:** the deployed navigation/presentation and valid README links/images, fixed published archive/version identity and reported SQL versions, credited pinned corpus, actual text/vector interactions and mode/lifetime behavior, and independently expected scoped query results with their limits. Build/deployment and fixture details remain realization choices.
 

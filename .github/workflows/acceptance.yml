@@ -11,7 +11,7 @@ on:
         required: true
       package_name:
         description: Already selected package identity (no publication)
-        default: sqlite-vec-wasm-acceptance-fixture
+        default: sqlite-vector-wasm-acceptance-fixture
       package_version:
         description: Already selected version (no publication)
         default: 0.0.0-test
@@ -41,7 +41,7 @@ jobs:
             libxrandr2 libgbm1 libdrm2 libasound2t64
       - name: Produce and accept exact final package
         env:
-          PACKAGE_NAME: ${{ inputs.package_name || 'sqlite-vec-wasm-acceptance-fixture' }}
+          PACKAGE_NAME: ${{ inputs.package_name || 'sqlite-vector-wasm-acceptance-fixture' }}
           PACKAGE_VERSION: ${{ inputs.package_version || '0.0.0-test' }}
         run: bash tools/acceptance.sh --name "$PACKAGE_NAME" --version "$PACKAGE_VERSION"
       - name: Preserve available acceptance evidence and exact payload

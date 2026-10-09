@@ -11,10 +11,10 @@ contents. No product runtime or compiler is installed for consumers.
 From the repository root, with an explicit nonpublished fixture identity:
 
 ```sh
-export HARNESS_STATE=/tmp/sqlite-vec-wasm-tools
-bash tools/package.sh --build-handoff /tmp/sqlite-vec-wasm-build.json \
-  --name sqlite-vec-wasm-packaging-fixture --version 0.0.0-test \
-  > /tmp/sqlite-vec-wasm-package.json
+export HARNESS_STATE=/tmp/sqlite-vector-wasm-tools
+bash tools/package.sh --build-handoff /tmp/sqlite-vector-wasm-build.json \
+  --name sqlite-vector-wasm-packaging-fixture --version 0.0.0-test \
+  > /tmp/sqlite-vector-wasm-package.json
 ```
 
 The entry point verifies the source lock, build configuration identities,
@@ -28,7 +28,13 @@ stdout is success JSON matching the invocation's atomic `handoff.json`.
 One npm-compatible `.tgz` is suitable for both npm and GitHub Release channels.
 Packaging does not select a release name/version policy, tag or publish it.
 The explicit name/version supplied by the caller are carried into metadata;
-the fixture identity above is never published by these commands.
+the fixture identity above is never published by these commands. For the product,
+use `--name sqlite-vector-wasm` and an independently selected SemVer according to
+the [release-version policy](../README.md#releases). `0.1.0` is an initial example,
+not a repository release pin. `package.json` holds that product identity;
+`runtime.json` preserves exact `inputs.sqlite` and `inputs.sqliteVec` versions
+and digests. The latter key identifies the selected sqlite-vec upstream, not the
+product. No release orchestrator or registry publication is implemented here.
 
 The result identifies the archive path/size/SHA-256, every shipped file, runtime
 paths/hashes, source identities and actual build environment/options. These
@@ -49,7 +55,7 @@ Run the scoped packaging/browser check on the final archive:
 ```sh
 bash tools/harness.sh deps
 bash tools/harness.sh exec node tools/package/check.mjs \
-  /tmp/sqlite-vec-wasm-package.json
+  /tmp/sqlite-vector-wasm-package.json
 ```
 
 This checks local npm consumption, extracts the actual tarball again, hosts it

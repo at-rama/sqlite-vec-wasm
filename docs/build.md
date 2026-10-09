@@ -6,12 +6,12 @@ For complete clean production and final-package browser evidence, see
 Run from the repository root on the harness's qualified Linux x86-64 host. Install the system prerequisites described in the [harness architecture](../.42p/engineering/2026-10-04_sqlite-vec-wasm_technical_architecture_edit-0.1.md), including a native C compiler and GNU Make. Their actual versions are recorded; they are not an immutable OS image.
 
 ```sh
-export HARNESS_STATE=/tmp/sqlite-vec-wasm-tools
+export HARNESS_STATE=/tmp/sqlite-vector-wasm-tools
 bash tools/harness.sh install
 bash tools/harness.sh check
 bash tools/harness.sh deps
 bash tools/harness.sh smoke
-bash tools/build.sh > /tmp/sqlite-vec-wasm-build.json
+bash tools/build.sh > /tmp/sqlite-vector-wasm-build.json
 ```
 
 Use an empty external tool directory for initial reconstruction on managed workspaces; retain it for subsequent integrity-checked executions. SDK Node is development tooling. No Node product runtime is built.
@@ -54,7 +54,7 @@ The offline suite needs system Node 18 or newer and `cc`, in addition to the exi
 Browser construction checks are implemented separately from these lightweight checks. A-build evidence uses raw constructed assets. A-acceptance will test final packaged bytes, the complete known vector/Hamming fixtures and persistence through runtime shutdown/reopen.
 
 ```sh
-bash tools/harness.sh exec node tools/build/check.mjs /tmp/sqlite-vec-wasm-build.json
+bash tools/harness.sh exec node tools/build/check.mjs /tmp/sqlite-vector-wasm-build.json
 ```
 
 This command constructs a separate fresh, unmodified SQLite reference with the same retained options, then checks both distributions in the qualified Chrome. It compares API, WASM export, SQL function/compile-option and VFS inventories by inclusion, allowing sqlite-vec additions and code-generation differences. It exercises all three loader/Worker1/promiser variants, independent C-style and OO1 connections, BigInt, FTS5 and deterministic vec0 queries. Missing WASM, Worker1 and OPFS-proxy companions and corrupt WASM must prevent the requested runtime capability from initializing. Upstream initialization can leave a pending Promise after a failed WASM fetch; this negative check uses a bounded wait and never treats that as successful initialization. The command returns nonzero on a failed check and stores its report under `.work/build-check/run-<unique>/checks.json` only after all checks pass.

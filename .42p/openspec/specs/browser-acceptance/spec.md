@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Establish complete production and real-browser acceptance for the final sqlite-vec-wasm package, with evidence bound to its evaluated source revision and payload. This capability realizes `A-acceptance`.
+Establish complete production and real-browser acceptance for the final sqlite-vector-wasm package, with evidence bound to its evaluated source revision and payload. This capability realizes `A-acceptance`.
 
 ## Requirements
 

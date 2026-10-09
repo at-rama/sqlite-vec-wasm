@@ -1,4 +1,4 @@
-# SQLite browser runtime with sqlite-vec
+# sqlite-vector-wasm
 
 This package contains SQLite's browser/WASM distribution with sqlite-vec
 statically integrated. Every new connection has the extension available;
@@ -49,5 +49,7 @@ unavailable persistent VFS is not silently replaced with transient storage.
 
 See [SQLite browser APIs](https://sqlite.org/wasm/doc/trunk/api-index.md) for
 upstream initialization, Worker1 and asset-location mechanisms. The included
-`runtime.json` identifies versions, runtime files and build options. See
+`package.json` carries the independent product name/version. `runtime.json`
+identifies exact upstream versions (`inputs.sqlite` and `inputs.sqliteVec`, the
+selected sqlite-vec engine), source digests, runtime files and build options. See
 `NOTICE`, `LICENSE` and `licenses/` for the distinct upstream license terms.

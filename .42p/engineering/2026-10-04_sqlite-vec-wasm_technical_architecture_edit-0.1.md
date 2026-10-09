@@ -57,7 +57,7 @@ Installed tools, archives and SDK configuration/cache default to ignored `.work/
 In the managed workspace used for qualification, materialization reproduced truncated Clang under `.work/`, while extraction outside the checkout remained intact across subsequent invocations. When reconstructing there, set this before the command sequence and retain the exported value for later commands:
 
 ```sh
-export HARNESS_STATE="$(mktemp -d /tmp/sqlite-vec-wasm-harness.XXXXXX)/tools"
+export HARNESS_STATE="$(mktemp -d /tmp/sqlite-vector-wasm-harness.XXXXXX)/tools"
 ```
 
 This is a temporary-location workaround, not a resolution of the persistence anomaly. Integrity checks still reject altered extracted members. SDK activation records absolute paths and does not by itself guarantee that SDK Node/npm precede other installations in PATH; the harness explicitly establishes and checks that priority.

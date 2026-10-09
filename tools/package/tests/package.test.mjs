@@ -28,7 +28,7 @@ async function fixture(t) {
     amalgamation: ['make','sqlite3.c'], configure: ['env', 'CC=cc', './configure', '--enable-all'], wasm: ['make', 'b-esm', `sqlite3_wasm_extra_init.c=${repository}/bridge.c`] };
   for (const [field, path] of [['harnessSha256', 'tools/harness.sh'], ['configSha256', 'tools/build/config.mjs'],
     ['templateSha256', 'tools/build/extra-init.c.in'], ['dependencyLockSha256', 'tools/harness/package-lock.json']]) build[field] = hash(await readFile(join(repository, path)));
-  return { repository, handoff: { schemaVersion: 1, inputs, build, runtimeDirectory, runtimeFiles }, name: 'sqlite-vec-wasm-fixture', version: '0.0.0-test' };
+  return { repository, handoff: { schemaVersion: 1, inputs, build, runtimeDirectory, runtimeFiles }, name: 'sqlite-vector-wasm-fixture', version: '0.0.0-test' };
 }
 
 // The offline suite uses actual local npm packing but does not qualify production SDK identity.
@@ -45,6 +45,7 @@ test('complete handoff assembles one exact autonomous tarball and consumer subpa
   assert.equal(metadata.exports['.'], undefined); assert.equal(metadata.sideEffects, undefined);
   for (const name of runtimeNames) assert.equal(metadata.exports[`./${name}`], `./${name}`);
   const portable = JSON.parse(await readFile(join(result.runtimeDirectory, 'runtime.json')));
+  assert.deepEqual(portable.inputs, result.inputs);
   assert.equal(JSON.stringify(portable).includes(options.repository), false);
   await rm(options.handoff.runtimeDirectory, { recursive: true });
   const consumer = join(options.repository, 'consumer'); await mkdir(consumer);
@@ -61,6 +62,26 @@ test('identity and argument parsing reject missing, duplicate and invalid metada
   for (const name of ['../escape','Foo','node_modules','@scope/../x','', '.hidden']) assert.throws(() => identity(name,'1.0.0'));
   for (const version of ['latest','1','01.0.0','1.0.0-01','1.0.0-','1.0.0+']) assert.throws(() => identity('fixture',version));
   assert.deepEqual(identity('@fixture/engine','1.2.3-alpha.1+build'), {name:'@fixture/engine',version:'1.2.3-alpha.1+build'});
+});
+
+test('independent product versions preserve the same exact upstream composition', async t => {
+  const options = await fixture(t);
+  options.name = 'sqlite-vector-wasm';
+  for (const version of ['0.1.0', '0.1.1', '0.2.0', '1.0.0']) {
+    const result = await assemble({ ...options, version });
+    const metadata = JSON.parse(await readFile(join(result.runtimeDirectory, 'package.json')));
+    const runtime = JSON.parse(await readFile(join(result.runtimeDirectory, 'runtime.json')));
+    assert.equal(metadata.name, 'sqlite-vector-wasm');
+    assert.equal(metadata.version, version);
+    assert.deepEqual(runtime.inputs, Object.fromEntries(['sqlite', 'sqliteVec'].map(key =>
+      [key, { version: options.handoff.inputs[key].version, digest: options.handoff.inputs[key].digest }])));
+    assert.equal(metadata.version.includes(runtime.inputs.sqlite.version), false);
+    assert.equal(metadata.version.includes(runtime.inputs.sqliteVec.version), false);
+  }
+  // A composed upstream string can be syntactically valid prerelease SemVer.
+  // Product release policy excludes it; the generic packaging validator does not select that policy.
+  const composed = `${options.handoff.inputs.sqlite.version}-${options.handoff.inputs.sqliteVec.version}`;
+  assert.equal(identity(options.name, composed).version, composed);
 });
 
 test('scoped package and SemVer build metadata survive real npm packing', async t => {

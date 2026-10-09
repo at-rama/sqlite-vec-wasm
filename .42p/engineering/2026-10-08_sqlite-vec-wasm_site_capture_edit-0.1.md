@@ -2,7 +2,7 @@
 
 ## Purpose, scope, and authority
 
-Retain the reconciled design of A-Site, the public web surface of sqlite-vec-wasm: presentation, browser demonstration and GitHub access. This Capture projects instituted user decisions from S-site-design, S-site-exploration and S-site-mission; it does not institute them or prove implementation. It is distinct from the [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), whose package, runtime and publication obligations remain unchanged.
+Retain the reconciled design of A-Site, the public web surface of sqlite-vector-wasm: presentation, browser demonstration and GitHub access. This Capture projects instituted user decisions from S-site-design, S-site-exploration and S-site-mission, with scoped identity/composition consequences from S-product-design; it does not institute them or prove implementation. It is distinct from the [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), whose runtime and publication obligations remain preserved under S-product-design's identity/version revision.
 
 S-site-mission replaces S-site-design's proposed integration into a living root specification with two Captures and one global Allocation, and institutes exactly one new `A-site` unit. Realization is deferred to an OpenSpec Change. This design migration implements neither the site nor its build or deployment. Source design requirements below retain their force; permissions, reported observations, unselected alternatives and unresolved choices are identified separately.
 
@@ -18,13 +18,13 @@ Add a basic static site hosted on GitHub Pages, presenting the project and demon
 
 Source: S-site-design, “Présentation” and “Intégration au projet”.
 
-The README remains the sole presentation source, converted to HTML at deployment without maintaining another copy of its content. Relative links and images must remain usable from the site. The presentation may follow the README on `main` independently of engine releases; a documentation change needs no new sqlite-vec-wasm publication. A documentation-only site update preserves the release identity used by the demo.
+The README remains the sole presentation source, converted to HTML at deployment without maintaining another copy of its content. Relative links and images must remain usable from the site. The presentation may follow the README on `main` independently of engine releases; a documentation change needs no new sqlite-vector-wasm publication. A documentation-only site update preserves the release identity used by the demo.
 
 ### C-demo-release — Published runtime consumption
 
 Source: S-site-design, “Distribution utilisée par la démo” and “Intégration au projet”.
 
-Consume JS/WASM extracted from the actually published archive, without rebuilding the engine. Resolve the latest stable release when deploying the demo, then use that precise version until the next demo update. Display the project version, `sqlite_version()` and `vec_version()`, with a link to the release used. C-readme permits independent documentation updates; these must not silently change the demo's runtime.
+Consume JS/WASM extracted from the actually published archive, without rebuilding the engine. Resolve the latest stable release when deploying the demo, then use that precise version until the next demo update. Display the independent sqlite-vector-wasm product version, `sqlite_version()` and the selected engine identity/version (currently sqlite-vec via `vec_version()`), with a link to the release used. S-product-design changes this presentation identity, not the published-archive consumption rule or the real vector behavior. C-readme permits independent documentation updates; these must not silently change the demo's runtime.
 
 The site and demo data remain separate from the distributed package. The demo consumes A-release's published distribution; it introduces no package API, runtime capability, publishing responsibility or third canonical runtime distribution. Its UI behavior belongs to the site, not the product integration glue.
 
@@ -95,6 +95,8 @@ Source: S-site-mission, Capture Site and Allocation instructions.
 Framework, repository file organization, build/deployment pipeline, interface library, prepared-data formats, selected upstream revision, internal text/vector-search mechanisms and deterministic fixture details remain for the later Change and Apply, constrained by the behaviors above. One `A-site` responsibility is selected; no subdivision into UI, data, deployment or search units is established. No current passage condition is added merely because these choices remain open.
 
 ## Material sources
+
+**S-product-design** — The same primary 2026-10-09 user instruction identified in the Distribution Capture, D1–D6. Only product presentation and independent version/composition consequences propagate here. The selected engine remains sqlite-vec. Dataset, modes, actual execution, independent checks, memory lifetime and site/publication separation are unaffected. This related source and the Distribution projection are not independent corroboration.
 
 **S-site-design** — User-supplied edited text on 2026-10-08 in this sqlite-vec-wasm project conversation, titled “Spécification — Site public et démonstration sqlite-vec-wasm”, from “Ajouter au dépôt un site statique basique publié sur GitHub Pages” through “sur le WASM réellement distribué”. The user provided both the edited writing block and the full text after the source-access diagnostic. This explicitly designates the consolidated exploration as design input; its earlier assistant origin does not make it independent evidence. The supplied text grounds the behavioral decisions and reports exploratory observations. Its proposed SPEC integration is replaced by S-site-mission, not erased from provenance. No public conversation permalink or raw experiment output is available in this checkout.
 

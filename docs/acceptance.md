@@ -11,12 +11,12 @@ SDK Node/npm and verified Chrome, not the bootstrap runtime.
 bash tools/acceptance.sh
 ```
 
-The default identity is the nonpublished `sqlite-vec-wasm-acceptance-fixture`
+The default identity is the nonpublished `sqlite-vector-wasm-acceptance-fixture`
 version `0.0.0-test`. A caller preparing an exact release artifact can provide
 its already selected name and version without changing the acceptance procedure:
 
 ```sh
-bash tools/acceptance.sh --name sqlite-vec-wasm --version 1.2.3
+bash tools/acceptance.sh --name sqlite-vector-wasm --version 0.1.0
 ```
 
 This command installs and verifies fresh tools, installs locked test dependencies,

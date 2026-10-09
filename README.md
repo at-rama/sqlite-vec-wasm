@@ -1,8 +1,14 @@
-# sqlite-vec-wasm
+# sqlite-vector-wasm
 
-sqlite-vec-wasm exists to build and publish the canonical SQLite browser/WASM distribution with an official stable sqlite-vec release statically integrated, reproducibly, without functionally modifying either upstream.
+sqlite-vector-wasm aims to provide the canonical SQLite browser/WASM distribution with statically integrated vector search, reproducibly, without functionally modifying its upstreams.
 
 The goal is a ready-to-use browser distribution that saves you from building WASM and integrating the extension yourself, while preserving SQLite's browser APIs and upstream vector-search behavior.
+
+## Vector search
+
+The selected engine is sqlite-vec. It provides native Float32 vectors and binary bit vectors with Hamming-distance search, with a small static integration that preserves SQLite's browser APIs and capabilities. Exactly one engine is integrated; there is no backend-selection or plugin API.
+
+The selection can be reconsidered when observable maintenance, security, compatibility or technical suitability changes materially. Any replacement must preserve the applicable browser and distribution behavior, including binary vectors and Hamming search.
 
 ## Browser support
 
@@ -14,7 +20,9 @@ Node.js runtime support, native binaries and WASI are outside the project's scop
 
 ## Releases
 
-Releases provide the same version and browser files through npm and [GitHub Releases](https://github.com/at-rama/sqlite-vec-wasm/releases). Each release identifies the included SQLite and sqlite-vec versions and file checksums. Check GitHub Releases for available versions, downloads and release details.
+The product uses its own Semantic Versioning (`MAJOR.MINOR.PATCH`), independently of the included SQLite and vector-engine versions. Before `1.0.0`, compatible corrections and verified compatible upstream updates normally increment PATCH; additive or breaking product changes increment MINOR with an explicit compatibility explanation. From `1.0.0`, breaking changes increment MAJOR, compatible additions MINOR and compatible corrections PATCH. Upstream update size or passing tests alone does not determine compatibility.
+
+Releases are intended to provide the same product version and verified browser payload through npm (`sqlite-vector-wasm`) and [GitHub Releases](https://github.com/at-rama/sqlite-vec-wasm/releases). Each release will identify the exact SQLite version, selected vector engine and version (currently sqlite-vec), file checksums and build provenance. The product version is never composed from the upstream versions. Check GitHub Releases for publication records before choosing a version.
 
 ## Builds and updates
 
@@ -57,6 +65,7 @@ These commands set up development tools and test a small browser fixture. They d
 
 ## Project documentation
 
+- [User and build documentation](docs/) covers source acquisition, browser builds, packaging and acceptance.
 - [Engineering notes](.42p/engineering/) record the technical analysis and build investigation.
 - [Development rules](.42p/standards/) describe how to work in this repository.
 

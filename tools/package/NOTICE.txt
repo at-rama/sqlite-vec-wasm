@@ -1,4 +1,4 @@
-sqlite-vec-wasm
+sqlite-vector-wasm
 
 Repository-authored packaging code and documentation are Apache-2.0; see LICENSE.
 Included upstream runtime material retains its own terms:

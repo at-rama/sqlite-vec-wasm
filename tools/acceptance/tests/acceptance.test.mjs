@@ -124,6 +124,9 @@ test('invalid final-package identities produce a failure report before launching
 });
 
 test('acceptance metadata is explicit and rejects invalid or duplicate options', () => {
+  assert.deepEqual(options([]), { name: 'sqlite-vector-wasm-acceptance-fixture', version: '0.0.0-test' });
+  assert.deepEqual(options(['--name', 'sqlite-vector-wasm', '--version', '0.1.0']),
+    { name: 'sqlite-vector-wasm', version: '0.1.0' });
   assert.deepEqual(options(['--version', '1.2.3', '--name', 'fixture']), { name: 'fixture', version: '1.2.3' });
   assert.throws(() => options(['--name', 'fixture']));
   assert.throws(() => options(['--name', 'fixture', '--name', 'other']));

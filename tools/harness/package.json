@@ -1,5 +1,5 @@
 {
-  "name": "sqlite-vec-wasm-harness",
+  "name": "sqlite-vector-wasm-harness",
   "private": true,
   "devDependencies": {
     "playwright-core": "1.63.0"

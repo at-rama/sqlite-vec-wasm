@@ -25,7 +25,7 @@ export function command(commandName, args, { cwd, env, log }) {
 }
 
 export function options(argv) {
-  const result = { name: 'sqlite-vec-wasm-acceptance-fixture', version: '0.0.0-test' };
+  const result = { name: 'sqlite-vector-wasm-acceptance-fixture', version: '0.0.0-test' };
   assert.ok(argv.length === 0 || argv.length === 4, 'Usage: acceptance.sh [--name NAME --version VERSION]');
   const seen = new Set();
   for (let i = 0; i < argv.length; i += 2) {
@@ -41,7 +41,7 @@ export async function production({ repository = root, metadata = options([]), ru
   await mkdir(join(repository, '.work/acceptance'), { recursive: true });
   const workspace = await mkdtemp(join(repository, '.work/acceptance/run-'));
   const logs = join(workspace, 'logs'); await mkdir(logs);
-  const toolsParent = await mkdtemp(join(tmpdir(), 'sqlite-vec-wasm-acceptance-'));
+  const toolsParent = await mkdtemp(join(tmpdir(), 'sqlite-vector-wasm-acceptance-'));
   const env = { ...environment, HARNESS_STATE: join(toolsParent, 'tools') };
   const report = { schemaVersion: 1, verdict: 'failed', started: new Date().toISOString(),
     package: metadata, workspace, toolsDirectory: env.HARNESS_STATE,

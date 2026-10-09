@@ -100,7 +100,7 @@ export function packageMetadata(name, version, files) {
   return { ...identity(name, version), description: 'SQLite browser/WASM with sqlite-vec statically integrated',
     license: 'SEE LICENSE IN NOTICE',
     exports: Object.fromEntries([...runtimeNames, 'package.json', 'runtime.json'].map(name => [`./${name}`, `./${name}`])),
-    files, repository: { type: 'git', url: 'https://github.com/at-rama/sqlite-vec-wasm.git' } };
+    files, repository: { type: 'git', url: 'https://github.com/at-rama/sqlite-vector-wasm.git' } };
 }
 
 export function execute(command, args, { cwd, input, logPath, env = process.env } = {}) {

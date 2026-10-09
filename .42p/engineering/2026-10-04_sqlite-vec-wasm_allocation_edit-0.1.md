@@ -2,12 +2,15 @@
 
 ## Identity, source, and authority
 
-Direct inputs are the two current Captures:
+Direct inputs are the current Captures:
 
 - [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `1891e35fec3b89c015557c401fd49d5d92da11d3820dca8d50de38a1b8a0d455`.
 - [Site Capture](2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md), snapshot SHA-256 `587b3bd72f68aecdea099f36083b2a91fd8d56f07513144f831135d6c7d14758`.
+- [Release/Watch Capture](2026-10-09_sqlite-vec-wasm_release-watch_capture_edit-0.1.md), snapshot SHA-256 `a2884319e53e0e5c741c8a2ad4264f872cc0cd56f473ba98694bc121aa1fc564`.
 
-Their handles retain their identity within each Capture; references below identify the corresponding scope. Instituted decisions and sources ground the design. Captures are reconciled non-authoritative projections; this Allocation organizes their responsibility coverage without instituting requirements or proving implementation. Distribution's S-spec retains the immutable historical contract provenance; Site's S-site-design and S-site-mission ground the new site responsibility. OpenSpec contractualizes each unit's realization. The two scopes do not create competing product authorities. Their S-product-design records the scoped 2026-10-09 user revision. The same nine units remain; identity reconciliation neither changes completion status nor realizes future watch/update/release/bootstrap/site responsibilities.
+Release/Watch input registration records its exact current snapshot only. Its designated source explicitly revises distribution versioning, admissible upstreams and watch/candidate behavior. Detailed reconciliation of affected units, compositions and coverage below remains pending; superseded descriptions are retained as the comparison state, not current obligations. The earlier Distribution/Site accounting below does not establish current completeness across all three inputs. The Release/Watch Capture's impact map identifies the affected responsibilities and retained boundaries; no new allocation unit or implementation status is instituted by this registration.
+
+Their handles retain their identity within each Capture; references below identify the corresponding scope. Instituted decisions and sources ground the design. Captures are reconciled non-authoritative projections; this Allocation organizes responsibility coverage without instituting requirements or proving implementation, subject to the pending Release/Watch reconciliation above. Distribution's S-spec retains the immutable historical contract provenance; Site's S-site-design and S-site-mission ground the site responsibility. OpenSpec contractualizes each unit's realization. The scopes do not create competing product authorities. Distribution and Site's S-product-design records the scoped 2026-10-09 identity revision; Release/Watch's S-release-watch-design records the distinct versioning/watch revision and its explicit supersessions. The same nine units remain; input registration neither changes completion status nor realizes future watch/update/release/bootstrap/site responsibilities.
 
 An allocation surface denotes a responsibility boundary, not a prescribed file, workflow, library, API, or architectural component. The modalities, exclusions, conditions, and exceptions attributed to the Capture retain their force. Evidence described below identifies what later Verification must connect to that responsibility; it is not a separate Verification model.
 
@@ -134,7 +137,7 @@ Own deterministic comparisons of a few searches in each mode against expectation
 
 ## Coverage accounting
 
-Each material handle in the union of the two Captures has one classification. Distribution handles are listed first; Site handles follow. Multiple units in a covered row jointly account for its content; context and obligations within a handle are distinguished rather than assigning the handle two classifications.
+The following accounting retains the Distribution/Site comparison state before the Release/Watch revision. It is not a current coverage claim for all inputs. Distribution handles are listed first; Site handles follow. Multiple units in a covered row jointly account for its content; context and obligations within a handle are distinguished rather than assigning the handle two classifications. Reconsider affected rows together with the unit descriptions during the pending reconciliation.
 
 | Capture handle | Classification | Allocation / treatment |
 | --- | --- | --- |
@@ -180,8 +183,8 @@ Each material handle in the union of the two Captures has one classification. Di
 | S-site-exploration | Non-allocatable | Primary user intent/rationale and earlier alternatives; no unseen assistant proposal is promoted into a requirement. |
 | S-site-mission | Non-allocatable | Human authority for the local migration, one A-site unit and deferred realization; not a site implementation obligation or independent corroboration of measurements. |
 
-**Distribution coverage: 100% — 21/21 material handles examined; 13 covered, eight non-allocatable. Site coverage: 100% — 17/17 examined; nine covered, eight non-allocatable. Union coverage: 100% — 38/38 examined; 22 covered, 16 non-allocatable; no unassigned obligation or omitted element. Allocation grounding: 100% — 9/9 units grounded; no orphan units.**
+**Prior Distribution/Site accounting, before the Release/Watch revision:** Distribution: 21/21 material handles examined; 13 covered, eight non-allocatable. Site: 17/17 examined; nine covered, eight non-allocatable. Their prior union: 38/38 examined; 22 covered, 16 non-allocatable. Prior grounding: 9/9 units. Current three-input coverage and revised grounding remain unevaluated; the previous 100% result must not be applied to the revised design.
 
 The two explicit Site questions remain open and represented; 100% responsibility accounting does not claim their answers are known. Source authority and scope prose outside handles is non-allocatable provenance/boundary material, retained in the source descriptions and compositions. C-demo-release is a consumer dependency on A-release, not a new publication channel. C-demo-checks is a limited additional site check, not duplicated ownership or weakening of C-verification.
 
-Authority and epistemic distinctions outside the Capture handles are retained in this document's source boundary, and its material relationships are represented in unit composition. Lifecycle invariants are not reclassified as current readiness conditions. No unassigned design obligation prevents allocation; unspecified lower-level mechanisms remain open. Coverage certifies responsibility/grounding accounting, not successful implementation, technical compatibility, completed bootstrap, or passed production gates.
+Authority and epistemic distinctions outside the Capture handles are retained in this document's source boundary. Lifecycle invariants are not reclassified as current readiness conditions. Pending Release/Watch reconciliation must update the affected responsibilities, material relationships and accounting; unspecified lower-level mechanisms remain open. Coverage concerns responsibility/grounding accounting, not successful implementation, technical compatibility, completed bootstrap, or passed production gates.

@@ -1,0 +1,145 @@
+# Release/Watch Capture
+
+## Purpose, scope, and authority
+
+Retain the current design of sqlite-vector-wasm distribution versioning, upstream watch, manual candidate preparation and post-integration publication from the final consolidation explicitly supplied by the user, `S-release-watch-design`. `S-capture-mission` establishes this dedicated Capture, distinct from the [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) and [Site Capture](2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md). This is a reconciled, non-authoritative working projection; it neither institutes decisions nor proves implementation, upstream availability, acceptance or publication.
+
+The supplied consolidation expressly supersedes earlier versioning and watch orientations within the scope recorded under `C-reconciliation`. This precedence comes from its explicit revision relation and user designation, not its date or this Capture. The original exploration transcript is not supplied; the consolidation is a designated derived source, not independent corroboration of every preceding discussion message. Repository projections in `S-repository-state` are current-state inputs and impact locators, never substantive evidence supporting themselves.
+
+The scope retains existing source authenticity, integrity, upstream nonmodification, browser/product fidelity, mandatory verification and human integration authority. It does not change the selected vector engine, runtime, site behavior or general 42p model. Detailed downstream reconciliation remains work to perform; an input registration in the [global Allocation](2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md) does not establish its coverage of this revision.
+
+## Material criteria and lifecycle boundaries
+
+### C-determinism — Mechanical calculation and human authority
+
+Source: `S-release-watch-design`, sections 1, 9 and 11.
+
+Detection, combination selection, version calculation and publication preparation are algorithmic. No AI participates in nominal operation. One shared deterministic calculation serves A-watch forecasts, dispatch evaluation, candidate preparation and final publication recalculation, using official upstream versions, published provenance, Git tags, npm versions and the separate `latest`/`next` HEADs.
+
+A-watch proposes work. The maintainer selects upstreams and initiates preparation; the workflow stops at a candidate PR. Human integration into `main` authorizes the subsequent automatic publication, subject to mandatory gates. Dispatch expresses preparation intent, not permission to publish; passing checks alone does not institute adoption.
+
+### C-version-identity — One distribution version domain
+
+Source: `S-release-watch-design`, sections 1–2 and 10.
+
+`main` is the sole permanent branch; preparation branches are temporary. There is no permanent distribution branch. The assembled distribution alone has a project SemVer, with Git tags `dist/vX.Y.Z` and the same unprefixed npm version, for example `dist/v0.2.0-alpha.1` / `0.2.0-alpha.1`. Tags identify GitHub Releases and npm publications.
+
+The codebase identity is its exact Git commit. There are no `code/vX.Y.Z` tags, code-version counter, separate code npm publication or code/dist synchronization mechanism. A code change receives a new project number only through a new distribution; changed upstreams or build parameters can produce a new distribution without changing project code. Upstream numbers remain exact component identities, not parts of the distribution version string.
+
+### C-semver — Deterministic increments and maturity ceiling
+
+Source: `S-release-watch-design`, section 3.
+
+The distribution increment is `max(ΔSQLite, Δsqlite-vec)`, ordered `MAJOR > MINOR > PATCH`. Classify the numerical change of each upstream independently of its prerelease suffix. Thus `0.1.9 → 0.1.10-alpha.1` supplies PATCH and `0.1.10 → 0.2.0-alpha.1` supplies MINOR. The suffix separately determines prerelease status and ordering. This is the selected numbering convention, not automatic compatibility assessment; mandatory compatibility and acceptance checks remain independent.
+
+While sqlite-vec remains `0.x`, the distribution stays `0.x`: an upstream MAJOR signal is capped at distribution MINOR. A SQLite MAJOR signal with distribution `0.4.2` and sqlite-vec still `0.x` therefore yields `0.5.0`. sqlite-vec reaching `1.x` permits transition to the distribution's `1.x` regime.
+
+A new distribution without numerical upstream progression uses PATCH by default unless a higher applicable upstream signal exists. This includes code or packaging corrections, distinct reconstruction, changed build parameters and explicit rollback. A published distribution version is never reused. This revision replaces the prior impact-based increment policy; it does not waive product checks.
+
+### C-channels — Stable and experimental publication
+
+Source: `S-release-watch-design`, section 4.
+
+`latest` carries stable `X.Y.Z`; `next` carries experimental `X.Y.Z-alpha.N`. They share one npm version namespace but have separate publication HEADs. Any prerelease upstream requires `next`; stable upstreams may also remain on `next` while distribution validation is unfinished. A stable distribution cannot contain a prerelease upstream. The distribution owns its `alpha.N` counter, independently of upstream alpha/beta counters; exact upstream suffixes remain in provenance.
+
+Each channel advances monotonically by SemVer; a publication need not exceed every version previously published on the other channel. For example, `latest = 0.2.0`, then `next = 0.3.0-alpha.2`, then `latest = 0.2.1`, then `next = 0.3.0-alpha.3`, then `latest = 0.3.0` is valid.
+
+When a stable version reaches or exceeds an experimental series' numerical base, that series closes. After `latest = 0.3.0`, `0.3.0-alpha.4` is obsolete; the next series starts at `0.3.1-alpha.1` for PATCH, `0.4.0-alpha.1` for MINOR or an applicable MAJOR base. While the current series remains valid its counter increments. Forecasts reserve no npm number: recalculate against actual tags and publications, preserving unique versions, per-channel progression, SemVer order, valid series continuity and closure, and prevention of concurrent-candidate collisions. `Q-numbering` retains unspecified calculation details without weakening these invariants.
+
+### C-watch — Weekly planning and email boundary
+
+Source: `S-release-watch-design`, sections 5 and 7.
+
+A-watch runs weekly through GitHub Actions. It discovers official published stable and prerelease versions from SQLite's official Fossil publications and sqlite-vec's official GitHub Releases. Discovery baselines are SQLite `3.53.4` and sqlite-vec `0.1.9`; older versions do not participate in ordinary discovery. These are designated design baselines, not newly verified upstream facts or a ban on manual older-version selection.
+
+Read available upstream versions, channel HEADs, published distribution provenance and candidates in progress; enumerate eligible SQLite × sqlite-vec combinations through `C-selection`; calculate their forecast channel and increment; generate a job plan and email it through Gmail SMTP. The source's low-release-frequency rationale supports enumeration without AI heuristics. Scheduling deactivation due to repository inactivity is accepted and reactivated manually; no keepalive is introduced.
+
+For each job the email contains exact upstream versions, forecast channel/increment, workflow parameters, a GitHub Actions link and any existing-candidate state. It may also include a ready-to-copy `gh workflow run` command. The maintainer can launch zero, one or several jobs. The email reserves no version and triggers no dispatch. No GitHub notification issue is created. A-watch neither changes pins, builds, prepares PRs, merges, tags nor publishes.
+
+### C-selection — Two-dimensional eligibility and no refusal registry
+
+Source: `S-release-watch-design`, section 6.
+
+Compare pairs `(SQLite, sqlite-vec)` component by component, including prerelease order. A pair is at least as recent as another only when both components are greater than or equal; strict progression requires at least one greater component and no regression of the other.
+
+For `latest`, propose stable-only pairs strictly later than its published pair, not already published in the corresponding status, without implicit component regression. A more advanced `next` does not block stable maintenance. For `next`, require progression relative to its HEAD and a pair at least as recent component by component as `latest`, excluding pairs already covered by a corresponding publication. If `next` has no publication, use `latest` as its initial reference. An in-progress candidate may be signaled without duplicating preparation.
+
+For example, with `latest = (3.54.0, 0.1.9)` and `next = (3.53.5, 0.1.10-alpha.1)`, `(3.53.6, 0.1.10-alpha.2)` is excluded because SQLite regresses relative to `latest`. Both `(3.54.0, 0.1.10-alpha.1)` and `(3.54.0, 0.1.10-alpha.2)` are candidates; `(3.54.0, 0.1.9)` is already published. The pair is the proposal unit: a new pair can be eligible even without a newly discovered individual upstream version.
+
+There is no refusal registry. Eligible unselected pairs remain proposable; pairs superseded by their reference HEAD disappear naturally; a published pair is not reproposed in the same status. HEADs and published provenance supply selection state, with current-candidate inspection for preparation deduplication. The maintainer need not integrate every pair. Manual dispatch can explicitly select an older pair or rollback outside ordinary watch eligibility.
+
+### C-dispatch — Exact manual selection and rollback
+
+Source: `S-release-watch-design`, sections 7–8.
+
+`workflow_dispatch` accepts `sqlite_version`, `sqlite_vec_version` and the maintainer's free-text `release_comment`. Versions are exact. Dispatch is independent of A-watch and its history; select any combination admissible to preparation, including an unlisted pair, skipped intermediate versions, a prerelease, an older upstream or reconstruction. Ordinary-watch baselines and progression filters are not manual-selection prohibitions. Official-source integrity and mandatory checks remain applicable.
+
+A rollback explicitly selects an upstream older than the channel reference. It requires `release_comment`, retained in GitHub Release notes, and an unused distribution version with PATCH by default unless a higher applicable signal exists. A-watch never initiates rollback implicitly. For example, `sqlite_version=3.53.4`, `sqlite_vec_version=0.1.10` and a comment explaining a SQLite regression select older composition without rolling back the publication number. `Q-channel` retains the unresolved channel-selection mechanism for stable-input experimental candidates.
+
+### C-candidate — Automated preparation ending at a PR
+
+Source: `S-release-watch-design`, section 9.
+
+On manual dispatch, acquire the selected official upstreams, verify integrity/digests, prepare repository changes, build, execute all mandatory controls, prepare artifacts/provenance and create or update a candidate PR. Preparation stops there, without merging or publishing. The maintainer examines and integrates the candidate into `main`; a failing mandatory control makes it ineligible for integration and human approval does not replace the controls.
+
+### C-publication — Authorized integration, definitive version and exact payload
+
+Source: `S-release-watch-design`, sections 9–10.
+
+Authorized candidate integration triggers final distribution-version calculation and uniqueness verification, association with the authoritative commit and verified artifacts, creation of `dist/vX.Y.Z`, GitHub Release publication and npm publication on `latest` or `next`. GitHub Release and npm use the same version, revision and verified runtime payload. Evidence must apply to the revision actually published, not only a pre-integration PR head. Any mandatory failure prevents the corresponding release tag and GitHub/npm publications; passing candidate checks alone does not establish post-merge evidence applicability.
+
+Existing bounded initial npm bootstrap, trusted publishing and supported provenance provisions remain applicable where not superseded. In particular, the minimum unavoidable initial registry setup/first npm-publication exception may override only the automatic npm trigger: it waives no verification or revision/payload identity requirement, creates no recurring manual publication path and changes no recurring human initiation/integration authority.
+
+### C-provenance — Distribution composition and publication identity
+
+Source: `S-release-watch-design`, sections 2, 9–11.
+
+Record the exact code commit; distribution tag, GitHub Release and npm version; exact SQLite and sqlite-vec versions, origins and source digests, including prerelease suffixes; build tools/versions/options/environment; published output digests; channel; and dispatch comment when present. Provenance distinguishes code, upstreams, build and artifacts without another code SemVer or manually synchronized version domain.
+
+## Rationale and open material choices
+
+### R-frugality — Bounded automation and retained alternatives
+
+Source: `S-release-watch-design`, sections 1–2, 5–6 and 12.
+
+One permanent branch, one distribution version domain, direct email plans, no refusal history and no keepalive limit maintenance machinery. Git identifies code; upstream versions identify components; provenance relates them to published artifacts. Weekly deterministic enumeration proposes the available work while the maintainer controls selection and integration.
+
+The former two-tag-family proposal, daily assigned-issue notification, issue-closure refusal memory and impact-based version choice are explicitly superseded, not technically refuted. Retaining a second code version would need a separate distribution/use case that is absent from the selected design. Fully autonomous selection/adoption remains outside the human-authority boundary; automatic preparation and post-integration publication retain distinct authorization points.
+
+### Q-channel — Stable inputs on the experimental channel
+
+`C-channels` permits stable upstreams on `next`, while `C-dispatch` lists no channel parameter. The supplied design does not specify how such a candidate is distinguished from a `latest` candidate. Preserve both statements; no additional input or automatic stable-to-latest rule is adopted here. This is an unresolved realization choice, not a conflict requiring interruption of Capture.
+
+### Q-numbering — Remaining deterministic calculation details
+
+The supplied design fixes increment, ceiling, per-channel ordering, alpha continuity/closure, uniqueness and recalculation invariants. It does not give a complete executable algorithm for an empty publication history, a higher numerical signal while an alpha series remains valid, or final number allocation across concurrent candidates. These details remain unspecified; no initial project-version pin, reservation store, locking mechanism or additional manual version input is selected. The existing Distribution example `0.1.0` is not an instituted first-release pin. Ordinary computation preconditions are not new passage conditions.
+
+## Reconciliation and material impact
+
+### C-reconciliation — Replace superseded active rules, preserve history
+
+Source: `S-release-watch-design`, section 12; repository locators from `S-repository-state`.
+
+Reconcile active documents from design toward responsibilities and realization contracts. Replace contradictory rules rather than juxtaposing both as current obligations. Preserve authenticity/integrity, browser fidelity, mandatory controls, exact revision/payload evidence, human authority and unaffected bootstrap provisions. Immutable contracts, archived Changes, reports and evidence keep their original contents and source snapshots; a superseded historical rule is not a current requirement.
+
+| Current document / element | Material reconciliation to perform |
+| --- | --- |
+| [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md): `C-purpose`, `C-inputs` | Replace stable-only qualifiers with released stable/prerelease admissibility by channel; preserve selected-engine, official-source, digest, reproduction and nonmodification boundaries. |
+| Distribution: `C-release`, related `R-engine` versioning reference and material relationships | Replace impact-based increments with `C-version-identity`, `C-semver` and `C-channels`; retain exact revision/payload, notices and evidence obligations. The future engine-selection decision itself remains outside this revision. |
+| Distribution: `C-watch`, `R-updates`, `C-autonomy` and material relationships | Replace daily stable-only/newer-than-pins assigned issues and refusal memory with weekly pair planning, email and no refusal registry; reconcile exact dispatch inputs and retain PR/human integration/publication boundaries. |
+| [Global Allocation](2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md): `A-inputs`, `A-build`, `A-package`, `A-watch`, `A-updates`, `A-release`, compositions and coverage rows | Revise stable-only wording, watch surface, input/reference relationships and version/publication responsibilities; account for this Capture explicitly and reconsider affected coverage. `A-acceptance`/`A-bootstrap` retain mandatory evidence and bounded bootstrap; no new unit split is instituted. |
+| [Synchronized upstream-inputs spec](../openspec/specs/upstream-inputs/spec.md): source-selection purpose, requirement and scenarios | Stable-only rejection is superseded for experimental distributions; exact official released identities, integrity and frozen-pair/no-fallback behavior remain. Any delta must retain applicability to its allocated unit. |
+| [Synchronized browser-build spec](../openspec/specs/browser-build/spec.md): static-integration requirement | Reconsider the pinned-stable qualifier; retain same-release SQLite components, every-connection registration and upstream behavior. Other package/acceptance specs retain their payload/evidence boundaries. |
+| [AGENTS.md](../../AGENTS.md), [technical canon](../standards/software.md), [OpenSpec canon](../standards/openspec.md), [OpenSpec context](../openspec/config.yaml) | Maintain discovery of distinct Captures, explicit scoped supersession and truthful Allocation coverage, without changing the general process. |
+| [Acquisition documentation](../../docs/source-acquisition.md) and acquisition implementation/contracts | Their stable-only behavior describes the existing realization. Identify its divergence for a later allocated change; do not rewrite implementation evidence or promise prerelease support before realization. |
+| Site `C-demo-release` / `A-site` | Keep consumption of the actually published latest stable archive and fixed demo identity; experimental npm publication introduces no automatic experimental demo deployment. |
+
+This table records impact closure and retained boundaries, not completed downstream reconciliation or implementation progress. In particular, the old watch/release unit descriptions and synchronized stable-only contracts are known to require revision. They cannot authorize realization of superseded requirements. No report or archive is rewritten to manufacture current evidence.
+
+## Material sources
+
+**S-release-watch-design** — User-supplied file `2026-10-09_consolidation_watch.md`, titled “Consolidation finale — Versionnement, surveillance et publication de sqlite-vector-wasm”, dated 2026-10-09; sections 1–13 and conclusion. Library identity: `libfile_63b5a662028881918b55a9feb445275e`; exact supplied-byte SHA-256: `c0ec8160d9d20bc4e924251cb6fb09c0d310e97231a21bf635c202e923129a78`. The attachment was read directly from its supplied workspace copy. It is the explicitly designated final derived consolidation, including its stated supersessions, not an independently acquired transcript or verification of upstream versions, publication state or email delivery. Copies and this projection are not corroboration.
+
+**S-capture-mission** — Primary user instruction of 2026-10-09 in this sqlite-vec-wasm project conversation: “Réalise avec le competence 42p-capture, unr capture de l'exploration ci-jointe dédiée au design Release/Watch, dans le dossier .42p/engineering”. It designates the attached exploration and establishes the dedicated Capture's identity, scope and destination; it does not establish realization progress. No public conversation permalink is available.
+
+**S-repository-state** — Current-state acquisition at `main` commit [`8cc9122b9f540eaada7ee3e1d75b782335dece46`](https://github.com/at-rama/sqlite-vector-wasm/commit/8cc9122b9f540eaada7ee3e1d75b782335dece46): repository instructions, current Distribution/Site Captures, global Allocation, standards, synchronized specs and acquisition documentation. Immutable [Distribution](https://github.com/at-rama/sqlite-vector-wasm/blob/8cc9122b9f540eaada7ee3e1d75b782335dece46/.42p/engineering/2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), [Site](https://github.com/at-rama/sqlite-vector-wasm/blob/8cc9122b9f540eaada7ee3e1d75b782335dece46/.42p/engineering/2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md) and [Allocation](https://github.com/at-rama/sqlite-vector-wasm/blob/8cc9122b9f540eaada7ee3e1d75b782335dece46/.42p/engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md) locators preserve the pre-reconciliation comparison state. Captures and Allocation contribute existing state and source provenance, never independent decision authority or evidence; historical sources are interpreted at their own recorded revisions. No release/npm HEAD lookup, upstream availability qualification or SMTP experiment was performed for this Capture.

@@ -8,6 +8,8 @@ Instituted decisions and sources ground the design. The [Distribution Capture](.
 
 The repository-owned [base Capture skill](.42p/.agents/skills/42p-capture/SKILL.md) is available for creating or updating a Capture when requested.
 
+The dedicated [Release/Watch Capture](.42p/engineering/2026-10-09_sqlite-vec-wasm_release-watch_capture_edit-0.1.md) records the user-designated 2026-10-09 design revision, its source and explicit supersessions. Detailed reconciliation into the Distribution Capture, global Allocation and synchronized realization canon remains pending. Input registration does not establish Allocation coverage; former rules expressly superseded by that source are not current obligations and must not drive new realization. Use its impact map to resolve affected release/watch work without treating the Capture itself as decision authority.
+
 Historical qualification/Verification reports and archived Changes retain their original source snapshots and evidence limits; their authority statements are historical context, not current instructions. Resolve historical references at the recorded revision and hash. See the [design reconciliation review](.42p/engineering/2026-10-08_sqlite-vec-wasm_design-reconciliation_edit-0.1.md) for this migration's source comparison and boundaries.
 
 Use a working branch and pull request targeting protected `main`; do not write to `main` directly. Run the canonical repository check on every proposed change. Integration and publication retain the instituted human authority and mandatory gates preserved in the Distribution Capture, particularly `C-autonomy`, `C-release`, `C-failure` and `C-bootstrap`. Site realization remains separate from canonical runtime/package publication.

@@ -10,7 +10,7 @@ The repository-owned [base Capture skill](.42p/.agents/skills/42p-capture/SKILL.
 
 Historical qualification/Verification reports and archived Changes retain their original source snapshots and evidence limits; their authority statements are historical context, not current instructions. Resolve historical references at the recorded revision and hash. See the [design reconciliation review](.42p/engineering/2026-10-08_sqlite-vec-wasm_design-reconciliation_edit-0.1.md) for this migration's source comparison and boundaries.
 
-The [product identity reconciliation](.42p/engineering/2026-10-09_sqlite-vector-wasm_identity-reconciliation_edit-0.1.md) records the scoped 2026-10-09 rename/versioning revision, impact closure and external transition. Existing engineering filenames and immutable source links retain their recorded identities; live remote links remain valid during the separately administered GitHub rename.
+The [product identity reconciliation](.42p/engineering/2026-10-09_sqlite-vector-wasm_identity-reconciliation_edit-0.1.md) records the scoped 2026-10-09 identity/versioning revision and impact closure. Existing engineering filenames and immutable source links retain their recorded identities.
 
 Use a working branch and pull request targeting protected `main`; do not write to `main` directly. Run the canonical repository check on every proposed change. Integration and publication retain the instituted human authority and mandatory gates preserved in the Distribution Capture, particularly `C-autonomy`, `C-release`, `C-failure` and `C-bootstrap`. Site realization remains separate from canonical runtime/package publication.
 

@@ -4,8 +4,8 @@
 
 Direct inputs are the two current Captures:
 
-- [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `d927459ff33b751772af12a11ac183d064057ab5ca20674d93b67f5226d254dc`.
-- [Site Capture](2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md), snapshot SHA-256 `ee2b2ea4e2e90c50789a6a03bf3c3d5869df16c998b14b9c852703ce2a1275e5`.
+- [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `1891e35fec3b89c015557c401fd49d5d92da11d3820dca8d50de38a1b8a0d455`.
+- [Site Capture](2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md), snapshot SHA-256 `587b3bd72f68aecdea099f36083b2a91fd8d56f07513144f831135d6c7d14758`.
 
 Their handles retain their identity within each Capture; references below identify the corresponding scope. Instituted decisions and sources ground the design. Captures are reconciled non-authoritative projections; this Allocation organizes their responsibility coverage without instituting requirements or proving implementation. Distribution's S-spec retains the immutable historical contract provenance; Site's S-site-design and S-site-mission ground the new site responsibility. OpenSpec contractualizes each unit's realization. The two scopes do not create competing product authorities. Their S-product-design records the scoped 2026-10-09 user revision. The same nine units remain; identity reconciliation neither changes completion status nor realizes future watch/update/release/bootstrap/site responsibilities.
 

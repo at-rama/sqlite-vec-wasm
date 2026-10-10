@@ -4,9 +4,9 @@
 
 Direct inputs are the current Captures:
 
-- [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `1891e35fec3b89c015557c401fd49d5d92da11d3820dca8d50de38a1b8a0d455`.
-- [Site Capture](2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md), snapshot SHA-256 `587b3bd72f68aecdea099f36083b2a91fd8d56f07513144f831135d6c7d14758`.
-- [Release/Watch Capture](2026-10-09_sqlite-vec-wasm_release-watch_capture_edit-0.1.md), snapshot SHA-256 `a2884319e53e0e5c741c8a2ad4264f872cc0cd56f473ba98694bc121aa1fc564`.
+- [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), snapshot SHA-256 `5d63e5462f31ac994f02d57550ff2a4997d41eb022f4703c4ba37e2369fcf086`.
+- [Site Capture](2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md), snapshot SHA-256 `64e31e3e4b0afe0ca9e23bd13dda2f316f7421fcbb61538c5bef9c168a423894`.
+- [Release/Watch Capture](2026-10-09_sqlite-vec-wasm_release-watch_capture_edit-0.1.md), snapshot SHA-256 `1086bbb58a5563c53f7e154809d76dcba5368854c8f7ab3717bb0df115b3cd82`.
 
 Release/Watch input registration records its exact current snapshot only. Its designated source explicitly revises distribution versioning, admissible upstreams and watch/candidate behavior. Detailed reconciliation of affected units, compositions and coverage below remains pending; superseded descriptions are retained as the comparison state, not current obligations. The earlier Distribution/Site accounting below does not establish current completeness across all three inputs. The Release/Watch Capture's impact map identifies the affected responsibilities and retained boundaries; no new allocation unit or implementation status is instituted by this registration.
 

@@ -76,7 +76,7 @@ test('rollback channel reference, deterministic immutable input, changed state a
 
 const ok = data => ({ status: 200, headers: {}, data });
 test('state distinguishes genuine bootstrap, complete pagination, errors and partial identities', async () => {
-  const get = async url => url.includes('registry.npmjs.org') ? { status: 404, data: { error: 'Not found' } } : ok([]);
+  const get = async url => new URL(url).hostname === 'registry.npmjs.org' ? { status: 404, data: { error: 'Not found' } } : ok([]);
   assert.deepEqual(await readState({ repository: 'at-rama/sqlite-vector-wasm', get }), empty());
   const partial = await readState({ repository: 'at-rama/sqlite-vector-wasm', get: async url => url.includes('/tags?') ? ok([{ name:'dist/v0.1.0',commit:{sha:commit} }]) : get(url) });
   assert.throws(() => calc(pair(), partial), /collision/);

@@ -49,7 +49,7 @@ test('HTTP/qualified npm adapters use non-forced identities, exact uploads and e
   const directory=await mkdtemp(join(tmpdir(),'release-adapters-'));t.after(()=>rm(directory,{recursive:true,force:true}));
   const archive=join(directory,'payload.tgz');await writeFile(archive,'exact bytes');
   const requests=[],commands=[],original=globalThis.fetch;t.after(()=>{globalThis.fetch=original;});
-  globalThis.fetch=async(url,options)=>{requests.push({url,options});return {ok:true,status:201,json:async()=>url.includes('uploads.github.com')?{id:2,name:'payload.tgz',state:'uploaded'}:{id:1}};};
+  globalThis.fetch=async(url,options)=>{requests.push({url,options});return {ok:true,status:201,json:async()=>new URL(url).hostname === 'uploads.github.com'?{id:2,name:'payload.tgz',state:'uploaded'}:{id:1}};};
   const services=githubServices({repository:'a/b',token:'synthetic',directory,get:async()=>{},run:async(cmd,args,options)=>{commands.push({cmd,args,options});return '';},environment:{}});
   await services.createTag('dist/v0.1.0','a'.repeat(40));
   assert.deepEqual(JSON.parse(requests[0].options.body),{ref:'refs/tags/dist/v0.1.0',sha:'a'.repeat(40)});
@@ -57,6 +57,8 @@ test('HTTP/qualified npm adapters use non-forced identities, exact uploads and e
   const draft=JSON.parse(requests[1].options.body);assert.equal(draft.draft,true);assert.equal(draft.make_latest,'true');assert.equal(draft.body,'comment $(data)');
   await services.upload({upload_url:'https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}',assets:[]},'payload.tgz',archive);
   assert.equal(requests[2].options.body.toString(),'exact bytes');
+  await assert.rejects(services.upload({upload_url:'https://uploads.github.com.evil.invalid/repos/a/b/releases/1/assets{?name,label}',assets:[]},'payload.tgz',archive),/Unexpected publication endpoint/);
+  assert.equal(requests.length,3);
   await assert.rejects(services.upload({assets:[{name:'payload.tgz'}]},'payload.tgz',archive),/overwritten/);
   await services.npmPublish(archive,'next');
   assert.deepEqual(commands[0].args,['tools/harness.sh','exec','npm','publish',archive,'--tag','next','--access','public','--ignore-scripts','--provenance']);

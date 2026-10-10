@@ -32,6 +32,12 @@
 ## 5. Integrated validation and lifecycle evidence
 
 - [x] 5.1 Execute `sh tools/test-repository.sh`, `sh tools/check-repository.sh` and strict OpenSpec validation from `.42p`; verify all applicable checks pass and the complete A-release fixture matrix covers the requirements in both directions.
-- [ ] 5.2 Run a hosted nonpublishing qualification exercise using the recorded stable source pair, an exact implementation commit and explicit `sqlite-vector-wasm@0.1.0`; retain clean production/browser evidence and check the accepted archive/provenance with release preflight. Verify no tag, npm publish or GitHub Release call occurs; report live OIDC/registry publication as unexercised until separately authorized.
-- [ ] 5.3 Re-examine the current Allocation-to-Change mapping, then invoke repository-owned `42p-verify-change` after Apply to write the truthful Verification report with applicable evidence and limits; verify its three controls and coverage disposition rather than treating task completion or this proposal as acceptance.
-- [ ] 5.4 After satisfactory Verification, follow `openspec-archive-change` and its synchronization instructions; verify required Change merge gates on the committed candidate. Preserve human integration/publication authority and do not perform a real release merely to complete this Change.
+- [x] 5.2 Run a hosted nonpublishing qualification exercise using the recorded stable source pair, an exact implementation commit and explicit `sqlite-vector-wasm@0.1.0`; retain clean production/browser evidence and check the accepted archive/provenance with release preflight. Verify no tag, npm publish or GitHub Release call occurs; report live OIDC/registry publication as unexercised until separately authorized.
+
+## Post-Apply lifecycle
+
+These remain required sequential operations under the repository canon, outside the implementation checklist. Verification must finish before Archive; neither may be declared complete by an Apply checkbox.
+
+**5.3 Verification.** Re-examine the current Allocation-to-Change mapping, then invoke repository-owned `42p-verify-change` after Apply to write the truthful Verification report with applicable evidence and limits; verify its three controls and coverage disposition rather than treating task completion or this proposal as acceptance.
+
+**5.4 Archive.** After satisfactory Verification, follow `openspec-archive-change` and its synchronization instructions; verify required Change merge gates on the committed candidate. Preserve human integration/publication authority and do not perform a real release merely to complete this Change.

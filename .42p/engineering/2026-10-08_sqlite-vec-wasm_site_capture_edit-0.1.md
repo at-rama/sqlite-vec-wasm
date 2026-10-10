@@ -2,7 +2,7 @@
 
 ## Purpose, scope, and authority
 
-Retain the reconciled design of A-Site, the public web surface of sqlite-vector-wasm: presentation, browser demonstration and GitHub access. This Capture projects instituted user decisions from S-site-design, S-site-exploration and S-site-mission, with scoped identity/composition consequences from S-product-design; it does not institute them or prove implementation. It is distinct from the [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md), whose runtime and publication obligations remain preserved under S-product-design's identity/version revision.
+Retain the reconciled design of A-Site, the public web surface of sqlite-vector-wasm: presentation, browser demonstration and GitHub access. This Capture projects instituted user decisions from S-site-design, S-site-exploration and S-site-mission, with scoped identity/composition consequences from S-product-design and the publication references reconciled under S-capture-reconciliation; it does not institute them or prove implementation. It is distinct from the [Distribution Capture](2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) and [Release/Watch Capture](2026-10-09_sqlite-vec-wasm_release-watch_capture_edit-0.1.md), which retain product obligations and the expressly revised versioning/watch design. These related projections are not independent sources or corroboration.
 
 S-site-mission replaces S-site-design's proposed integration into a living root specification with two Captures and one global Allocation, and institutes exactly one new `A-site` unit. Realization is deferred to an OpenSpec Change. This design migration implements neither the site nor its build or deployment. Source design requirements below retain their force; permissions, reported observations, unselected alternatives and unresolved choices are identified separately.
 
@@ -25,6 +25,8 @@ The README remains the sole presentation source, converted to HTML at deployment
 Source: S-site-design, “Distribution utilisée par la démo” and “Intégration au projet”.
 
 Consume JS/WASM extracted from the actually published archive, without rebuilding the engine. Resolve the latest stable release when deploying the demo, then use that precise version until the next demo update. Display the independent sqlite-vector-wasm product version, `sqlite_version()` and the selected engine identity/version (currently sqlite-vec via `vec_version()`), with a link to the release used. S-product-design changes this presentation identity, not the published-archive consumption rule or the real vector behavior. C-readme permits independent documentation updates; these must not silently change the demo's runtime.
+
+S-capture-reconciliation aligns these references with the distribution-only `dist/vX.Y.Z` identity and npm `latest`/`next` policy retained in Release/Watch. The demo continues to consume an actually published stable distribution corresponding to `latest`; experimental publication on `next` introduces no automatic experimental demo deployment. The revised increment policy changes neither dataset, modes, checks nor runtime lifetime.
 
 The site and demo data remain separate from the distributed package. The demo consumes A-release's published distribution; it introduces no package API, runtime capability, publishing responsibility or third canonical runtime distribution. Its UI behavior belongs to the site, not the product integration glue.
 
@@ -95,6 +97,8 @@ Source: S-site-mission, Capture Site and Allocation instructions.
 Framework, repository file organization, build/deployment pipeline, interface library, prepared-data formats, selected upstream revision, internal text/vector-search mechanisms and deterministic fixture details remain for the later Change and Apply, constrained by the behaviors above. One `A-site` responsibility is selected; no subdivision into UI, data, deployment or search units is established. No current passage condition is added merely because these choices remain open.
 
 ## Material sources
+
+**S-capture-reconciliation** — The same primary user instruction of 2026-10-10 recorded in Distribution and Release/Watch: explicit adoption of the three-Capture comparison at PR #26 revision `df13642956586dea1cc858edec1dee0f5a019dca` and authorization to apply only its listed corrections. Only minimal provenance/version/publication references propagate here. Distribution and Release/Watch retain the locators of the revised design sources; their projections do not supply independent authority. Site behavior and open realization choices remain unchanged, and Allocation reconciliation remains deferred. No public conversation permalink is available.
 
 **S-product-design** — The same primary 2026-10-09 user instruction identified in the Distribution Capture, D1–D6. Only product presentation and independent version/composition consequences propagate here. The selected engine remains sqlite-vec. Dataset, modes, actual execution, independent checks, memory lifetime and site/publication separation are unaffected. This related source and the Distribution projection are not independent corroboration.
 

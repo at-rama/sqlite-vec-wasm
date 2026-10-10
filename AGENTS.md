@@ -1,19 +1,27 @@
 # Repository instructions
 
-Read [the editorial standard](.42p/standards/editorial.md) before writing human-facing content.
+## Authority and navigation
 
-Read [the technical canon](.42p/standards/software.md) before changing repository files. It defines the shared engineering rules and current validation command.
+Read the applicable repository standards before acting. Instituted decisions and sources retain design authority; Captures and Allocations are derived projections, not independent decision authorities.
 
-Instituted decisions and sources ground the design. The [Distribution Capture](.42p/engineering/2026-10-04_sqlite-vec-wasm_capture_edit-0.1.md) and [Site Capture](.42p/engineering/2026-10-08_sqlite-vec-wasm_site_capture_edit-0.1.md) retain distinct reconciled, non-authoritative working projections; the [global Allocation](.42p/engineering/2026-10-04_sqlite-vec-wasm_allocation_edit-0.1.md) organizes their coverage by responsibilities. OpenSpec contractualizes realization of each unit. Captures do not institute decisions or corroborate themselves; unresolved authority or required semantic revisions must return to the competent decision authority. Do not infer implementation progress from these projections or from a passing repository check. The README remains public product documentation, not another design authority.
+- [Editorial standard](.42p/standards/editorial.md) — human-facing content.
+- [Technical canon](.42p/standards/software.md) — repository engineering and validation.
+- [Pull-request gates](.42p/standards/gates.md) — integration controls.
+- [OpenSpec canon](.42p/standards/openspec.md) — Change lifecycle.
+- [Verification standard](.42p/standards/verification.md) — post-Apply verification.
 
-The repository-owned [base Capture skill](.42p/.agents/skills/42p-capture/SKILL.md) is available for creating or updating a Capture when requested.
+Resolve current Captures, Allocations and other engineering documents from `.42p/engineering/`. Do not assume fixed filenames, versions or implementation status.
 
-The dedicated [Release/Watch Capture](.42p/engineering/2026-10-09_sqlite-vec-wasm_release-watch_capture_edit-0.1.md) records the user-designated 2026-10-09 design revision, its source and explicit supersessions. Detailed reconciliation into the Distribution Capture, global Allocation and synchronized realization canon remains pending. Input registration does not establish Allocation coverage; former rules expressly superseded by that source are not current obligations and must not drive new realization. Use its impact map to resolve affected release/watch work without treating the Capture itself as decision authority.
+## Workflows
 
-Historical qualification/Verification reports and archived Changes retain their original source snapshots and evidence limits; their authority statements are historical context, not current instructions. Resolve historical references at the recorded revision and hash. See the [design reconciliation review](.42p/engineering/2026-10-08_sqlite-vec-wasm_design-reconciliation_edit-0.1.md) for this migration's source comparison and boundaries.
+Read and follow the applicable repository-owned skill under `.42p/.agents/skills/` before invoking its workflow.
 
-Use a working branch and pull request targeting protected `main`; do not write to `main` directly. Run the canonical repository check on every proposed change. Integration and publication retain the instituted human authority and mandatory gates preserved in the Distribution Capture, particularly `C-autonomy`, `C-release`, `C-failure` and `C-bootstrap`. Site realization remains separate from canonical runtime/package publication.
+OpenSpec lives under `.42p/openspec/`; run normal OpenSpec CLI commands from `.42p`.
 
-Follow [the pull-request gate canon](.42p/standards/gates.md) and run `sh tools/test-repository.sh` for registered automated tests. Only allocation-unit realization requires an OpenSpec Change; design and canon evolution, including governance tooling, is exempt. Merge gates control the Changes affected by the PR; they do not classify code changes or prove evidence freshness. Review must enforce those responsibilities.
+## Repository changes
 
-OpenSpec lives under `.42p/openspec/`; normal CLI commands MUST run from `.42p`. Read [the OpenSpec usage canon](.42p/standards/openspec.md) and use the generated skills under `.42p/.agents/skills/`. Each Change realizes exactly one allocation unit; Apply requires 100% bidirectional coverage between that unit and the Change, not the complete Allocation. Apply may not reinterpret upstream authority. When post-Apply Verification is invoked, read and use the repository-owned [42p-verify-change composition skill](.42p/.agents/skills/42p-verify-change/SKILL.md), following [the Verification standard](.42p/standards/verification.md). It confirms that coverage, delegates to the intact generated `openspec-verify-change` skill, and runs repository checks and applicable tests. Under the standard's report prerequisite and stop rules, it MUST produce and commit the Change's `verification.md` with the versioned YAML verdict and available evidence, including failures or blockers; unresolved report prerequisites require a diagnostic without invented identities or destination. The official skill must be available before invocation; installation and updates belong to separate preparation. These three controls constitute Verification; do not introduce an additional verification stage or proceed directly from completed tasks to archive.
+Work on a branch through a pull request targeting protected `main`. Do not write directly to `main`.
+
+Run the canonical repository check for every proposed change and applicable tests under the technical canon. Do not interpret passing checks as implementation acceptance or publication authorization.
+
+Preserve human integration and publication authority. Escalate unresolved authority or required semantic revisions rather than deciding them locally.

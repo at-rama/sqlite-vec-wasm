@@ -3,9 +3,9 @@ name: 42p-allocate
 description: Create or reconcile a compact Capture-derived Allocation of responsibilities, incrementally or across the full design. Use when the user asks to allocate captured design, reconcile existing allocation units after Capture revisions, or examine bidirectional Capture/Allocation coverage. Support read-only proposals without implementing or verifying realization.
 ---
 
-# 42p-allocate — Proposed skill
+# 42p-allocate
 
-This is a generic skill proposal grounded in the allocation invariants explicitly adopted by the user on 2026-10-10. Its presence does not install a skill, amend repository canon, reconcile the project's Allocation, or establish implementation status. Follow the host repository's authority, lifecycle, editorial and validation rules; report integration conflicts rather than silently changing those rules.
+Follow the host repository's authority, lifecycle, editorial and validation rules; report integration conflicts rather than silently changing those rules.
 
 ## Purpose and authority
 

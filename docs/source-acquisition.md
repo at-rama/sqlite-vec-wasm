@@ -73,9 +73,10 @@ specific to that invocation. A successful handoff establishes source acquisition
 not compatibility of the selected pair, a completed build or product acceptance.
 Source admissibility does not select a publication channel: that policy belongs
 to `A-release`. A future dispatch supplies exact versions; helper defaults do not
-relax that obligation. `A-build` still restricts its input validation to stable
-versions and requires a separate correction. This acquisition change therefore
-does not establish complete product support for prereleases.
+relax that obligation. Construction consumes the exact verified pair, including
+published sqlite-vec prereleases, under the [canonical build checks](build.md).
+Acquisition and raw-runtime construction do not establish final-package acceptance
+or complete product support for prereleases.
 
 Run the inexpensive offline checks with the existing system Python, Bash and archive
 tools. The registered build-orchestration suite additionally requires Node 18 or newer

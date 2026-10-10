@@ -9,7 +9,7 @@ import { repositoryRoot, construct, generateBridge, runtimeInventory, buildEnvir
 import { runtimeNames, targets, wasmOptions } from '../config.mjs';
 
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
-async function fixture(t, { fail, absent, empty, extra, badIdentity } = {}) {
+async function fixture(t, { fail, absent, empty, extra, badIdentity, vecVersion, mutateHandoff } = {}) {
   const root = await mkdtemp(join(tmpdir(), 'sqlite-build-test-'));
   t.after(() => rm(root, { recursive: true, force: true }));
   const sqlite = join(root, 'sources/sqlite');
@@ -20,8 +20,16 @@ async function fixture(t, { fail, absent, empty, extra, badIdentity } = {}) {
   for (const path of ['tools/build/config.mjs', 'tools/build/extra-init.c.in', 'tools/harness.sh', 'tools/harness/package-lock.json', 'inputs/sources.lock.json']) {
     await copyFile(join(repositoryRoot, path), join(root, path));
   }
-  const lock = await readFile(join(root, 'inputs/sources.lock.json'));
-  const pins = JSON.parse(lock);
+  const lockPath = join(root, 'inputs/sources.lock.json');
+  const pins = JSON.parse(await readFile(lockPath));
+  if (vecVersion) {
+    const previous = pins.sqliteVec.version;
+    for (const key of ['version', 'archiveUrl', 'releaseUrl']) {
+      pins.sqliteVec[key] = pins.sqliteVec[key].replace(previous, vecVersion);
+    }
+    await writeFile(lockPath, JSON.stringify(pins) + '\n');
+  }
+  const lock = await readFile(lockPath);
   await writeFile(join(vec, 'sqlite-vec.c'), '/* unchanged extension fixture */');
   await writeFile(join(vec, 'sqlite-vec.h'), '/* unchanged header fixture */');
   await writeFile(join(sqlite, 'ext/wasm/GNUmakefile'), 'sqlite3_wasm_extra_init.c ?=\n-DSQLITE_ENABLE_FTS5\nemcc.WASM_BIGINT ?= 1\n' +
@@ -30,9 +38,10 @@ async function fixture(t, { fail, absent, empty, extra, badIdentity } = {}) {
   await writeFile(join(sqlite, 'ext/wasm/api/sqlite3-wasm.c'), 'SQLITE_WASM_EXTRA_INIT');
   const handoff = { workspace: join(root, 'sources'), lockDigest: { algorithm: 'sha256', value: digest(lock) } };
   for (const [key, path] of [['sqlite',sqlite],['sqliteVec',vec]]) handoff[key] = {
-    version: pins[key].version, sourcePath: path, archivePath: `${path}.archive`, digest: pins[key].digest,
+    version: pins[key].version, sourcePath: path, archivePath: `${path}.archive`, digest: { ...pins[key].digest },
   };
   if (badIdentity) handoff.sqlite.version = '0.0.0';
+  if (mutateHandoff) mutateHandoff(handoff);
   const calls = [];
   const run = async (command, args, options) => {
     calls.push({ command, args, ...options });
@@ -49,7 +58,51 @@ async function fixture(t, { fail, absent, empty, extra, badIdentity } = {}) {
     }
     return `${command} fixture-version`;
   };
-  return { root, sqlite, vec, calls, run };
+  return { root, sqlite, vec, calls, run, pins };
+}
+
+for (const vecVersion of ['0.1.10-alpha.4', '0.1.10-beta.1', '0.1.10-rc.0']) {
+  test(`published ${vecVersion} keeps exact frozen identity and build provenance`, async t => {
+    const f = await fixture(t, { vecVersion });
+    const lock = await readFile(join(f.root, 'inputs/sources.lock.json'));
+    const result = await construct({ root: f.root, run: f.run });
+    assert.equal(result.inputs.sqliteVec.version, vecVersion);
+    assert.deepEqual(result.inputs.sqliteVec.digest, f.pins.sqliteVec.digest);
+    assert.deepEqual(result.inputs.lockDigest, { algorithm: 'sha256', value: digest(lock) });
+    assert.equal(await readFile(join(f.root, 'inputs/sources.lock.json'), 'utf8'), lock.toString());
+    const acquisition = f.calls.filter(x => x.command === 'bash');
+    assert.equal(acquisition.length, 1);
+    assert.deepEqual(acquisition[0].args, [join(f.root, 'tools/inputs.sh'), 'acquire', '--lock', join(f.root, 'inputs/sources.lock.json')]);
+    assert.deepEqual(result.build.configure, ['env', 'CC=cc', 'CC_FOR_BUILD=cc', 'CXX=/bin/false', './configure', '--enable-all']);
+    assert.deepEqual(result.build.wasm.slice(0, 5), ['make', ...targets, ...wasmOptions]);
+    assert.equal(result.runtimeFiles.length, runtimeNames.length);
+    for (const file of result.runtimeFiles) {
+      const bytes = await readFile(join(result.runtimeDirectory, file.name));
+      assert.equal(file.size, bytes.length); assert.equal(file.sha256, digest(bytes));
+    }
+    assert.equal(await readFile(join(f.vec, 'sqlite-vec.c'), 'utf8'), '/* unchanged extension fixture */');
+    assert.equal(await readFile(join(f.vec, 'sqlite-vec.h'), 'utf8'), '/* unchanged header fixture */');
+    assert.deepEqual(JSON.parse(await readFile(join(result.logPath, '../handoff.json'), 'utf8')), result);
+    assert(!Object.hasOwn(result, 'channel'));
+  });
+}
+
+for (const [label, mutateHandoff, message] of [
+  ['stripped prerelease suffix', h => { h.sqliteVec.version = '0.1.10'; }, /Wrong acquired sqliteVec identity/],
+  ['different prerelease', h => { h.sqliteVec.version = '0.1.10-alpha.3'; }, /Wrong acquired sqliteVec identity/],
+  ['source digest bytes', h => { h.sqliteVec.digest.value = 'f'.repeat(64); }, /Wrong acquired sqliteVec identity/],
+  ['source digest algorithm', h => { h.sqliteVec.digest.algorithm = 'sha3-256'; }, /Wrong acquired sqliteVec identity/],
+  ['source lock bytes', h => { h.lockDigest.value = '0'.repeat(64); }, /Source lock changed/],
+  ['source lock algorithm', h => { h.lockDigest.algorithm = 'sha3-256'; }, /Source lock changed/],
+]) {
+  test(`prerelease handoff refuses ${label} before generation or compilation`, async t => {
+    const f = await fixture(t, { vecVersion: '0.1.10-alpha.4', mutateHandoff });
+    await assert.rejects(construct({ root: f.root, run: f.run }), message);
+    assert.equal(f.calls.filter(x => x.command === 'bash').length, 1);
+    assert(!f.calls.some(x => x.command === 'env' || (x.command === 'make' && x.args[0] !== '--version')));
+    const workspace = join(f.root, '.work/build', (await readdir(join(f.root, '.work/build')))[0]);
+    assert.deepEqual(await readdir(workspace), ['build.log']);
+  });
 }
 
 test('fresh acquisition, exact arguments, canonical flags and complete JSON/hashes', async t => {

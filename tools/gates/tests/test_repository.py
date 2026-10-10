@@ -9,6 +9,7 @@ import unittest
 
 
 SOURCE = Path(__file__).resolve().parents[3]
+MANIFEST = '.42p/standards/canon.sha256'
 
 
 class RepositoryGateway(unittest.TestCase):
@@ -21,16 +22,19 @@ class RepositoryGateway(unittest.TestCase):
         self.git('init', '-q')
         self.git('config', 'user.name', 'Repository test')
         self.git('config', 'user.email', 'repository-test@example.invalid')
-        files = ['README.md', 'AGENTS.md', '.gitignore',
-                 '.42p/standards/software.md', '.42p/standards/openspec.md',
-                 '.42p/openspec/config.yaml', 'tools/check-repository.sh',
+        self.protected = [line.split('  ', 1)[1] for line in
+                          (SOURCE / MANIFEST).read_text().splitlines()]
+        files = ['README.md', '.gitignore', MANIFEST, *self.protected,
+                 'tools/check-repository.sh',
                  'tools/inputs.py', 'inputs/sources.lock.json']
         files += [str(p.relative_to(SOURCE)) for p in
                   (SOURCE / '.42p/engineering').glob('*_capture_edit-*.md')]
         files += [str(p.relative_to(SOURCE)) for p in
                   (SOURCE / '.42p/engineering').glob('*_allocation_edit-*.md')]
         for name in files:
-            self.write(name, (SOURCE / name).read_text())
+            path = self.repo / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes((SOURCE / name).read_bytes())
         self.git('add', '-A')
         self.git('commit', '-qm', 'Valid fixture')
         self.allocation = next(self.repo.glob('.42p/engineering/*_allocation_edit-*.md'))
@@ -87,14 +91,17 @@ class RepositoryGateway(unittest.TestCase):
         self.check(False, 'including untracked/case variants')
 
     def test_entry_points_must_exist_and_be_tracked(self):
-        for name in ('README.md', 'AGENTS.md', '.42p/standards/software.md',
-                     '.42p/standards/openspec.md', '.42p/openspec/config.yaml', '.gitignore'):
+        for name in ('README.md', '.gitignore', MANIFEST, *self.protected):
             with self.subTest(name=name):
                 text = (self.repo / name).read_text()
+                message = ('Missing repository authority or integrity' if name in
+                           ('README.md', '.gitignore') else
+                           'Canon manifest must be a tracked regular file' if name == MANIFEST
+                           else 'Canon file must be a tracked regular file')
                 self.git('rm', '-f', name)
-                self.check(False, 'Missing repository authority or integrity')
+                self.check(False, message)
                 self.write(name, text)
-                self.check(False, 'Missing repository authority or integrity')
+                self.check(False, message)
                 self.git('add', name)
         self.check()
 
@@ -112,15 +119,105 @@ class RepositoryGateway(unittest.TestCase):
         path.symlink_to('missing')
         self.check(False, 'root-level openspec is forbidden')
 
-    def test_authority_drift_fails_in_both_entry_points(self):
-        for name in ('AGENTS.md', '.42p/openspec/config.yaml'):
+    def test_any_editorial_change_requires_updated_digest(self):
+        for name in self.protected:
             with self.subTest(name=name):
                 path = self.repo / name
-                text = path.read_text()
-                path.write_text(text.replace('Instituted decisions and sources ground the design.',
-                                            'Capture institutes its own authority.'))
-                self.check(False, 'must preserve instituted decision/source authority')
-                path.write_text(text)
+                original = path.read_bytes()
+                path.write_bytes(original + b'\n# Revised wording.\n')
+                self.check(False, 'Canon SHA-256 mismatch: ' + name)
+                path.write_bytes(original)
+
+    def refresh_digest(self, name):
+        manifest = self.repo / MANIFEST
+        lines = manifest.read_text().splitlines()
+        digest = hashlib.sha256((self.repo / name).read_bytes()).hexdigest()
+        lines = [digest + '  ' + name if line.split('  ', 1)[1] == name
+                 else line for line in lines]
+        manifest.write_text('\n'.join(lines) + '\n')
+
+    def test_joint_content_and_digest_update_passes_for_every_protected_file(self):
+        for name in self.protected:
+            with self.subTest(name=name):
+                path = self.repo / name
+                path.write_bytes(path.read_bytes() + b'\n# Revised wording.\n')
+                self.refresh_digest(name)
+                self.git('add', name, MANIFEST)
+                self.check()
+
+    def test_gateway_does_not_require_a_particular_sentence(self):
+        replacements = {'AGENTS.md': '# Revised operating instructions\n',
+                        '.42p/openspec/config.yaml':
+                        'schema: spec-driven\ncontext: |\n  Revised context wording.\n'}
+        for name, text in replacements.items():
+            path = self.repo / name
+            path.write_text(text)
+            self.refresh_digest(name)
+        self.git('add', '-A')
+        self.check()
+
+    def test_malformed_manifest_or_digest_fails(self):
+        manifest = self.repo / MANIFEST
+        original = manifest.read_text()
+        for text in ('', '{}\n', '\xff', original.replace('  ', ' ', 1),
+                     original.replace(original[:64], 'a' * 63, 1),
+                     original.replace(original[:64], 'g' * 64, 1)):
+            with self.subTest(text=text[:80]):
+                manifest.write_text(text)
+                self.check(False, 'manifest')
+        manifest.write_bytes(b'\xff')
+        self.check(False, 'Cannot read canon manifest')
+
+    def test_duplicate_unsorted_and_invalid_manifest_paths_fail(self):
+        manifest = self.repo / MANIFEST
+        original = manifest.read_text()
+        lines = original.splitlines()
+        manifest.write_text(original + lines[0] + '\n')
+        self.check(False, 'Duplicate canon manifest entry')
+        manifest.write_text('\n'.join(reversed(lines)) + '\n')
+        self.check(False, 'must be sorted by path')
+        for name in ('/AGENTS.md', '../AGENTS.md', 'a/../AGENTS.md',
+                     './AGENTS.md', 'a//AGENTS.md', 'a\\AGENTS.md',
+                     'C:/AGENTS.md', MANIFEST):
+            with self.subTest(name=name):
+                manifest.write_text('0' * 64 + '  ' + name + '\n')
+                self.check(False, 'Invalid canon manifest')
+
+    def test_protected_directory_and_symlinks_fail(self):
+        name = self.protected[0]
+        path = self.repo / name
+        path.unlink()
+        path.mkdir()
+        self.check(False, 'Canon file must be a tracked regular file')
+        path.rmdir()
+        path.symlink_to(self.repo / 'README.md')
+        self.git('add', name)
+        self.check(False, 'Canon file must be a tracked regular file')
+
+    def test_symlink_manifest_and_symlink_parent_fail(self):
+        manifest = self.repo / MANIFEST
+        original = manifest.read_text()
+        manifest.unlink()
+        self.write('manifest-copy.txt', original)
+        manifest.symlink_to(self.repo / 'manifest-copy.txt')
+        self.git('add', MANIFEST)
+        self.check(False, 'Canon manifest must be a tracked regular file')
+        manifest.unlink()
+        manifest.write_text(original)
+        self.git('add', MANIFEST)
+        parent = self.repo / '.42p/openspec'
+        parent.rename(self.repo / 'real-openspec')
+        parent.symlink_to(self.repo / 'real-openspec', target_is_directory=True)
+        self.check(False, 'Canon file must be a tracked regular file')
+
+    def test_capture_and_allocation_joint_update_remains_independent(self):
+        path = self.captures[0]
+        original_digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        path.write_text(path.read_text() + '\nA revised projection.\n')
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        self.allocation.write_text(self.allocation.read_text().replace(original_digest, digest))
+        self.git('add', '-A')
+        self.check()
 
     def test_missing_capture_or_allocation_fails(self):
         for path in [*self.captures, self.allocation]:

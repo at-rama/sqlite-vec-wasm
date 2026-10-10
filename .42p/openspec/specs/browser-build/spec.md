@@ -22,6 +22,14 @@ Each construction SHALL consume a fresh successful A-inputs acquisition of the r
 - **WHEN** an earlier acquisition or build remains in temporary state
 - **THEN** a new construction uses freshly acquired trees rather than those earlier sources or outputs
 
+#### Scenario: Published prerelease pair
+- **WHEN** A-inputs successfully acquires a recorded pair containing an official published prerelease
+- **THEN** construction consumes that exact verified pair with its complete version suffixes, without independently resolving releases or deciding a publication channel
+
+#### Scenario: Acquisition identity drifts
+- **WHEN** the acquisition handoff no longer matches the consumed lock bytes, exact version including suffix, or expected digest
+- **THEN** construction fails before generation or compilation without substituting another pair
+
 ### Requirement: Common SQLite release identity
 
 SQLite core, WASM support and JavaScript bindings SHALL originate from the same pinned SQLite release. Construction SHALL generate the amalgamation from its verified full-source tree and SHALL NOT substitute a separately acquired core, header or binding distribution.
@@ -36,7 +44,7 @@ SQLite core, WASM support and JavaScript bindings SHALL originate from the same 
 
 ### Requirement: Static registration on every connection
 
-The runtime SHALL compile the pinned stable sqlite-vec into its WASM and automatically register it through SQLite's supported static-extension initialization mechanism on every new connection. Consumers SHALL NOT dynamically load or register sqlite-vec themselves. Registration failure SHALL fail initialization or connection opening, as applicable.
+The runtime SHALL compile the pinned official published sqlite-vec release, whether stable or prerelease, into its WASM and automatically register it through SQLite's supported static-extension initialization mechanism on every new connection. Consumers SHALL NOT dynamically load or register sqlite-vec themselves. Registration failure SHALL fail initialization or connection opening, as applicable.
 
 #### Scenario: Independent connections
 - **WHEN** a consumer opens multiple independent connections through the conventional or ESM browser runtime
@@ -49,6 +57,10 @@ The runtime SHALL compile the pinned stable sqlite-vec into its WASM and automat
 #### Scenario: Registration cannot complete
 - **WHEN** static-extension registration or a connection's extension initialization fails
 - **THEN** the corresponding initialization or opening fails instead of returning a usable connection without sqlite-vec
+
+#### Scenario: Exact prerelease runtime identity
+- **WHEN** the selected sqlite-vec release is a published prerelease and the canonical build succeeds
+- **THEN** independent browser connections expose its SQL functionality without consumer registration and report its exact upstream version including the prerelease suffix
 
 ### Requirement: Canonical browser baseline is retained
 
@@ -130,6 +142,9 @@ Successful construction SHALL supply packaging with runtime locations, the compl
 - **WHEN** packaging consumes a successful build handoff
 - **THEN** it can locate and check the runtime bytes while package assembly, licensing, final-asset acceptance and publication remain separate responsibilities
 
+#### Scenario: Prerelease handoff provenance
+- **WHEN** construction succeeds for a verified source pair containing a published prerelease
+- **THEN** its complete handoff retains the exact input versions including suffixes, source digests and lock identity alongside actual build tools/options and output digests, without claiming product acceptance
 ### Requirement: Failure does not reuse previous output
 
 Any mandatory acquisition, tool, generation, compilation or output-inventory failure SHALL return nonzero without emitting a successful build handoff or selecting earlier outputs. Once a build workspace exists, construction SHALL retain its available diagnostic log and temporary state for investigation. Successful workspaces SHALL remain available to packaging until caller cleanup.

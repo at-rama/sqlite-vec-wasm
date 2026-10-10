@@ -80,7 +80,7 @@ Two stable selected upstreams SHALL yield `latest` and stable `X.Y.Z`; at least 
 
 ### Requirement: Independent channel progression and alpha series
 
-Each channel SHALL advance monotonically by SemVer without requiring a version greater than the other channel's complete history. A valid alpha series SHALL advance its counter unless a new signal requires a higher base, which starts at `alpha.1`. A stable version reaching/exceeding an alpha base SHALL close that series.
+Each channel SHALL advance monotonically by SemVer without requiring a version greater than the other channel's complete history. For experimental calculation, the required base SHALL be the current published `latest` version incremented by the numerical signal of the selected upstreams relative to that stable composition, with default PATCH and the maturity ceiling. An open alpha series SHALL retain its base and advance its counter when the required base is less than or equal to its base; a greater required base SHALL start at `alpha.1`. A stable version reaching/exceeding an alpha base SHALL close that series; absent an open series, the stable-derived required base SHALL start at `alpha.1`. This version reference SHALL NOT replace watch eligibility or explicit rollback's channel reference. The initial selected stable case requires no preceding stable reference.
 
 #### Scenario: Stable maintenance alongside an experimental series
 - **WHEN** publications follow `latest=0.2.0`, `next=0.3.0-alpha.2`, `latest=0.2.1`, `next=0.3.0-alpha.3`, `latest=0.3.0`
@@ -90,9 +90,17 @@ Each channel SHALL advance monotonically by SemVer without requiring a version g
 - **WHEN** `latest` has reached `0.3.0` and a subsequent experimental selection supplies PATCH or MINOR
 - **THEN** the next series starts respectively at `0.3.1-alpha.1` or `0.4.0-alpha.1`, rather than `0.3.0-alpha.4`
 
-#### Scenario: Continuing or replacing a valid series
-- **WHEN** a series remains open and the new numerical signal does not require a higher base, or does require one
-- **THEN** the distribution respectively increments its alpha counter or starts the required higher base at `alpha.1`
+#### Scenario: Required base below the open series
+- **WHEN** `latest=0.2.0`, `next=0.3.0-alpha.2` and the experimental selection supplies PATCH relative to the stable upstream composition
+- **THEN** the required base is `0.2.1` and publication continues at `0.3.0-alpha.3`
+
+#### Scenario: Required base equals the open series
+- **WHEN** `latest=0.2.0`, `next=0.3.0-alpha.2` and the experimental selection supplies MINOR relative to the stable upstream composition
+- **THEN** the required base is `0.3.0` and publication continues at `0.3.0-alpha.3`
+
+#### Scenario: Required base exceeds the open series
+- **WHEN** `latest=0.2.0`, `next=0.2.1-alpha.2` and the experimental selection supplies MINOR relative to the stable upstream composition
+- **THEN** the required base is `0.3.0` and publication opens `0.3.0-alpha.1`
 
 ### Requirement: Complete publication state and uniqueness
 
@@ -171,16 +179,24 @@ Steady-state npm publication SHALL use trusted publishing rather than persistent
 - **THEN** the workflow uses those mechanisms bound to its authorized repository/workflow and exact payload
 
 #### Scenario: Missing publishing prerequisites
-- **WHEN** required authentication or a supported required attestation mechanism is unavailable
+- **WHEN** required authentication outside the bounded initial npm exception, or a supported required attestation mechanism, is unavailable
 - **THEN** the workflow fails with an explicit diagnostic rather than silently using a persistent token or claiming attestation success
 
 ### Requirement: Bounded initial npm exception
 
-The minimum unavoidable initial registry setup/first npm-publication exception SHALL override only the automatic npm trigger where needed to establish trusted publishing. It SHALL preserve qualification and commit/payload identity, create no recurring manual path and leave subsequent human initiation/integration and automatic publication unchanged. A-bootstrap SHALL supply setup, not an alternative numbering policy.
+The minimum unavoidable initial registry setup/first npm-publication exception SHALL override only the automatic npm trigger where needed to establish trusted publishing. It SHALL preserve qualification and commit/payload identity, create no recurring manual path and leave subsequent human initiation/integration and automatic publication unchanged. A-bootstrap SHALL supply setup, not an alternative numbering policy. After authorized integration and mandatory qualification, the exception SHALL automatically create the tag and publish the GitHub Release with the accepted archive/evidence, hand that exact archive to A-bootstrap and report npm pending. Complete success SHALL require verification of the corresponding manual npm publication. That completion check SHALL be read-only and SHALL NOT recreate identities, repack, overwrite, resume another partial failure or supply a recurring manual publisher.
 
 #### Scenario: Initial setup is unavoidable
 - **WHEN** initial registry setup requires a first manual npm publication
-- **THEN** only the exact qualified initial payload can be handed to that bounded bootstrap operation, with no waiver of mandatory controls
+- **THEN** tagging and GitHub Release publication remain automatic, the exact qualified initial payload/evidence is handed to A-bootstrap and npm is explicitly pending, with no waiver of mandatory controls or complete-success claim
+
+#### Scenario: Initial manual npm publication matches
+- **WHEN** npm's initial published version, channel, provenance and archive match the accepted handoff and already published GitHub identity
+- **THEN** read-only completion verification can report complete success without recreating the tag, republishing either destination or qualifying different bytes
+
+#### Scenario: Initial npm completion is absent or inconsistent
+- **WHEN** the initial npm publication is absent, inaccessible, on a different channel or inconsistent with the accepted identity/payload
+- **THEN** completion remains pending or fails with an explicit diagnostic, with no complete-success claim, overwrite or automatic repair
 
 #### Scenario: Steady-state release after bootstrap
 - **WHEN** trusted publishing is established

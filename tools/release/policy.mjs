@@ -125,6 +125,7 @@ export function calculate({ selection, snapshot, comment = '' }) {
     }
   }
   if (reference) assert.ok(compareDistribution(version, reference.version) > 0, 'Channel must progress monotonically');
+  assert.ok(upstream(selection.sqliteVec).numeric[0] !== 0 || distribution(version).numeric[0] === 0, 'Maturity ceiling conflicts with channel progression');
   const tag = `dist/v${version}`;
   assert.ok(!snapshot.tags.includes(tag) && !snapshot.releaseTags.includes(tag) && !snapshot.npmVersions.includes(version), `Publication collision: ${version}`);
   return { name: 'sqlite-vector-wasm', version, tag, channel, signal: signal ? ['PATCH','MINOR','MAJOR'][signal - 1] : 'INITIAL',

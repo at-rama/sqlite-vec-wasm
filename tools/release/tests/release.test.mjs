@@ -39,6 +39,7 @@ test('stable initial, default patch, simultaneous signals and maturity', () => {
   assert.equal(calc(pair('0.2.0', '3.53.5'), state()).version, '0.3.0');
   assert.equal(calc(pair('0.1.9', '4.0.0'), state('0.4.2')).version, '0.5.0');
   assert.equal(calc(pair('1.0.0'), state('0.4.2')).version, '1.0.0');
+  assert.throws(() => calc(pair('0.1.9'), state('1.0.0', null, pair('1.0.0')), 'reviewed rollback'), /Maturity ceiling/);
 });
 
 test('alpha required base less/equal/greater and closed/absent series', () => {

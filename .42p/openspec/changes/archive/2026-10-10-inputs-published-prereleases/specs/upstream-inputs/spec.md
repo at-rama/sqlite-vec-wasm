@@ -1,9 +1,9 @@
-# upstream-inputs Specification
+## RENAMED Requirements
 
-## Purpose
-Provide exact official published SQLite and sqlite-vec source identities and verified temporary sources for the browser build, implementing the source-selection and acquisition responsibility of `A-inputs`.
+- FROM: `### Requirement: Official stable source selection`
+- TO: `### Requirement: Official published source selection`
 
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Official published source selection
 
@@ -37,18 +37,6 @@ The resolver SHALL select exact published, non-draft official upstream releases.
 - **WHEN** the newest stable release lacks sufficient official archive or digest metadata
 - **THEN** resolution fails without choosing an older stable release or a prerelease
 
-### Requirement: Frozen source pair without automatic fallback
-
-The selected source pair SHALL be frozen before acquisition. Acquisition SHALL use those exact pins without re-resolving latest versions. Selection or acquisition failure SHALL terminate processing without an automatic older-version fallback or upstream repair; the helpers SHALL NOT replace the pair in response to a later compatibility failure.
-
-#### Scenario: New release during acquisition
-- **WHEN** another stable upstream release appears after resolution
-- **THEN** acquisition retains the already frozen source pair
-
-#### Scenario: Frozen candidate cannot proceed
-- **WHEN** source processing fails or a caller reports an incompatible selected pair
-- **THEN** the helpers provide no automatic replacement pair or repair
-
 ### Requirement: Repository-recorded official source identities
 
 The source lock SHALL record each exact version, official archive URL, digest algorithm and expected digest before production acquisition uses it. A new pin SHALL use the official published archive digest: SQLite SHA3-256 or sqlite-vec release-asset SHA-256. Missing, malformed or ambiguous official version/archive/digest metadata SHALL fail resolution; a self-computed download digest SHALL NOT authorize a new pin.
@@ -64,46 +52,6 @@ The source lock SHALL record each exact version, official archive URL, digest al
 #### Scenario: Incomplete source lock
 - **WHEN** acquisition receives a lock with missing, malformed or inconsistent required identities
 - **THEN** it fails before exposing or using any source tree
-
-### Requirement: Existing pin integrity is retained
-
-For an already recorded source identity, the resolver and acquirer SHALL retain its recorded expected digest. Changed official metadata or downloaded bytes SHALL NOT silently replace that digest. An announced or observed digest mismatch SHALL fail the operation and require explicit upstream-authority handling outside automatic acquisition.
-
-#### Scenario: Official metadata changes an existing digest
-- **WHEN** resolution encounters a different official digest for a source identity already present in the supplied baseline pins
-- **THEN** resolution fails and preserves the existing pin
-
-#### Scenario: Acquisition is independent of moving checksums
-- **WHEN** the acquisition command consumes the recorded lock
-- **THEN** it checks downloaded bytes against that lock and does not fetch a replacement checksum or modify the lock
-
-### Requirement: Verification precedes source use
-
-Every downloaded source archive SHALL be verified against its repository-recorded cryptographic digest before extraction or other source use. Download, digest or extraction failure SHALL return failure and SHALL NOT expose sources for a build.
-
-#### Scenario: Matching archive
-- **WHEN** a complete downloaded archive matches its recorded digest
-- **THEN** that archive is eligible for extraction
-
-#### Scenario: Changed or incomplete archive
-- **WHEN** downloaded bytes fail the recorded digest or the download is incomplete
-- **THEN** acquisition fails before extracting or using that archive
-
-### Requirement: Official sufficient archives without vendoring
-
-Acquisition SHALL use the official SQLite full-source release archive and the official sqlite-vec amalgamation archive containing its C source and generated header. It SHALL NOT require upstream clones, submodules or recursive mirroring for these sufficient archives, and upstream source trees SHALL NOT be committed. An upstream constraint requiring a different acquisition mechanism SHALL stop this realization for explicit reconsideration.
-
-#### Scenario: Sufficient official archives
-- **WHEN** the two selected official archives are verified and extracted
-- **THEN** acquisition provides the complete SQLite source tree and sqlite-vec C/header sources without obtaining a separate sqlite-vec repository or vendored SQLite copy
-
-#### Scenario: Required content unavailable
-- **WHEN** a selected archive cannot supply the required source content
-- **THEN** acquisition fails without silently substituting a clone, mirror or unrelated source bundle
-
-#### Scenario: Repository content boundary
-- **WHEN** source acquisition completes
-- **THEN** acquired upstream archives and trees remain outside tracked repository content
 
 ### Requirement: Fresh acquisition and complete handoff
 

@@ -35,8 +35,10 @@ def version(value, project):
     require(isinstance(value, str), f'{project}: version must be a string')
     if project == 'sqliteVec' and value.startswith('v'):
         value = value[1:]
-    pattern = r'3\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:\.(0|[1-9]\d*))?' if project == 'sqlite' else r'(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)'
-    require(re.fullmatch(pattern, value), f'{project}: expected an exact stable version, got {value!r}')
+    number = r'(0|[1-9][0-9]*)'
+    pattern = (rf'3\.{number}\.{number}(?:\.{number})?' if project == 'sqlite'
+               else rf'{number}\.{number}\.{number}(?:-(?:alpha|beta|rc)(?:\.{number})?)?')
+    require(re.fullmatch(pattern, value), f'{project}: expected an exact release version, got {value!r}')
     return value
 
 
@@ -87,18 +89,23 @@ def read_json(path):
     return json.loads(Path(path).read_text(), object_pairs_hook=unique_object)
 
 
-def stable_vec(release):
+def published_vec(release):
     require(isinstance(release, dict), 'Malformed sqlite-vec release record')
     require(type(release.get('draft')) is bool and type(release.get('prerelease')) is bool, 'Malformed sqlite-vec release classification')
-    if release['draft'] or release['prerelease'] or release.get('published_at') is None:
+    if release['draft'] or release.get('published_at') is None:
         return False
     try:
-        version(release.get('tag_name'), 'sqliteVec')
+        v = version(release.get('tag_name'), 'sqliteVec')
     except InputError:
         return False
     published = release['published_at']
     require(isinstance(published, str) and re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z', published), 'Malformed sqlite-vec publication timestamp')
+    require(release['prerelease'] == ('-' in v), 'Contradictory sqlite-vec release classification')
     return True
+
+
+def stable_vec(release):
+    return published_vec(release) and not release['prerelease']
 
 
 def sqlite_rows(text):
@@ -155,7 +162,7 @@ def select_vec(releases, explicit, baseline):
     else:
         chosen = version(explicit, 'sqliteVec')
         matches = [r for r in releases if r.get('tag_name') == 'v' + chosen]
-    require(len(matches) == 1 and stable_vec(matches[0]), f'sqlite-vec {chosen} is missing, ambiguous or unstable')
+    require(len(matches) == 1 and published_vec(matches[0]), f'sqlite-vec {chosen} is missing, ambiguous or unpublished')
     selected = matches[0]
     require(isinstance(selected.get('assets'), list) and all(isinstance(a, dict) for a in selected['assets']), 'Malformed sqlite-vec asset metadata')
     name = f'sqlite-vec-{chosen}-amalgamation.tar.gz'
@@ -369,7 +376,7 @@ def main():
     sub = parser.add_subparsers(dest='command', required=True)
     check = sub.add_parser('validate', help='Validate a source lock offline')
     check.add_argument('lock')
-    resolve = sub.add_parser('resolve', help='Resolve independently latest stable or exact overrides')
+    resolve = sub.add_parser('resolve', help='Resolve independently latest stable or exact published releases, including sqlite-vec prereleases')
     resolve.add_argument('--sqlite-version')
     resolve.add_argument('--sqlite-vec-version')
     resolve.add_argument('--baseline-lock', help='Retain established pins and reject metadata drift')

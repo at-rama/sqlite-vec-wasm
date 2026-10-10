@@ -11,4 +11,4 @@
 
 ## 3. Integration evidence
 
-- [ ] 3.1 Run the repository gateway, all registered tests and strict OpenSpec validation; reconstruct resolution/acquisition with official stable SQLite and published prerelease sqlite-vec in an isolated clean checkout with empty tool/npm/source state, verify official digests and retained exact identities, and keep raw evidence ignored.
+- [x] 3.1 Run the repository gateway, all registered tests and strict OpenSpec validation; reconstruct resolution/acquisition with official stable SQLite and published prerelease sqlite-vec in an isolated clean checkout with empty tool/npm/source state, verify official digests and retained exact identities, and keep raw evidence ignored.

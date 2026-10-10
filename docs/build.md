@@ -18,6 +18,16 @@ Use an empty external tool directory for initial reconstruction on managed works
 
 Every construction delegates to [verified acquisition](source-acquisition.md) with the tracked source lock and creates new source and build directories. It does not consume an older handoff. Progress goes to stderr and the invocation's log; stdout contains only the success JSON. Missing tools and failed commands return nonzero without a success result.
 
+The recorded pair can include an official published sqlite-vec alpha, beta or
+release-candidate version admitted by acquisition. The build retains the complete
+version suffix in its input identities and handoff; it checks the acquired versions,
+source digests and exact lock bytes before generation or compilation. It neither
+resolves another pair nor substitutes a stable release if the selected pair fails.
+Release channel selection is separate. A prerelease still has to satisfy the same
+canonical browser, static-registration and storage requirements; source publication
+does not establish compatibility with the pinned toolchain. An incompatibility
+requiring an upstream patch stops construction for explicit reconsideration.
+
 The orchestrator runs `env CC=cc CC_FOR_BUILD=cc CXX=/bin/false ./configure --enable-all`, then `make sqlite3.c` in the acquired SQLite tree. The generated core/header must identify that same acquired release. From its `ext/wasm` directory it runs `make b-vanilla b-esm b-bundler emcc_opt=-Oz sqlite3_wasm_extra_init.c=ABSOLUTE_BRIDGE_PATH`. Options are defined in [config.mjs](../tools/build/config.mjs) and used directly for execution and reporting. Ambient compiler/include/Make/SQLite overrides are excluded.
 
 The bridge is a separate generated translation unit from [extra-init.c.in](../tools/build/extra-init.c.in). It defines `SQLITE_CORE` locally, includes the verified absolute sqlite-vec C path, and returns `sqlite3_auto_extension`'s registration result. Neighboring sqlite-vec headers and canonical SQLite include flags supply headers. No upstream source is edited, and no upstream flags or exports are replaced. Source/build paths must contain only ASCII letters, digits, `_`, `.`, `/` and `-`; other paths are rejected explicitly because C include, Make and upstream shell recipe syntax cannot safely represent them here.

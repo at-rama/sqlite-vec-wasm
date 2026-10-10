@@ -1,29 +1,41 @@
 # upstream-inputs Specification
 
 ## Purpose
-Provide exact official stable SQLite and sqlite-vec source identities and verified temporary sources for the browser build, implementing the source-selection and acquisition responsibility of `A-inputs`.
+Provide exact official published SQLite and sqlite-vec source identities and verified temporary sources for the browser build, implementing the source-selection and acquisition responsibility of `A-inputs`.
 
 ## Requirements
 
-### Requirement: Official stable source selection
+### Requirement: Official published source selection
 
-The resolver SHALL select an exact published stable version of each project from its official upstream. A supplied exact version SHALL take precedence independently for that project; an omitted version SHALL select its latest stable release. Drafts, prereleases, alpha, beta, release candidates and development snapshots SHALL be rejected, regardless of documentation examples.
+The resolver SHALL select exact published, non-draft official upstream releases. Explicit versions SHALL take precedence independently and admit published alpha, beta or release-candidate versions with sufficient official source/integrity metadata. Omitted versions SHALL select the latest stable release. Development snapshots, malformed or ambiguous release identities SHALL fail without fallback. The helper SHALL NOT select npm channels or waive downstream checks.
 
 #### Scenario: Both versions omitted
 - **WHEN** neither project has an explicit version
-- **THEN** the resolver selects each project's latest official stable release and returns both exact versions
+- **THEN** the resolver selects each project's latest official stable release, excluding newer prereleases, and returns both exact versions
 
 #### Scenario: One explicit version
-- **WHEN** an exact stable SQLite version is supplied and sqlite-vec is omitted
+- **WHEN** an exact admissible SQLite version is supplied and sqlite-vec is omitted
 - **THEN** that SQLite version is retained and the latest stable sqlite-vec release is selected
 
 #### Scenario: Explicit sqlite-vec or both versions
-- **WHEN** an exact stable sqlite-vec version is supplied, alone or with an exact stable SQLite version
+- **WHEN** an exact published stable or prerelease sqlite-vec version is supplied, alone or with an exact admissible SQLite version
 - **THEN** each supplied version takes precedence and only an omitted version is resolved to latest stable
 
+#### Scenario: Published prerelease selection
+- **WHEN** an exact sqlite-vec alpha, beta or release-candidate version identifies a published non-draft official release with sufficient source and digest metadata
+- **THEN** the resolver retains its exact suffix in the source lock without replacing it by its stable base or computing a distribution channel
+
 #### Scenario: Invalid or unstable selection
-- **WHEN** a supplied version is malformed, absent from official release records, draft, prerelease or a development snapshot
+- **WHEN** a supplied identity is malformed, absent, draft, unpublished, a development snapshot or supported by ambiguous or contradictory release metadata
 - **THEN** resolution fails without replacing it with another version
+
+#### Scenario: SQLite development download
+- **WHEN** a SQLite download is a development snapshot rather than an identified published release with sufficient full-source/integrity metadata
+- **THEN** resolution rejects it even when it is hosted by the official upstream
+
+#### Scenario: Newest stable metadata is insufficient
+- **WHEN** the newest stable release lacks sufficient official archive or digest metadata
+- **THEN** resolution fails without choosing an older stable release or a prerelease
 
 ### Requirement: Frozen source pair without automatic fallback
 
@@ -42,11 +54,11 @@ The selected source pair SHALL be frozen before acquisition. Acquisition SHALL u
 The source lock SHALL record each exact version, official archive URL, digest algorithm and expected digest before production acquisition uses it. A new pin SHALL use the official published archive digest: SQLite SHA3-256 or sqlite-vec release-asset SHA-256. Missing, malformed or ambiguous official version/archive/digest metadata SHALL fail resolution; a self-computed download digest SHALL NOT authorize a new pin.
 
 #### Scenario: New official source pin
-- **WHEN** a new stable source has sufficient official release and archive-integrity metadata
+- **WHEN** a new published stable or prerelease source has sufficient official release and archive-integrity metadata
 - **THEN** resolution emits its exact identity and official digest for recording in the candidate repository state before production acquisition
 
 #### Scenario: Missing official digest
-- **WHEN** an otherwise stable archive has no usable official published digest
+- **WHEN** an otherwise admissible released archive has no usable official published digest
 - **THEN** resolution fails without authorizing the archive from a digest computed on its downloaded bytes
 
 #### Scenario: Incomplete source lock
@@ -112,3 +124,7 @@ Each invocation SHALL acquire sources in a fresh temporary workspace under ignor
 #### Scenario: Successful pair handoff
 - **WHEN** both inputs pass the required acquisition checks
 - **THEN** the invocation reports their temporary source locations and the exact lock identity consumed, without claiming build compatibility or product acceptance
+
+#### Scenario: Acquired prerelease identity
+- **WHEN** a recorded source pair includes a published sqlite-vec prerelease and both archives pass integrity, extraction and content checks
+- **THEN** the handoff preserves that exact prerelease identity and recorded digest, without selecting a distribution channel or claiming build compatibility

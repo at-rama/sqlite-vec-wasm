@@ -55,9 +55,22 @@ class LockTests(unittest.TestCase):
             with self.assertRaises(inputs.InputError): inputs.read_json(path)
 
     def test_exact_versions_only(self):
-        for v in ('latest', '^0.1.9', '0.1.9-rc.1', '01.1.9', '', None):
+        for v in ('latest', '^0.1.9', '0.1.9-dev.1', '0.1.9-alpha.01', '0.1.9-rc1',
+                  '0.1.9+build', '01.1.9', '٠.1.9', '', None):
             with self.subTest(v=v), self.assertRaises(inputs.InputError): inputs.version(v, 'sqliteVec')
         self.assertEqual(inputs.version('v0.1.9', 'sqliteVec'), '0.1.9')
+
+    def test_prerelease_lock_preserves_exact_identity(self):
+        for v in ('0.1.10-alpha.4', '0.2.0-beta.1', '1.0.0-rc.0', '1.0.0-rc'):
+            with self.subTest(v=v):
+                candidate = lock()
+                pin = candidate['sqliteVec']
+                for key in ('version', 'archiveUrl', 'releaseUrl'):
+                    pin[key] = pin[key].replace('0.1.9', v)
+                self.assertEqual(inputs.validate_lock(candidate), candidate)
+                self.assertEqual(inputs.version('v' + v, 'sqliteVec'), v)
+                pin['archiveUrl'] = lock()['sqliteVec']['archiveUrl']
+                with self.assertRaises(inputs.InputError): inputs.validate_lock(candidate)
 
 
 
@@ -74,6 +87,17 @@ def metadata():
 def release_page(url):
     v = url.rsplit('/', 1)[1].removesuffix('.html').replace('_', '.')
     return f'<title>SQLite Release {v} On 2026-01-01</title>'
+
+
+def prerelease(v='0.1.10-alpha.4'):
+    release = copy.deepcopy(metadata()[1][0])
+    release['tag_name'] = 'v' + v
+    release['prerelease'] = True
+    release['html_url'] = release['html_url'].replace('0.1.9', v)
+    release['url'] = inputs.VEC_API + '/124'
+    for key in ('name', 'browser_download_url'):
+        release['assets'][0][key] = release['assets'][0][key].replace('0.1.9', v)
+    return release
 
 
 class ResolutionTests(unittest.TestCase):
@@ -113,6 +137,42 @@ class ResolutionTests(unittest.TestCase):
     def test_latest_does_not_fallback_on_missing_digest(self):
         sql, releases=metadata();new=copy.deepcopy(releases[0]);new['tag_name']='v0.2.0';new['assets']=[]
         with self.assertRaises(inputs.InputError):self.resolve(releases=[*releases,new])
+
+    def test_explicit_published_prereleases_and_stable_default(self):
+        for v in ('0.1.10-alpha.4', '0.2.0-beta.1', '1.0.0-rc.1'):
+            with self.subTest(v=v):
+                releases = [prerelease(v), *metadata()[1]]
+                self.assertEqual(self.resolve(releases=releases), lock())
+                selected = self.resolve(releases=releases, vec_version='v' + v)
+                self.assertEqual(selected['sqlite'], lock()['sqlite'])
+                self.assertEqual(selected['sqliteVec']['version'], v)
+                self.assertEqual(selected['sqliteVec']['archiveUrl'], releases[0]['assets'][0]['browser_download_url'])
+                self.assertEqual(set(selected), {'schemaVersion', 'sqlite', 'sqliteVec'})
+
+    def test_prerelease_failures_never_substitute_a_stable_release(self):
+        for mutate in (lambda r:r.update(draft=True), lambda r:r.update(published_at=None),
+                       lambda r:r.update(published_at='invalid'), lambda r:r.update(prerelease=False),
+                       lambda r:r.update(prerelease='true'), lambda r:r.update(assets=[]),
+                       lambda r:r['assets'][0].update(digest=None),
+                       lambda r:r['assets'][0].update(digest='sha256:bad'),
+                       lambda r:r['assets'][0].update(browser_download_url=lock()['sqliteVec']['archiveUrl'])):
+            r = prerelease(); mutate(r)
+            with self.subTest(mutate=mutate), self.assertRaises(inputs.InputError):
+                self.resolve(releases=[r, *metadata()[1]], vec_version='0.1.10-alpha.4')
+        r = prerelease()
+        with self.assertRaises(inputs.InputError):
+            self.resolve(releases=[r, r], vec_version='0.1.10-alpha.4')
+        with self.assertRaises(inputs.InputError):
+            self.resolve(releases=[r], vec_version='0.1.10-alpha.3')
+        with self.assertRaises(inputs.InputError): self.resolve(releases=[r])
+
+    def test_sqlite_snapshot_is_not_a_released_source(self):
+        snapshot = 'PRODUCT,3.54.0,2026/sqlite-snapshot-202607312245.tar.gz,100,' + 'c' * 64
+        self.assertEqual(self.resolve(sql=snapshot + '\n' + metadata()[0]), lock())
+        with self.assertRaises(inputs.InputError): self.resolve(sql=snapshot)
+        for v in ('snapshot', 'trunk', '3.54.0-alpha.1'):
+            with self.subTest(v=v), self.assertRaises(inputs.InputError):
+                self.resolve(sqlite_version=v)
 
     def test_malformed_latest_metadata_never_selects_an_older_release(self):
         sql,releases=metadata()
@@ -162,6 +222,17 @@ class PinTests(unittest.TestCase):
                 with self.assertRaises(OSError):inputs.write_lock(path,lock())
             self.assertEqual(path.read_text(),'previous');self.assertEqual(list(Path(d).iterdir()),[path])
             inputs.write_lock(path,lock());self.assertEqual(inputs.read_json(path),lock())
+
+    def test_prerelease_pin_is_retained_without_digest_refresh(self):
+        releases = [prerelease()]
+        baseline = self.resolve(releases=releases, vec_version='0.1.10-alpha.4')
+        before = copy.deepcopy(baseline)
+        releases[0]['assets'][0]['digest'] = None
+        self.assertEqual(self.resolve(releases=releases, vec_version='0.1.10-alpha.4', baseline=baseline), baseline)
+        releases[0]['assets'][0]['digest'] = 'sha256:' + 'c' * 64
+        with self.assertRaises(inputs.InputError):
+            self.resolve(releases=releases, vec_version='0.1.10-alpha.4', baseline=baseline)
+        self.assertEqual(baseline, before)
 
 
 def archives(directory):
@@ -216,6 +287,31 @@ class AcquisitionTests(unittest.TestCase):
             self.assertTrue((Path(handoff['sqlite']['sourcePath'])/'configure').stat().st_mode & 0o111)
             self.assertTrue((Path(handoff['sqliteVec']['sourcePath'])/'sqlite-vec.h').is_file())
         self.assertEqual(self.raw,json.dumps(self.candidate).encode())
+
+    def test_prerelease_acquisition_preserves_pair_digest_and_failures(self):
+        pin = self.candidate['sqliteVec']
+        for key in ('version', 'archiveUrl', 'releaseUrl'):
+            pin[key] = pin[key].replace('0.1.9', '0.1.10-alpha.4')
+        self.raw = json.dumps(self.candidate).encode()
+        one = self.acquire(); two = self.acquire()
+        self.assertNotEqual(one['workspace'], two['workspace'])
+        for handoff in (one, two):
+            self.assertEqual(handoff['sqliteVec']['version'], '0.1.10-alpha.4')
+            self.assertEqual(handoff['sqliteVec']['digest'], pin['digest'])
+            self.assertEqual(handoff['lockDigest']['value'], hashlib.sha256(self.raw).hexdigest())
+            inputs.shutil.rmtree(handoff['workspace'])
+        def corrupt_vec(url, dest):
+            self.fetch(url, dest)
+            if url == pin['archiveUrl']: dest.write_bytes(b'changed prerelease')
+        with patch.object(inputs, 'extract_file', wraps=inputs.extract_file) as extract:
+            self.assert_clean_failure(corrupt_vec, extract)
+            self.assertEqual(extract.call_count, 1)  # SQLite only; never corrupt sqlite-vec.
+        path = self.directory / 'sources.lock.json'; path.write_bytes(self.raw)
+        with patch.object(inputs, 'ROOT', self.directory):
+            with patch.object(inputs.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, b'other', b'')):
+                with self.assertRaises(inputs.InputError): inputs.recorded_lock(path)
+            with patch.object(inputs.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, self.raw, b'')):
+                self.assertEqual(inputs.recorded_lock(path), self.raw)
 
     def test_fixture_transport_rejects_unexpected_urls(self):
         destination=self.directory/'unexpected-download'

@@ -13,9 +13,17 @@ bash tools/inputs.sh resolve --output .work/inputs/candidate.lock.json
 
 Use `--sqlite-version 3.53.4` or `--sqlite-vec-version v0.1.9` to override either
 project independently; both options can be supplied together. These are command
-examples, not default pins. Overrides accept exact stable versions only, never
-ranges, `latest`, alpha, beta, RC or development versions. The optional official
-`v` prefix is normalized for sqlite-vec. Missing official releases, sufficient
+examples, not default pins. Explicit sqlite-vec overrides also accept published
+`alpha`, `beta` and `rc` releases, such as `v0.1.10-alpha.4`; the complete suffix
+is preserved in the pin, archive URL and handoff. The optional official `v`
+prefix is normalized for sqlite-vec. Omitted versions still select each project's
+latest stable release independently. Ranges, `latest`, development snapshots,
+drafts and unpublished releases are rejected. SQLite selection uses its published
+numbered releases and full source archives; the unofficial prerelease snapshots
+on its download page are not eligible. No numbered SQLite prerelease archive
+convention is implemented by this helper; a newly published format needs review
+before support, rather than guessing URLs or substituting a stable version.
+Missing official releases, sufficient
 archives or published digests cause failure. There is no older-version fallback
 or compatibility search.
 
@@ -23,7 +31,7 @@ The resolver uses `inputs/sources.lock.json` as its baseline when it exists.
 Use `--baseline-lock PATH` to supply another retained baseline. Matching pins retain their recorded digest; changed official digest/archive
 metadata for an established pin fails. An older explicit SQLite release whose
 archive digest is no longer listed can use a retained baseline pin only after
-its official stable release identity is confirmed. New pins always need an
+its official release identity is confirmed. New pins always need an
 official published digest. Resolution stores the metadata endpoints, observations
 and selected pins under a fresh ignored `.work/inputs/resolve-*` directory.
 It writes the complete candidate atomically and does not acquire sources or
@@ -63,6 +71,11 @@ sources; each entry also identifies its version, archive and verified digest.
 successful workspace lifetime and may remove it after use. Temporary paths are
 specific to that invocation. A successful handoff establishes source acquisition,
 not compatibility of the selected pair, a completed build or product acceptance.
+Source admissibility does not select a publication channel: that policy belongs
+to `A-release`. A future dispatch supplies exact versions; helper defaults do not
+relax that obligation. `A-build` still restricts its input validation to stable
+versions and requires a separate correction. This acquisition change therefore
+does not establish complete product support for prereleases.
 
 Run the inexpensive offline checks with the existing system Python, Bash and archive
 tools. The registered build-orchestration suite additionally requires Node 18 or newer
